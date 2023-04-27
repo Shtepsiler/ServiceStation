@@ -8,11 +8,13 @@ namespace ServiceStationDatabase.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<PartNeeded> builder)
         {
+            builder.Property(p => p.Id).UseIdentityColumn();
+
             builder.Property(p => p.JobId);
             builder.Property(p => p.PartId);
             builder.Property(p => p.Quantity);
 
-            builder.HasKey(p => new { p.JobId, p.PartId });
+            builder.HasKey(p =>p.Id);
 
 
             builder.HasOne(p => p.Job).WithMany(p => p.PartNeededs);

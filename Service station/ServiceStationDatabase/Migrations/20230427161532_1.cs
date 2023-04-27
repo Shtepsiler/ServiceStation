@@ -15,7 +15,7 @@ namespace ServiceStationDatabase.Migrations
                 name: "Clients",
                 columns: table => new
                 {
-                    ClientId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -24,14 +24,14 @@ namespace ServiceStationDatabase.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clients", x => x.ClientId);
+                    table.PrimaryKey("PK_Clients", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Mechanics",
                 columns: table => new
                 {
-                    MechanicId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -41,40 +41,40 @@ namespace ServiceStationDatabase.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Mechanics", x => x.MechanicId);
+                    table.PrimaryKey("PK_Mechanics", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Models",
                 columns: table => new
                 {
-                    ModelId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Models", x => x.ModelId);
+                    table.PrimaryKey("PK_Models", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Vendors",
                 columns: table => new
                 {
-                    VendorId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vendors", x => x.VendorId);
+                    table.PrimaryKey("PK_Vendors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Jobs",
                 columns: table => new
                 {
-                    JobId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ModelId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValue: "Pending"),
@@ -87,24 +87,24 @@ namespace ServiceStationDatabase.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Jobs", x => x.JobId);
+                    table.PrimaryKey("PK_Jobs", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Jobs_Clients_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Clients",
-                        principalColumn: "ClientId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Jobs_Mechanics_MechanicId",
                         column: x => x.MechanicId,
                         principalTable: "Mechanics",
-                        principalColumn: "MechanicId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Jobs_Models_ModelId",
                         column: x => x.ModelId,
                         principalTable: "Models",
-                        principalColumn: "ModelId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -112,7 +112,7 @@ namespace ServiceStationDatabase.Migrations
                 name: "Parts",
                 columns: table => new
                 {
-                    PartId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SerialNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
@@ -122,12 +122,12 @@ namespace ServiceStationDatabase.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Parts", x => x.PartId);
+                    table.PrimaryKey("PK_Parts", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Parts_Vendors_VendorId",
                         column: x => x.VendorId,
                         principalTable: "Vendors",
-                        principalColumn: "VendorId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -135,7 +135,7 @@ namespace ServiceStationDatabase.Migrations
                 name: "Orders",
                 columns: table => new
                 {
-                    OrderId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     JobId = table.Column<int>(type: "int", nullable: false),
                     IssueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -143,12 +143,12 @@ namespace ServiceStationDatabase.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Orders_Jobs_JobId",
                         column: x => x.JobId,
                         principalTable: "Jobs",
-                        principalColumn: "JobId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -156,24 +156,26 @@ namespace ServiceStationDatabase.Migrations
                 name: "PartsNeeded",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     JobId = table.Column<int>(type: "int", nullable: false),
                     PartId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PartsNeeded", x => new { x.JobId, x.PartId });
+                    table.PrimaryKey("PK_PartsNeeded", x => x.Id);
                     table.ForeignKey(
                         name: "FK_PartsNeeded_Jobs_JobId",
                         column: x => x.JobId,
                         principalTable: "Jobs",
-                        principalColumn: "JobId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PartsNeeded_Parts_PartId",
                         column: x => x.PartId,
                         principalTable: "Parts",
-                        principalColumn: "PartId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -181,24 +183,26 @@ namespace ServiceStationDatabase.Migrations
                 name: "OrderParts",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     OrderId = table.Column<int>(type: "int", nullable: false),
                     PartId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderParts", x => new { x.OrderId, x.PartId });
+                    table.PrimaryKey("PK_OrderParts", x => x.Id);
                     table.ForeignKey(
                         name: "FK_OrderParts_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "OrderId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderParts_Parts_PartId",
                         column: x => x.PartId,
                         principalTable: "Parts",
-                        principalColumn: "PartId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -218,6 +222,11 @@ namespace ServiceStationDatabase.Migrations
                 column: "ModelId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderParts_OrderId",
+                table: "OrderParts",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderParts_PartId",
                 table: "OrderParts",
                 column: "PartId");
@@ -231,6 +240,11 @@ namespace ServiceStationDatabase.Migrations
                 name: "IX_Parts_VendorId",
                 table: "Parts",
                 column: "VendorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PartsNeeded_JobId",
+                table: "PartsNeeded",
+                column: "JobId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PartsNeeded_PartId",

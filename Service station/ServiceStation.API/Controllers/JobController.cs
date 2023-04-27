@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ServiceStation.DAL.Entities;
 using ServiceStation.DAL.Repositories.Contracts;
+using ServiceStation.BAL.Services;
+using ServiceStation.BAL.Services.Interfaces;
 
 namespace ServiceStation.API.Controllers
 {     
@@ -11,14 +13,19 @@ namespace ServiceStation.API.Controllers
     public class JobController : ControllerBase
     {
 
+        private IJobService _JobService;
 
-            private readonly ILogger<JobController> _logger;
+        private readonly ILogger<JobController> _logger;
             private IUnitOfWork _ADOuow;
-            public JobController(ILogger<JobController> logger,
-                IUnitOfWork ado_unitofwork)
+            public JobController(
+                ILogger<JobController> logger,
+                IUnitOfWork ado_unitofwork,
+                 IJobService JobService
+                )
             {
                 _logger = logger;
                 _ADOuow = ado_unitofwork;
+            _JobService = JobService;
             }
 
             //GET: api/jobs
@@ -27,8 +34,9 @@ namespace ServiceStation.API.Controllers
             {
                 try
                 {
-                    var results = await _ADOuow._JobRepository.GetAllAsync();
-                    _ADOuow.Commit();
+                var results = await _JobService.GetAllAsync();
+
+
                     _logger.LogInformation($"Отримали всі івенти з бази даних!");
                     return Ok(results);
                 }
@@ -45,8 +53,7 @@ namespace ServiceStation.API.Controllers
             {
                 try
                 {
-                    var result = await _ADOuow._JobRepository.GetAsync(id);
-                    _ADOuow.Commit();
+                    var result = await _JobService.GetByIdAsync(id);
                     if (result == null)
                     {
                         _logger.LogInformation($"Івент із Id: {id}, не був знайдейний у базі даних");
@@ -82,8 +89,7 @@ namespace ServiceStation.API.Controllers
                     _logger.LogInformation($"Ми отримали некоректний json зі сторони клієнта");
                     return BadRequest("Обєкт івенту є некоректним");
                 }
-                var created_id = await _ADOuow._JobRepository.AddAsync(job);
-                    _ADOuow.Commit();
+                var created_id = await _JobService.PostAsync(job);
                     return StatusCode(StatusCodes.Status201Created);
                 }
                 catch (Exception ex)
@@ -97,7 +103,6 @@ namespace ServiceStation.API.Controllers
         [HttpPut("{id}")]
             public async Task<ActionResult> UpdateEventAsync(int id, [FromBody] Job job)
             {
-
                 try
                 {
                     if (job == null)
@@ -110,16 +115,9 @@ namespace ServiceStation.API.Controllers
                         _logger.LogInformation($"Ми отримали некоректний json зі сторони клієнта");
                         return BadRequest("Обєкт івенту є некоректним");
                     }
+            job.Id = id;
 
-                    var event_entity = await _ADOuow._JobRepository.GetAsync(id);
-                    if (event_entity == null)
-                    {
-                        _logger.LogInformation($"Івент із Id: {id}, не був знайдейний у базі даних");
-                        return NotFound();
-                    }
-
-                    await _ADOuow._JobRepository.ReplaceAsync(job);
-                    _ADOuow.Commit();
+                await _JobService.UpdateAsync(id, job);
                     return StatusCode(StatusCodes.Status204NoContent);
                 }
                 catch (Exception ex)
@@ -135,20 +133,19 @@ namespace ServiceStation.API.Controllers
             {
                 try
                 {
-                    var event_entity = await _ADOuow._JobRepository.GetAsync(id);
+                    var event_entity = await _JobService.GetByIdAsync(id);
                     if (event_entity == null)
                     {
-                        _logger.LogInformation($"Івент із Id: {id}, не був знайдейний у базі даних");
+                        _logger.LogInformation($"Запис із Id: {id}, не був знайдейний у базі даних");
                         return NotFound();
                     }
 
-                    await _ADOuow._JobRepository.DeleteAsync(id);
-                    _ADOuow.Commit();
+                    await _JobService.DeleteByIdAsync(id);
                     return NoContent();
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError($"Транзакція сфейлилась! Щось пішло не так у методі GetAllEventsAsync() - {ex.Message}");
+                    _logger.LogError($"Транзакція сфейлилась! Щось пішло не так у методі GetAllAsync() - {ex.Message}");
                     return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
                 }
             }

@@ -8,11 +8,12 @@ namespace ServiceStationDatabase.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<OrderPart> builder)
         {
+            builder.Property(p => p.Id).UseIdentityColumn();
             builder.Property(p => p.OrderId);
             builder.Property(p => p.PartId);
             builder.Property(p => p.Quantity);
 
-            builder.HasKey(p => new { p.OrderId, p.PartId });
+            builder.HasKey(p => p.Id);
 
 
             builder.HasOne(p => p.Order).WithMany(p => p.OrderParts);

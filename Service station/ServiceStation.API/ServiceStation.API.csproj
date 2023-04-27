@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ServiceStation.BAL\ServiceStation.BAL.csproj" />
     <ProjectReference Include="..\ServiceStation.DAL\ServiceStation.DAL.csproj" />
   </ItemGroup>
 

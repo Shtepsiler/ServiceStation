@@ -2,6 +2,8 @@ using ServiceStation.DAL.Repositories.Contracts;
 using ServiceStation.DAL.Repositories;
 using System.Data;
 using System.Data.SqlClient;
+using ServiceStation.BAL.Services.Interfaces;
+using ServiceStation.BAL.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,7 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IPartNeededRepository, PartNeededRepository>();
 builder.Services.AddScoped<IPartRepository, PartRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IJobService, JobService>();
 
 
 

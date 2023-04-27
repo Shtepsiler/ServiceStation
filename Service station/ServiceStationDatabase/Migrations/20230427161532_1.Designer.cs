@@ -12,8 +12,8 @@ using ServiceStationDatabase.Data;
 namespace ServiceStationDatabase.Migrations
 {
     [DbContext(typeof(BillsPaymentContext))]
-    [Migration("20230426202843_2")]
-    partial class _2
+    [Migration("20230427161532_1")]
+    partial class _1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -190,6 +190,12 @@ namespace ServiceStationDatabase.Migrations
 
             modelBuilder.Entity("ServiceStationDatabase.Entities.OrderPart", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
@@ -199,7 +205,9 @@ namespace ServiceStationDatabase.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderId", "PartId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("PartId");
 
@@ -242,6 +250,12 @@ namespace ServiceStationDatabase.Migrations
 
             modelBuilder.Entity("ServiceStationDatabase.Entities.PartNeeded", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int>("JobId")
                         .HasColumnType("int");
 
@@ -251,7 +265,9 @@ namespace ServiceStationDatabase.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("JobId", "PartId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
 
                     b.HasIndex("PartId");
 

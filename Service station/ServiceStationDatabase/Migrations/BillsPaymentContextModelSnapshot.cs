@@ -187,6 +187,12 @@ namespace ServiceStationDatabase.Migrations
 
             modelBuilder.Entity("ServiceStationDatabase.Entities.OrderPart", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
@@ -196,7 +202,9 @@ namespace ServiceStationDatabase.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderId", "PartId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("PartId");
 
@@ -239,6 +247,12 @@ namespace ServiceStationDatabase.Migrations
 
             modelBuilder.Entity("ServiceStationDatabase.Entities.PartNeeded", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int>("JobId")
                         .HasColumnType("int");
 
@@ -248,7 +262,9 @@ namespace ServiceStationDatabase.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("JobId", "PartId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
 
                     b.HasIndex("PartId");
 

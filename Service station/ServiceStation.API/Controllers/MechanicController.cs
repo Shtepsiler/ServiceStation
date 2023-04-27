@@ -1,84 +1,157 @@
-﻿/*using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using ServiceStation.DAL.Entities;
+using ServiceStation.DAL.Repositories.Contracts;
 
 namespace ServiceStation.API.Controllers
 {
-    public class MechanicController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class MwchanicController : ControllerBase
     {
-        // GET: HomeController
-        public ActionResult Index()
+
+
+        private readonly ILogger<MwchanicController> _logger;
+        private IUnitOfWork _ADOuow;
+        public MwchanicController(ILogger<MwchanicController> logger,
+            IUnitOfWork ado_unitofwork)
         {
-            return View();
+            _logger = logger;
+            _ADOuow = ado_unitofwork;
         }
 
-        // GET: HomeController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: HomeController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: HomeController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        //GET: api/jobs
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Job>>> GetAllEventsAsync()
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var results = await _ADOuow._JobRepository.GetAllAsync();
+                _ADOuow.Commit();
+                _logger.LogInformation($"Отримали всі івенти з бази даних!");
+                return Ok(results);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                _logger.LogError($"Транзакція сфейлилась! Щось пішло не так у методі GetAllEventsAsync() - {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
             }
         }
 
-        // GET: HomeController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: HomeController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        //GET: api/jobs/Id
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Job>> GetByIdAsync(int id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var result = await _ADOuow._JobRepository.GetAsync(id);
+                _ADOuow.Commit();
+                if (result == null)
+                {
+                    _logger.LogInformation($"Івент із Id: {id}, не був знайдейний у базі даних");
+                    return NotFound();
+                }
+                else
+                {
+                    _logger.LogInformation($"Отримали івент з бази даних!");
+                    return Ok(result);
+                }
+
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                _logger.LogError($"Транзакція сфейлилась! Щось пішло не так у методі GetAllEventsAsync() - {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
             }
         }
 
-        // GET: HomeController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: HomeController/Delete/5
+        //POST: api/jobs
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> PostJobAsync([FromBody] Job job)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (job == null)
+                {
+                    _logger.LogInformation($"Ми отримали пустий json зі сторони клієнта");
+                    return BadRequest("Обєкт івенту є null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogInformation($"Ми отримали некоректний json зі сторони клієнта");
+                    return BadRequest("Обєкт івенту є некоректним");
+                }
+                var created_id = await _ADOuow._JobRepository.AddAsync(job);
+                _ADOuow.Commit();
+                return StatusCode(StatusCodes.Status201Created);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                _logger.LogError($"Транзакція сфейлилась! Щось пішло не так у методі PostEventAsync - {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
             }
         }
+
+        //POST: api/jobs/id
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateEventAsync(int id, [FromBody] Job job)
+        {
+
+            try
+            {
+                if (job == null)
+                {
+                    _logger.LogInformation($"Ми отримали пустий json зі сторони клієнта");
+                    return BadRequest("Обєкт івенту є null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogInformation($"Ми отримали некоректний json зі сторони клієнта");
+                    return BadRequest("Обєкт івенту є некоректним");
+                }
+
+                var event_entity = await _ADOuow._JobRepository.GetAsync(id);
+                if (event_entity == null)
+                {
+                    _logger.LogInformation($"Івент із Id: {id}, не був знайдейний у базі даних");
+                    return NotFound();
+                }
+
+                await _ADOuow._JobRepository.ReplaceAsync(job);
+                _ADOuow.Commit();
+                return StatusCode(StatusCodes.Status204NoContent);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Транзакція сфейлилась! Щось пішло не так у методі PostEventAsync - {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
+            }
+        }
+
+        //GET: api/jobs/Id
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteByIdAsync(int id)
+        {
+            try
+            {
+                var event_entity = await _ADOuow._JobRepository.GetAsync(id);
+                if (event_entity == null)
+                {
+                    _logger.LogInformation($"Івент із Id: {id}, не був знайдейний у базі даних");
+                    return NotFound();
+                }
+
+                await _ADOuow._JobRepository.DeleteAsync(id);
+                _ADOuow.Commit();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Транзакція сфейлилась! Щось пішло не так у методі GetAllEventsAsync() - {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
+            }
+        }
+
     }
 }
-*/
