@@ -1,7 +1,8 @@
 ﻿namespace ServiceStation.DAL.Entities
 {
     public class PartNeeded
-    {
+    {   
+        public int Id { get; set; }
         public int JobId { get; set; }
 
         public int PartId { get; set; }

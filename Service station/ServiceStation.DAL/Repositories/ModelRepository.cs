@@ -7,7 +7,7 @@ namespace ServiceStation.DAL.Repositories
 {
     public class ModelRepository : GenericRepository<Model>, IModelRepository
     {
-        public ModelRepository(SqlConnection sqlConnection, IDbTransaction dbtransaction) : base(sqlConnection, dbtransaction, "Images")
+        public ModelRepository(SqlConnection sqlConnection, IDbTransaction dbtransaction) : base(sqlConnection, dbtransaction, "Models")
         {
 
         }

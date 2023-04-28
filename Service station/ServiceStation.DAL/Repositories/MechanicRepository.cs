@@ -7,7 +7,7 @@ namespace ServiceStation.DAL.Repositories
 {
     public class MechanicRepository : GenericRepository<Mechanic>, IMechanicRepository
     {
-        public MechanicRepository(SqlConnection sqlConnection, IDbTransaction dbtransaction) : base(sqlConnection, dbtransaction, "Galleries")
+        public MechanicRepository(SqlConnection sqlConnection, IDbTransaction dbtransaction) : base(sqlConnection, dbtransaction, "Mechanics")
         {
         }
     }

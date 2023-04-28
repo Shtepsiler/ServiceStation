@@ -7,7 +7,7 @@ namespace ServiceStation.DAL.Repositories
 {
     public class PartRepository : GenericRepository<Part>, IPartRepository
     {
-        public PartRepository(SqlConnection sqlConnection, IDbTransaction dbtransaction) : base(sqlConnection, dbtransaction, "Users")
+        public PartRepository(SqlConnection sqlConnection, IDbTransaction dbtransaction) : base(sqlConnection, dbtransaction, "Parts")
         {
         }
 

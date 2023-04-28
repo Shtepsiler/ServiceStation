@@ -7,7 +7,7 @@ namespace ServiceStation.DAL.Repositories
 {
     public class OrderPartRepository : GenericRepository<OrderPart>, IOrderPartRepository
     {
-        public OrderPartRepository(SqlConnection sqlConnection, IDbTransaction dbtransaction) : base(sqlConnection, dbtransaction, "Categories")
+        public OrderPartRepository(SqlConnection sqlConnection, IDbTransaction dbtransaction) : base(sqlConnection, dbtransaction, "OrderParts")
         {
         }
 

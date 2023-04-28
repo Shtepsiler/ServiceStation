@@ -29,7 +29,18 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IPartNeededRepository, PartNeededRepository>();
 builder.Services.AddScoped<IPartRepository, PartRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IJobService, JobService>();
+
+
+builder.Services.AddScoped<IJobService, JobService>(); 
+builder.Services.AddScoped<IMechanicService, MechanicService>();
+builder.Services.AddScoped<IModelService, ModelService>();
+builder.Services.AddScoped<IOrderPartsService, OrderPartsService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IPartNeededService, PartNeededService>();
+builder.Services.AddScoped<IPartService, PartService>();
+builder.Services.AddScoped<IUnitOfBisnes, UnitOfBisnes>();
+
+
 
 
 
