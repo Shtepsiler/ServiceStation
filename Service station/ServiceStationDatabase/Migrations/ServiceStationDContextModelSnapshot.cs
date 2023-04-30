@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiceStationDatabase.Data;
 
@@ -11,12 +10,10 @@ using ServiceStationDatabase.Data;
 
 namespace ServiceStationDatabase.Migrations
 {
-    [DbContext(typeof(BillsPaymentContext))]
-    [Migration("20230427161532_1")]
-    partial class _1
+    [DbContext(typeof(ServiceStationDContext))]
+    partial class ServiceStationDContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,6 +76,9 @@ namespace ServiceStationDatabase.Migrations
                     b.Property<DateTime>("IssueDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("ManagerId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("MechanicId")
                         .HasColumnType("int");
 
@@ -99,11 +99,41 @@ namespace ServiceStationDatabase.Migrations
 
                     b.HasIndex("ClientId");
 
+                    b.HasIndex("ManagerId");
+
                     b.HasIndex("MechanicId");
 
                     b.HasIndex("ModelId");
 
                     b.ToTable("Jobs");
+                });
+
+            modelBuilder.Entity("ServiceStationDatabase.Entities.Manager", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Managers");
                 });
 
             modelBuilder.Entity("ServiceStationDatabase.Entities.Mechanic", b =>
@@ -142,6 +172,39 @@ namespace ServiceStationDatabase.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Mechanics");
+                });
+
+            modelBuilder.Entity("ServiceStationDatabase.Entities.MechanicsTasks", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MechanicId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Task")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.HasIndex("MechanicId");
+
+                    b.ToTable("MechanicsTasks");
                 });
 
             modelBuilder.Entity("ServiceStationDatabase.Entities.Model", b =>
@@ -300,6 +363,12 @@ namespace ServiceStationDatabase.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ServiceStationDatabase.Entities.Manager", "Manager")
+                        .WithMany("Jobs")
+                        .HasForeignKey("ManagerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ServiceStationDatabase.Entities.Mechanic", "Mechanic")
                         .WithMany("Jobs")
                         .HasForeignKey("MechanicId")
@@ -314,9 +383,30 @@ namespace ServiceStationDatabase.Migrations
 
                     b.Navigation("Client");
 
+                    b.Navigation("Manager");
+
                     b.Navigation("Mechanic");
 
                     b.Navigation("Model");
+                });
+
+            modelBuilder.Entity("ServiceStationDatabase.Entities.MechanicsTasks", b =>
+                {
+                    b.HasOne("ServiceStationDatabase.Entities.Job", "Job")
+                        .WithMany("Tasks")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ServiceStationDatabase.Entities.Mechanic", "Mechanic")
+                        .WithMany("Tasks")
+                        .HasForeignKey("MechanicId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Job");
+
+                    b.Navigation("Mechanic");
                 });
 
             modelBuilder.Entity("ServiceStationDatabase.Entities.Order", b =>
@@ -389,11 +479,20 @@ namespace ServiceStationDatabase.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("PartNeededs");
+
+                    b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("ServiceStationDatabase.Entities.Manager", b =>
+                {
+                    b.Navigation("Jobs");
                 });
 
             modelBuilder.Entity("ServiceStationDatabase.Entities.Mechanic", b =>
                 {
                     b.Navigation("Jobs");
+
+                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("ServiceStationDatabase.Entities.Model", b =>

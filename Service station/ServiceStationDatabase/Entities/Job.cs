@@ -11,6 +11,9 @@ namespace ServiceStationDatabase.Entities
     public class Job
     {
         public int Id { get; set; }
+        public int ManagerId { get; set; }
+        [NotMapped]
+        public Manager Manager { get; set; }
         public int ModelId { get; set; }
         [NotMapped]
         public Model Model { get; set; }
@@ -29,5 +32,7 @@ namespace ServiceStationDatabase.Entities
         public List<Order> Orders { get; set; }
         [NotMapped]
         public List<PartNeeded> PartNeededs { get; set; }
+        [NotMapped]
+        public List<MechanicsTasks> Tasks { get; set; }
     }
 }

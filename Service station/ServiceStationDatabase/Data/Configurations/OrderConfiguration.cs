@@ -23,7 +23,6 @@ namespace ServiceStationDatabase.Data.Configurations
 
 
 
-            //  new PaymentMohtodSeeder().Seed(builder);
         }
     }
 }

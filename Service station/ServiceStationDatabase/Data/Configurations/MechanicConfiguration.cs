@@ -16,7 +16,6 @@ namespace ServiceStationDatabase.Data.Configurations
             builder.Property(p => p.Specialization);
 
             builder.HasKey(p => p.Id);   
-            //  new CreditCardSeeder().Seed(builder);
         }
     }
 }

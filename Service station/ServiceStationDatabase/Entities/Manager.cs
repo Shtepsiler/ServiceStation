@@ -7,17 +7,14 @@ using System.Threading.Tasks;
 
 namespace ServiceStationDatabase.Entities
 {
-    public class Mechanic
+    public class Manager
     {
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Address { get; set; }
+        public string FullName { get; set; }
         public string Phone { get; set; }
-        public string Specialization { get; set; }
+        public string Email { get; set; }
+
         [NotMapped]
         public List<Job> Jobs { get; set; }
-        [NotMapped]
-        public List<MechanicsTasks> Tasks { get; set; }
     }
 }

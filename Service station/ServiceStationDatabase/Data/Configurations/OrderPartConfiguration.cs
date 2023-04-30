@@ -19,7 +19,6 @@ namespace ServiceStationDatabase.Data.Configurations
             builder.HasOne(p => p.Order).WithMany(p => p.OrderParts);
             builder.HasOne(p => p.Part).WithMany(p => p.OrderedParts);
 
-            //new UserSeeder().Seed(builder);
         }
     }
 }

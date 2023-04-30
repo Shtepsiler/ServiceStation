@@ -28,6 +28,21 @@ namespace ServiceStationDatabase.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Managers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FullName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Managers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Mechanics",
                 columns: table => new
                 {
@@ -76,6 +91,7 @@ namespace ServiceStationDatabase.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ManagerId = table.Column<int>(type: "int", nullable: false),
                     ModelId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, defaultValue: "Pending"),
                     ClientId = table.Column<int>(type: "int", nullable: false),
@@ -92,6 +108,12 @@ namespace ServiceStationDatabase.Migrations
                         name: "FK_Jobs_Clients_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Jobs_Managers_ManagerId",
+                        column: x => x.ManagerId,
+                        principalTable: "Managers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -129,6 +151,34 @@ namespace ServiceStationDatabase.Migrations
                         principalTable: "Vendors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MechanicsTasks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MechanicId = table.Column<int>(type: "int", nullable: false),
+                    JobId = table.Column<int>(type: "int", nullable: false),
+                    Task = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MechanicsTasks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MechanicsTasks_Jobs_JobId",
+                        column: x => x.JobId,
+                        principalTable: "Jobs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MechanicsTasks_Mechanics_MechanicId",
+                        column: x => x.MechanicId,
+                        principalTable: "Mechanics",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -212,6 +262,11 @@ namespace ServiceStationDatabase.Migrations
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Jobs_ManagerId",
+                table: "Jobs",
+                column: "ManagerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Jobs_MechanicId",
                 table: "Jobs",
                 column: "MechanicId");
@@ -220,6 +275,16 @@ namespace ServiceStationDatabase.Migrations
                 name: "IX_Jobs_ModelId",
                 table: "Jobs",
                 column: "ModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MechanicsTasks_JobId",
+                table: "MechanicsTasks",
+                column: "JobId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MechanicsTasks_MechanicId",
+                table: "MechanicsTasks",
+                column: "MechanicId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderParts_OrderId",
@@ -256,6 +321,9 @@ namespace ServiceStationDatabase.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "MechanicsTasks");
+
+            migrationBuilder.DropTable(
                 name: "OrderParts");
 
             migrationBuilder.DropTable(
@@ -275,6 +343,9 @@ namespace ServiceStationDatabase.Migrations
 
             migrationBuilder.DropTable(
                 name: "Clients");
+
+            migrationBuilder.DropTable(
+                name: "Managers");
 
             migrationBuilder.DropTable(
                 name: "Mechanics");

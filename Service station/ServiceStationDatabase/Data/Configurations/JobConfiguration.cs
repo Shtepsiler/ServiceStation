@@ -11,6 +11,7 @@ namespace ServiceStationDatabase.Data.Configurations
         public void Configure(EntityTypeBuilder<Job> builder)
         {
             builder.Property(p=>p.Id).UseIdentityColumn();
+            builder.Property(p => p.ManagerId);
             builder.Property(p => p.ModelId);
             builder.Property(p => p.Status).HasMaxLength(15).HasDefaultValue("Pending");
             builder.Property(p => p.ClientId);
@@ -19,13 +20,12 @@ namespace ServiceStationDatabase.Data.Configurations
             builder.Property(p => p.FinishDate).IsRequired(false);
             builder.Property(p => p.Description);
             builder.HasKey(p => p.Id);
-            //   new BankAccountSeeder().Seed(builder);
 
           /*  builder.HasCheckConstraint(
                        "constraint_status",
                        "`Status` = 'Pending' or `Status` = 'In Progress'or `Status` = 'Finished'");*/
 
-
+            builder.HasOne(p => p.Manager).WithMany(p => p.Jobs);
             builder.HasOne(p => p.Model).WithMany(p => p.Jobs);
             builder.HasOne(p => p.Mechanic).WithMany(p => p.Jobs);
             builder.HasOne(p => p.Client).WithMany(p => p.Jobs);

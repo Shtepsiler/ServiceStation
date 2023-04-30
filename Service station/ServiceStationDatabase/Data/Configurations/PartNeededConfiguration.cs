@@ -20,7 +20,6 @@ namespace ServiceStationDatabase.Data.Configurations
             builder.HasOne(p => p.Job).WithMany(p => p.PartNeededs);
             builder.HasOne(p => p.Part).WithMany(p => p.PartNeededs);
 
-            //new UserSeeder().Seed(builder);
         }
     }
 }
