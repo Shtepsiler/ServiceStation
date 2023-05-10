@@ -1,16 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using ServiceStationDatabase.Entities;
+using ServiceStation.DAL.Entities;
 
-namespace ServiceStationDatabase.Data.Configurations
+namespace ServiceStation.DAL.Data.Configurations
 {
     public class JobConfiguration : IEntityTypeConfiguration<Job>
     {
-      
+
         public void Configure(EntityTypeBuilder<Job> builder)
         {
-            builder.Property(p=>p.Id).UseIdentityColumn();
+            builder.Property(p => p.Id).UseIdentityColumn();
             builder.Property(p => p.ManagerId);
             builder.Property(p => p.ModelId);
             builder.Property(p => p.Status).HasMaxLength(15).HasDefaultValue("Pending");
@@ -21,14 +21,14 @@ namespace ServiceStationDatabase.Data.Configurations
             builder.Property(p => p.Description);
             builder.HasKey(p => p.Id);
 
-            builder.HasCheckConstraint(
-                       "constraint_status",
-                       "`Status` = 'Pending' or `Status` = 'In Progress'or `Status` = 'Finished'");
+            /*  builder.HasCheckConstraint(
+                         "constraint_status",
+                         "`Status` = 'Pending' or `Status` = 'In Progress'or `Status` = 'Finished'");*/
 
             builder.HasOne(p => p.Manager).WithMany(p => p.Jobs);
             builder.HasOne(p => p.Model).WithMany(p => p.Jobs);
-            builder.HasOne(p => p.Mechanic).WithMany(p => p.Jobs);
-            builder.HasOne(p => p.Client).WithMany(p => p.Jobs);
+/*            builder.HasOne(p => p.Mechanic).WithMany(p => p.Jobs);
+*/            builder.HasOne(p => p.Client).WithMany(p => p.Jobs);
 
 
         }

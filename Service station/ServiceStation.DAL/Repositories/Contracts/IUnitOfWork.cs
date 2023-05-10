@@ -7,8 +7,7 @@ namespace ServiceStation.DAL.Repositories.Contracts
         IJobRepository _JobRepository { get; }
         IMechanicRepository _MechanicRepository { get; }
         IModelRepository _ModelRepository { get; }
-        IOrderPartRepository _OrderPartRepository { get; }
-        IOrderRepository _OrderRepository { get; }
+        IMechanicsTasksRepository _MechanicsTasksRepository { get; } 
         IPartNeededRepository _PartNeededRepository { get; }
         IPartRepository _PartRepository { get; }
       

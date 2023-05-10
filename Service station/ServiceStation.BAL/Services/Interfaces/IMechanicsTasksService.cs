@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace ServiceStation.BAL.Services.Interfaces
 {
-    public interface IMechanicService
+    public interface IMechanicsTasksService
     {
-        Task<IEnumerable<Mechanic>> GetAllAsync();
-        Task<Mechanic> GetByIdAsync(int id);
-        Task<int> PostAsync(Mechanic mechanic);
+        Task<IEnumerable<MechanicsTasks>> GetAllAsync();
+        Task<MechanicsTasks> GetByIdAsync(int id);
+        Task<int> PostAsync(MechanicsTasks task);
         Task DeleteByIdAsync(int id);
-        Task UpdateAsync(int id, Mechanic mechanic);
+        Task UpdateAsync(int id, MechanicsTasks task);
 
 
     }

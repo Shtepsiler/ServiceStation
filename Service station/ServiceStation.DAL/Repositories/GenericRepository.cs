@@ -102,7 +102,6 @@ namespace ServiceStation.DAL.Repositories
             return updateQuery.ToString();
         }
 
-        // генерация Isert выражения
         private string GenerateInsertQuery()
         {
             var insertQuery = new StringBuilder($"INSERT INTO {_tableName} ");

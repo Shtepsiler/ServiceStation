@@ -8,8 +8,7 @@ namespace ServiceStation.DAL.Repositories
         public IJobRepository _JobRepository { get; }
         public IMechanicRepository _MechanicRepository { get; }
         public IModelRepository _ModelRepository { get; }
-        public IOrderPartRepository _OrderPartRepository { get; }
-        public IOrderRepository _OrderRepository { get; }
+        public IMechanicsTasksRepository _MechanicsTasksRepository { get; }
         public IPartNeededRepository _PartNeededRepository { get; }
         public IPartRepository _PartRepository { get; }
 
@@ -20,8 +19,7 @@ namespace ServiceStation.DAL.Repositories
         IJobRepository JobRepository,
         IMechanicRepository MechanicRepository ,
         IModelRepository ModelRepository ,
-        IOrderPartRepository OrderPartRepository ,
-        IOrderRepository OrderRepository ,
+        IMechanicsTasksRepository MechanicsTasksRepository,
         IPartNeededRepository PartNeededRepository ,
         IPartRepository PartRepository,
         IDbTransaction dbTransaction
@@ -31,8 +29,7 @@ namespace ServiceStation.DAL.Repositories
             _JobRepository = JobRepository;
              _MechanicRepository = MechanicRepository;
              _ModelRepository = ModelRepository;
-             _OrderPartRepository = OrderPartRepository;
-             _OrderRepository = OrderRepository;
+            _MechanicsTasksRepository = MechanicsTasksRepository;
              _PartNeededRepository = PartNeededRepository;
             _PartRepository = PartRepository;
             _dbTransaction = dbTransaction;

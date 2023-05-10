@@ -14,25 +14,22 @@ namespace ServiceStation.BAL.Services
         public IJobService _JobService { get; }
         public IMechanicService _MechanicService { get; }
         public IModelService _ModelService { get; }
-        public IOrderPartsService _OrderPartsService { get; }
-        public IOrderService _OrderService { get; }
+        public IMechanicsTasksService _MechanicsTasksService { get; }
         public IPartNeededService _PartNeededService { get; }
         public IPartService _PartService { get; }   
         
         
         public UnitOfBisnes(IJobService jobService,
             IMechanicService mechanicService,
-            IModelService modelService, 
-            IOrderPartsService orderPartsService,
-            IOrderService orderService, 
+            IModelService modelService,
+            IMechanicsTasksService MechanicsTasksService, 
             IPartNeededService partNeededService, 
             IPartService partService)
         {
             _JobService = jobService;
             _MechanicService = mechanicService;
             _ModelService = modelService;
-            _OrderPartsService = orderPartsService;
-            _OrderService = orderService;
+            _MechanicsTasksService = MechanicsTasksService;
             _PartNeededService = partNeededService;
             _PartService = partService;
         }

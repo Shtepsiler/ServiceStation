@@ -12,8 +12,7 @@ namespace ServiceStation.BAL.Services.Interfaces
         IJobService _JobService { get; }
         IMechanicService _MechanicService { get; }
         IModelService _ModelService { get; }
-        IOrderPartsService _OrderPartsService { get; }
-        IOrderService _OrderService { get; }
+        IMechanicsTasksService _MechanicsTasksService { get; }
         IPartNeededService _PartNeededService { get; }
         IPartService _PartService { get; }
     }
