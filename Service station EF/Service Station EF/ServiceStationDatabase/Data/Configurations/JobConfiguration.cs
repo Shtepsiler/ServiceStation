@@ -21,9 +21,9 @@ namespace ServiceStationDatabase.Data.Configurations
             builder.Property(p => p.Description);
             builder.HasKey(p => p.Id);
 
-          /*  builder.HasCheckConstraint(
+            builder.HasCheckConstraint(
                        "constraint_status",
-                       "`Status` = 'Pending' or `Status` = 'In Progress'or `Status` = 'Finished'");*/
+                       "`Status` = 'Pending' or `Status` = 'In Progress'or `Status` = 'Finished'");
 
             builder.HasOne(p => p.Manager).WithMany(p => p.Jobs);
             builder.HasOne(p => p.Model).WithMany(p => p.Jobs);

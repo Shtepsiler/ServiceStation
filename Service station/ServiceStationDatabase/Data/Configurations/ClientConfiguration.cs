@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ServiceStationDatabase.Entities;
 namespace ServiceStationDatabase.Data.Configurations
 {
-    public class ClientConfiguration : IEntityTypeConfiguration<Client>
+/*    public class ClientConfiguration : IEntityTypeConfiguration<Client>
     {
         public void Configure(EntityTypeBuilder<Client> builder)
         {
@@ -15,5 +15,5 @@ namespace ServiceStationDatabase.Data.Configurations
 
             builder.HasKey(p => p. Id);
         }
-    }
+    }*/
 }

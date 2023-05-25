@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ServiceStationDatabase.Data.Configurations;
 using ServiceStationDatabase.Entities;
 
 namespace ServiceStationDatabase.Data
 {
-    public class ServiceStationDContext : DbContext
+    public class ServiceStationDContext : IdentityDbContext
     {
 
         public DbSet<Client> Clients { get; set; }
@@ -19,19 +20,24 @@ namespace ServiceStationDatabase.Data
         public DbSet<PartNeeded> PartsNeeded { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
 
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public ServiceStationDContext(DbContextOptions contextOptions) : base(contextOptions)
         {
-
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=ServiceStation;Trusted_Connection=SSPI;Encrypt=false;TrustServerCertificate=True;");
-
-            }
         }
+
+        /*        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+                {
+
+                    if (!optionsBuilder.IsConfigured)
+                    {
+                        optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=ServiceStation;Trusted_Connection=SSPI;Encrypt=false;TrustServerCertificate=True;");
+
+                    }
+                }*/
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new ClientConfiguration());
+            base.OnModelCreating(modelBuilder);
+
+            // modelBuilder.ApplyConfiguration(new ClientConfiguration());
             modelBuilder.ApplyConfiguration(new JobConfiguration());
             modelBuilder.ApplyConfiguration(new ManagerConfiguration());
             modelBuilder.ApplyConfiguration(new MechanicConfiguration());

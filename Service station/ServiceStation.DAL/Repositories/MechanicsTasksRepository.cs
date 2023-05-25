@@ -11,7 +11,7 @@ namespace ServiceStation.DAL.Repositories
         {
 
         }
-
+        // створити апдей статусу
 
     }
 }

@@ -146,6 +146,29 @@ namespace ServiceStation.API.Controllers
                     return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
                 }
             }
+        [HttpPut("{id,status}")]
+        public async Task<ActionResult> UpdateStatus(int id, string status)
+        {
+            try
+            {
+                if (status == null)
+                {
+                    _logger.LogInformation($"Ми отримали пустий json зі сторони клієнта");
+                    return BadRequest("Обєкт івенту є null");
+                }
+           
+           
 
+                await _UnitOfBisnes._JobService.UpdateStatus(id, status);
+                return StatusCode(StatusCodes.Status204NoContent);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Транзакція сфейлилась! Щось пішло не так у методі PostAsync - {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
+            }
         }
     }
+
+
+}

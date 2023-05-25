@@ -21,13 +21,20 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddDbContext<ServiceStationIdentityDBContext>(options =>
 {
-    string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    string connectionString = builder.Configuration.GetConnectionString("MSSQLConnection");
     options.UseSqlServer(connectionString);
 
 });
 
+builder.Services.AddAuthentication();
+builder.Services.AddIdentityCore<Client>()
+                   .AddRoles<IdentityRole>()
+                   .AddSignInManager<SignInManager<Client>>()
+                   .AddDefaultTokenProviders()
+                   .AddEntityFrameworkStores<ServiceStationIdentityDBContext>();
 
 builder.Services.AddScoped<IJobRepository, JobRepository>();
 builder.Services.AddScoped<IModelRepository, ModelRepository>();
@@ -39,11 +46,6 @@ builder.Services.AddScoped<IModelService, ModelService>();
 
 builder.Services.AddScoped<IUnitOfBisnes, UnitOfBisnes>();
 
-builder.Services.AddIdentityCore<Client>()
-                   .AddRoles<IdentityRole>()
-                   .AddSignInManager<SignInManager<Client>>()
-                   .AddDefaultTokenProviders()
-                   .AddEntityFrameworkStores<ServiceStationIdentityDBContext>();
 
 
 

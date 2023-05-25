@@ -4,7 +4,7 @@ using ServiceStation.DAL.Entities;
 
 namespace ServiceStation.DAL.Data.Configurations
 {
-    public class ClientConfiguration : IEntityTypeConfiguration<Client>
+   /* public class ClientConfiguration : IEntityTypeConfiguration<Client>
     {
         public void Configure(EntityTypeBuilder<Client> builder)
         {
@@ -16,5 +16,5 @@ namespace ServiceStation.DAL.Data.Configurations
 
             builder.HasKey(p => p.Id);
         }
-    }
+    }*/
 }

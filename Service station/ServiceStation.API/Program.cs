@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.SqlClient;
 using ServiceStation.BAL.Services.Interfaces;
 using ServiceStation.BAL.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped((s) => new SqlConnection(builder.Configuration.GetConnectionString("MSSQLConnection")));
+
 builder.Services.AddScoped<IDbTransaction>(s =>
 {
     SqlConnection conn = s.GetRequiredService<SqlConnection>();

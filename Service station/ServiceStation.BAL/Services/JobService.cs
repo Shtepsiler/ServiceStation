@@ -3,6 +3,7 @@ using ServiceStation.DAL.Entities;
 using ServiceStation.DAL.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -112,7 +113,19 @@ namespace ServiceStation.BAL.Services
 
             }
         }
+        public async Task UpdateStatus(int jobid, string status)
+        {
+            try
+            {
+                await _unitOfWork._JobRepository.UpdateStatus(jobid, status);
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+            }
 
+
+        }
 
     }
 }

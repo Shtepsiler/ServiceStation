@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ServiceStationDatabase.Data.Configurations;
 using ServiceStationDatabase.Entities;
 
 namespace ServiceStationDatabase.Data
 {
- /*  public class ServiceStationDContext : DbContext
+    public class ServiceStationDContext : IdentityDbContext<Client>
     {
 
         public DbSet<Client> Clients { get; set; }
@@ -20,7 +21,7 @@ namespace ServiceStationDatabase.Data
         public DbSet<Vendor> Vendors { get; set; }
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+/*        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
             if (!optionsBuilder.IsConfigured)
@@ -28,9 +29,10 @@ namespace ServiceStationDatabase.Data
                 optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=ServiceStation;Trusted_Connection=SSPI;Encrypt=false;TrustServerCertificate=True;");
 
             }
-        }
+        }*/
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new ClientConfiguration());
             modelBuilder.ApplyConfiguration(new JobConfiguration());
             modelBuilder.ApplyConfiguration(new ManagerConfiguration());
@@ -45,4 +47,4 @@ namespace ServiceStationDatabase.Data
         }
 
     }
-*/}
+}

@@ -14,6 +14,7 @@ namespace ServiceStation.BAL.Services.Interfaces
         Task<int> PostAsync(Job job);
         Task<Job> GetByIdAsync(int id);
         Task<IEnumerable<Job>> GetAllAsync();
+        Task UpdateStatus(int jobid, string status);
 
 
     }
