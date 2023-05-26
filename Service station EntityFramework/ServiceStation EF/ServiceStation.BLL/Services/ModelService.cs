@@ -1,4 +1,7 @@
-﻿using ServiceStation.BLL.Services.Interfaces;
+﻿using AutoMapper;
+using ServiceStation.BLL.DTO.Requests;
+using ServiceStation.BLL.DTO.Responses;
+using ServiceStation.BLL.Services.Interfaces;
 using ServiceStation.DAL.Entities;
 using ServiceStation.DAL.Repositories.Contracts;
 
@@ -7,26 +10,28 @@ namespace ServiceStation.BLL.Services
     public class ModelService : IModelService
     {
         public readonly IUnitOfWork _unitOfWork;
+        public readonly IMapper _maper;
 
         public ModelService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
         
-        public async Task<IEnumerable<Model>> GetAllAsync()
+        public async Task<IEnumerable<ModelResponse>> GetAllAsync()
         {
             try
             {
-                var results = await _unitOfWork._ModelRepository.GetAsync();
-                return results;
+                var results = (List<Model>)await _unitOfWork._ModelRepository.GetAsync();
+                return  _maper.Map<List<Model>, List<ModelResponse>>(results);
+                ;
             }
             catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
         }
 
-        public async Task<Model> GetByIdAsync(int id)
+        public async Task<ModelResponse> GetByIdAsync(int id)
         {
             try
             {
@@ -37,23 +42,23 @@ namespace ServiceStation.BLL.Services
                 }
                 else
                 {
-                    return result;
+                    return  _maper.Map<Model,ModelResponse>(result);
                 }
 
             }
             catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
         }
 
 
-        public async Task PostAsync(Model Model)
+        public async Task PostAsync(ModelRequest Model)
         {
             try
             {
 
-              await _unitOfWork._ModelRepository.InsertAsync(Model);
+              await _unitOfWork._ModelRepository.InsertAsync(_maper.Map<ModelRequest, Model>(Model));
             
             }
             catch (Exception ex)
@@ -62,7 +67,7 @@ namespace ServiceStation.BLL.Services
             }
         }
 
-        public async Task UpdateAsync(int id, Model Model)
+        public async Task UpdateAsync(int id, ModelRequest Model)
         {
 
             try
@@ -75,7 +80,7 @@ namespace ServiceStation.BLL.Services
                     
                 }
 
-                await _unitOfWork._ModelRepository.UpdateAsync(Model);
+                await _unitOfWork._ModelRepository.UpdateAsync(_maper.Map<ModelRequest, Model>(Model));
             }
             catch (Exception ex)
             {

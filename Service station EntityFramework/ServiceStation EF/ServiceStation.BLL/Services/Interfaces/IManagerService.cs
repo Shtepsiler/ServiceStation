@@ -1,4 +1,6 @@
-﻿using ServiceStation.DAL.Entities;
+﻿using ServiceStation.BLL.DTO.Requests;
+using ServiceStation.BLL.DTO.Responses;
+using ServiceStation.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +11,10 @@ namespace ServiceStation.BLL.Services.Interfaces
 {
     public interface IManagerService
     {
-        Task<IEnumerable<Manager>> GetAllAsync();
-        Task<Manager> GetByIdAsync(int id);
-        Task PostAsync(Manager manager);
+        Task<IEnumerable<ManagerResponse>> GetAllAsync();
+        Task<ManagerResponse> GetByIdAsync(int id);
+        Task PostAsync(ManagerRequest manager);
         Task DeleteByIdAsync(int id);
-        Task UpdateAsync(int id, Manager manager);
+        Task UpdateAsync(int id, ManagerRequest manager);
     }
 }

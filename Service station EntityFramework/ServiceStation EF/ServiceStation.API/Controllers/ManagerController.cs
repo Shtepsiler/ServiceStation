@@ -9,14 +9,14 @@ namespace ServiceStation.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class JobController : ControllerBase
+    public class ManagerController : ControllerBase
     {
 
         private IUnitOfBisnes _UnitOfBisnes;
 
-        private readonly ILogger<JobController> _logger;
-        public JobController(
-            ILogger<JobController> logger,
+        private readonly ILogger<ManagerController> _logger;
+        public ManagerController(
+            ILogger<ManagerController> logger,
              IUnitOfBisnes UnitOfBisnes
             )
         {
@@ -26,11 +26,11 @@ namespace ServiceStation.API.Controllers
 
         //GET: api/jobs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<JobResponse>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<ManagerResponse>>> GetAllAsync()
         {
             try
             {
-                var results = await _UnitOfBisnes._JobService.GetAllAsync();
+                var results = await _UnitOfBisnes._ManagerService.GetAllAsync();
 
 
                 _logger.LogInformation($"Отримали всі івенти з бази даних!");
@@ -45,11 +45,11 @@ namespace ServiceStation.API.Controllers
 
         //GET: api/jobs/Id
         [HttpGet("{id}")]
-        public async Task<ActionResult<JobResponse>> GetByIdAsync(int id)
+        public async Task<ActionResult<ManagerResponse>> GetByIdAsync(int id)
         {
             try
             {
-                var result = await _UnitOfBisnes._JobService.GetByIdAsync(id);
+                var result = await _UnitOfBisnes._ManagerService.GetByIdAsync(id);
                 if (result == null)
                 {
                     _logger.LogInformation($"Івент із Id: {id}, не був знайдейний у базі даних");
@@ -69,38 +69,13 @@ namespace ServiceStation.API.Controllers
             }
         }
 
-        //GET: api/jobs/Id
-        [HttpGet("user/{id}")]
-        public async Task<ActionResult<UsersJobsResponse>> GetByUserIdAsync(int id)
-        {
-            try
-            {
-                var result = await _UnitOfBisnes._JobService.GetAllClientsJobsAsync(id);
-                if (result == null)
-                {
-                    _logger.LogInformation($"Івент із Id: {id}, не був знайдейний у базі даних");
-                    return NotFound();
-                }
-                else
-                {
-                    _logger.LogInformation($"Отримали івент з бази даних!");
-                    return Ok(result);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Транзакція сфейлилась! Щось пішло не так у методі GetAllEventsAsync() - {ex.Message}");
-                return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
-            }
-        }
         //POST: api/jobs
         [HttpPost]
-        public async Task<ActionResult> PostAsync([FromBody] JobRequest job)
+        public async Task<ActionResult> PostAsync([FromBody] ManagerRequest manager)
         {
             try
             {
-                if (job == null)
+                if (manager == null)
                 {
                     _logger.LogInformation($"Ми отримали пустий json зі сторони клієнта");
                     return BadRequest("Обєкт івенту є null");
@@ -110,7 +85,7 @@ namespace ServiceStation.API.Controllers
                     _logger.LogInformation($"Ми отримали некоректний json зі сторони клієнта");
                     return BadRequest("Обєкт івенту є некоректним");
                 }
-                await _UnitOfBisnes._JobService.PostAsync(job);
+                await _UnitOfBisnes._ManagerService.PostAsync(manager);
                 return StatusCode(StatusCodes.Status201Created);
             }
             catch (Exception ex)
@@ -122,11 +97,11 @@ namespace ServiceStation.API.Controllers
 
         //POST: api/jobs/id
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateAsync(int id, [FromBody] JobRequest job)
+        public async Task<ActionResult> UpdateAsync(int id, [FromBody] ManagerRequest manager)
         {
             try
             {
-                if (job == null)
+                if (manager == null)
                 {
                     _logger.LogInformation($"Ми отримали пустий json зі сторони клієнта");
                     return BadRequest("Обєкт івенту є null");
@@ -136,9 +111,9 @@ namespace ServiceStation.API.Controllers
                     _logger.LogInformation($"Ми отримали некоректний json зі сторони клієнта");
                     return BadRequest("Обєкт івенту є некоректним");
                 }
-                job.Id = id;
+                manager.Id = id;
 
-                await _UnitOfBisnes._JobService.UpdateAsync(id, job);
+                await _UnitOfBisnes._ManagerService.UpdateAsync(id, manager);
                 return StatusCode(StatusCodes.Status204NoContent);
             }
             catch (Exception ex)
@@ -154,7 +129,7 @@ namespace ServiceStation.API.Controllers
         {
             try
             {
-                var event_entity = await _UnitOfBisnes._JobService.GetByIdAsync(id);
+                var event_entity = await _UnitOfBisnes._ManagerService.GetByIdAsync(id);
                 if (event_entity == null)
                 {
                     _logger.LogInformation($"Запис із Id: {id}, не був знайдейний у базі даних");

@@ -4,6 +4,8 @@ namespace ServiceStation.BLL.Services.Interfaces
 {
     public interface IUnitOfBisnes
     {
+        IClientService _ClientService { get; }
+        IIdentityService _IdentityService { get; }
         IJobService _JobService { get; }
         IModelService _ModelService { get; }
         IManagerService _ManagerService { get; }

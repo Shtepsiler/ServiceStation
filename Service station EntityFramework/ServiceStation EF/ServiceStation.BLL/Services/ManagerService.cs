@@ -1,4 +1,7 @@
-﻿using ServiceStation.BLL.Services.Interfaces;
+﻿using AutoMapper;
+using ServiceStation.BLL.DTO.Requests;
+using ServiceStation.BLL.DTO.Responses;
+using ServiceStation.BLL.Services.Interfaces;
 using ServiceStation.DAL.Entities;
 using ServiceStation.DAL.Repositories.Contracts;
 using System;
@@ -12,18 +15,19 @@ namespace ServiceStation.BLL.Services
     public class ManagerService : IManagerService
     {
         public readonly IUnitOfWork _unitOfWork;
+        public readonly IMapper _maper;
 
         public ManagerService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<Manager>> GetAllAsync()
+        public async Task<IEnumerable<ManagerResponse>> GetAllAsync()
         {
             try
             {
-                var results = await _unitOfWork._ManagerRepository.GetAsync();
-                return results;
+                var results =(List<Manager>) await _unitOfWork._ManagerRepository.GetAsync();
+                return _maper.Map<List<Manager>,List<ManagerResponse>>(results);
             }
             catch (Exception ex)
             {
@@ -31,7 +35,7 @@ namespace ServiceStation.BLL.Services
             }
         }
 
-        public async Task<Manager> GetByIdAsync(int id)
+        public async Task<ManagerResponse> GetByIdAsync(int id)
         {
             try
             {
@@ -42,7 +46,7 @@ namespace ServiceStation.BLL.Services
                 }
                 else
                 {
-                    return result;
+                    return _maper.Map<Manager, ManagerResponse>(result);
                 }
 
             }
@@ -53,12 +57,12 @@ namespace ServiceStation.BLL.Services
         }
 
 
-        public async Task PostAsync(Manager Manager)
+        public async Task PostAsync(ManagerRequest Manager)
         {
             try
             {
 
-                await _unitOfWork._ManagerRepository.InsertAsync(Manager);
+                await _unitOfWork._ManagerRepository.InsertAsync( _maper.Map<ManagerRequest, Manager>(Manager));
 
             }
             catch (Exception ex)
@@ -67,7 +71,7 @@ namespace ServiceStation.BLL.Services
             }
         }
 
-        public async Task UpdateAsync(int id, Manager Manager)
+        public async Task UpdateAsync(int id, ManagerRequest Manager)
         {
 
             try
@@ -77,13 +81,15 @@ namespace ServiceStation.BLL.Services
                 var event_entity = await _unitOfWork._ManagerRepository.GetByIdAsync(id);
                 if (event_entity == null)
                 {
+                    throw new Exception();
 
                 }
 
-                await _unitOfWork._ManagerRepository.UpdateAsync(Manager);
+                await _unitOfWork._ManagerRepository.UpdateAsync(_maper.Map<ManagerRequest, Manager>(Manager));
             }
             catch (Exception ex)
             {
+                throw ex;
 
             }
         }
@@ -96,13 +102,14 @@ namespace ServiceStation.BLL.Services
                 var event_entity = await _unitOfWork._ManagerRepository.GetByIdAsync(id);
                 if (event_entity == null)
                 {
-
+                    throw new Exception();
                 }
 
                 await _unitOfWork._ManagerRepository.DeleteAsync(id);
             }
             catch (Exception ex)
             {
+                throw ex;
 
             }
         }

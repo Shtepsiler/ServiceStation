@@ -1,9 +1,9 @@
 ﻿using ServiceStation.BLL.Configurations;
+using ServiceStation.BLL.Factories.Interfaces;
 using ServiceStation.DAL.Entities;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using TeamworkSystem.BusinessLogicLayer.Interfaces;
 
 namespace ServiceStation.BLL.Factories
 {
@@ -22,7 +22,7 @@ namespace ServiceStation.BLL.Factories
         {
             new(JwtRegisteredClaimNames.UniqueName, client.UserName),
             new(ClaimTypes.Name, client.UserName),
-            new(ClaimTypes.Authentication, client.Id),
+            new(ClaimTypes.Authentication, client.Email),
         };
 
         public JwtSecurityTokenFactory(JwtTokenConfiguration jwtTokenConfiguration) =>

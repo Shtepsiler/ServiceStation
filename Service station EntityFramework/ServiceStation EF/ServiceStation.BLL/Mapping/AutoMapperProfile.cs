@@ -18,17 +18,21 @@ namespace ServiceStation.BLL.Mapping
                 .ForMember(r=>r.MechanicFullName,opt=>opt.MapFrom(mech=>$"{mech.Mechanic.FirstName} {mech.Mechanic.LastName}"))
                 .ForMember(r=>r.Model,opt=>opt.MapFrom(model => model.Model.Name))
                 ;
-            CreateMap<Job, JobResponse>();
-            CreateMap<JobRequest, Job>();
+            CreateMap<Job, ManagerResponse>();
+            CreateMap<ManagerRequest, Job>();
         }
 
         private void CreateManagerMap()
         {
+            CreateMap<Manager,ManagerResponse>();
+            CreateMap<ManagerRequest, Manager>();
+
 
         }
         private void CreateModelMap()
         {
-
+            CreateMap<Model, ModelResponse>();
+            CreateMap<ModelRequest, Model>();
         }
 
 

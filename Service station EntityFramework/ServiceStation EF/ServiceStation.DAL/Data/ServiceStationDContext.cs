@@ -30,7 +30,7 @@ namespace ServiceStation.DAL.Data
         {
             base.OnModelCreating(modelBuilder);
 
-          //  modelBuilder.ApplyConfiguration(new ClientConfiguration());
+            modelBuilder.ApplyConfiguration(new ClientConfiguration());
             modelBuilder.ApplyConfiguration(new JobConfiguration());
             modelBuilder.ApplyConfiguration(new ManagerConfiguration());
             modelBuilder.ApplyConfiguration(new MechanicConfiguration());

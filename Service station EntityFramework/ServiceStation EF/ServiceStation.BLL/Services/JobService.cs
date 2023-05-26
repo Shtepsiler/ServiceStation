@@ -74,7 +74,7 @@ namespace ServiceStation.BLL.Services
             try
             {
 
-                await _unitOfWork._JobRepository.InsertAsync(_maper.Map<JobRequest,Job>(job));
+                await _unitOfWork._JobRepository.InsertAsync(_maper.Map<JobRequest, Job>(job));
             }
             catch (Exception ex)
             {
@@ -99,6 +99,7 @@ namespace ServiceStation.BLL.Services
             }
             catch (Exception ex)
             {
+                throw ex;
 
             }
         }
@@ -111,6 +112,7 @@ namespace ServiceStation.BLL.Services
                 var event_entity = await _unitOfWork._JobRepository.GetByIdAsync(id);
                 if (event_entity == null)
                 {
+                    throw new Exception();
 
                 }
 
@@ -119,6 +121,7 @@ namespace ServiceStation.BLL.Services
             }
             catch (Exception ex)
             {
+                throw ex;
 
             }
         }
