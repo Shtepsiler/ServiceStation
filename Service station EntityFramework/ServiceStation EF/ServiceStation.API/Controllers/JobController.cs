@@ -2,6 +2,8 @@
 using ServiceStation.DAL.Entities;
 
 using ServiceStation.BLL.Services.Interfaces;
+using ServiceStation.BLL.DTO.Responses;
+using ServiceStation.BLL.DTO.Requests;
 
 namespace ServiceStationEF.API.Controllers
 {
@@ -40,7 +42,7 @@ namespace ServiceStationEF.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
             }
         }
-
+        
         //GET: api/jobs/Id
         [HttpGet("{id}")]
         public async Task<ActionResult<Job>> GetByIdAsync(int id)
@@ -67,9 +69,34 @@ namespace ServiceStationEF.API.Controllers
             }
         }
 
+        //GET: api/jobs/Id
+        [HttpGet("user/{id}")]
+        public async Task<ActionResult<UsersJobsResponse>> GetByUserIdAsync(int id)
+        {
+            try
+            {
+                var result = await _UnitOfBisnes._JobService.GetAllClientsJobsAsync(id);
+                if (result == null)
+                {
+                    _logger.LogInformation($"Івент із Id: {id}, не був знайдейний у базі даних");
+                    return NotFound();
+                }
+                else
+                {
+                    _logger.LogInformation($"Отримали івент з бази даних!");
+                    return Ok(result);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Транзакція сфейлилась! Щось пішло не так у методі GetAllEventsAsync() - {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
+            }
+        }
         //POST: api/jobs
         [HttpPost]
-        public async Task<ActionResult> PostAsync([FromBody] Job job)
+        public async Task<ActionResult> PostAsync([FromBody] JobRequest job)
         {
             try
             {
@@ -95,7 +122,7 @@ namespace ServiceStationEF.API.Controllers
 
         //POST: api/jobs/id
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateAsync(int id, [FromBody] Job job)
+        public async Task<ActionResult> UpdateAsync(int id, [FromBody] JobRequest job)
         {
             try
             {

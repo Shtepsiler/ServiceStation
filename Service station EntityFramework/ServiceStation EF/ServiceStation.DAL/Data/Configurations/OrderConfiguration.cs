@@ -13,7 +13,7 @@ namespace ServiceStation.DAL.Data.Configurations
             builder.Property(p => p.JobId);
             builder.Property(p => p.IssueDate);
             builder.Property(p => p.Delivered).HasDefaultValue(false);
-
+            builder.Property(p => p.IsOrdered).HasDefaultValue(false);
 
             builder.HasKey(p => p.Id);
 

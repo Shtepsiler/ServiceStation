@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ServiceStation.DAL.Repositories
 {
-    public class ManagerRepository : GenericRepository<Manager>, IManagerRepositiry
+    public class ManagerRepository : GenericRepository<Manager>, IManagerRepository
     {
         public ManagerRepository(ServiceStationDContext databaseContext)
             : base(databaseContext)

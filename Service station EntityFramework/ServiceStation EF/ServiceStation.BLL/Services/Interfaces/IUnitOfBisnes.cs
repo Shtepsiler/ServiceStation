@@ -6,6 +6,6 @@ namespace ServiceStation.BLL.Services.Interfaces
     {
         IJobService _JobService { get; }
         IModelService _ModelService { get; }
-
+        IManagerService _ManagerService { get; }
     }
 }

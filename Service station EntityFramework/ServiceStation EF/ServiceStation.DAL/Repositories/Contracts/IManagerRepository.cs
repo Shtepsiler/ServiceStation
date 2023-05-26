@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ServiceStation.DAL.Repositories.Contracts
 {
-    public interface IManagerRepositiry : IGenericRepository<Manager>
+    public interface IManagerRepository : IGenericRepository<Manager>
     {
     }
 }

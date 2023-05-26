@@ -1,10 +1,38 @@
-﻿/*using AutoMapper;
-
+﻿using AutoMapper;
+using ServiceStation.BLL.DTO.Requests;
+using ServiceStation.BLL.DTO.Responses;
+using ServiceStation.DAL.Entities;
 
 namespace ServiceStation.BLL.Mapping
 {
     public class AutoMapperProfile : Profile
     {
+
+
+
+        private void CreateJobMap()
+        {
+            CreateMap<Job, UsersJobsResponse>()
+                .ForMember(r=>r.ManagerName,opt=>opt.MapFrom(manager => $"{manager.Manager.FullName}"))
+                .ForMember(r => r.ManagerPhone, opt => opt.MapFrom(manager => $"{manager.Manager.Phone}"))
+                .ForMember(r=>r.MechanicFullName,opt=>opt.MapFrom(mech=>$"{mech.Mechanic.FirstName} {mech.Mechanic.LastName}"))
+                .ForMember(r=>r.Model,opt=>opt.MapFrom(model => model.Model.Name))
+                ;
+            CreateMap<Job, JobResponse>();
+            CreateMap<JobRequest, Job>();
+        }
+
+        private void CreateManagerMap()
+        {
+
+        }
+        private void CreateModelMap()
+        {
+
+        }
+
+
+/*
         private void CreateClientMaps()
         {
             CreateMap<UserSignUpRequest, User>();
@@ -52,15 +80,13 @@ namespace ServiceStation.BLL.Mapping
                                + rating.Punctuality
                                + rating.Responsibility) / 4));
         }
-
+*/
         public AutoMapperProfile()
         {
-            CreateUserMaps();
-            CreateTicketsMaps();
-            CreateTeamsMaps();
-            CreateProjectsMaps();
-            CreateRatingsMaps();
+            CreateJobMap();
+            CreateManagerMap();
+            CreateModelMap();
+
         }
     }
 }
-*/

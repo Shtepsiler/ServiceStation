@@ -6,14 +6,17 @@ namespace ServiceStation.BLL.Services
     {
         public IJobService _JobService { get; }
         public IModelService _ModelService { get; }
+        public IManagerService _ManagerService { get; }
 
-        
-        
+
+                
         public UnitOfBisnes(IJobService jobService,
-            IModelService modelService)
+            IModelService modelService,
+            IManagerService managerService)
         {
             _JobService = jobService;
             _ModelService = modelService;
+            _ManagerService = managerService;   
         }
     }
 }

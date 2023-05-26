@@ -9,9 +9,9 @@ namespace ServiceStation.DAL.Repositories
     {
         protected readonly ServiceStationDContext databaseContext;
 
-        public IJobRepository _JobRepository { get; set; }
-        public IModelRepository _ModelRepository { get; set; }
-
+        public IJobRepository _JobRepository { get;  }
+        public IModelRepository _ModelRepository { get; }
+        public IManagerRepository _ManagerRepository { get; }
         public async Task SaveChangesAsync()
         {
             await databaseContext.SaveChangesAsync();
@@ -20,13 +20,14 @@ namespace ServiceStation.DAL.Repositories
         public UnitOfWork(
             ServiceStationDContext databaseContext,
             IJobRepository jobRepository,
-            IModelRepository modelRepository
+            IModelRepository modelRepository,
+             IManagerRepository managerRepository
           )
         {
             this.databaseContext = databaseContext;
             _JobRepository = jobRepository;
             _ModelRepository = modelRepository;
-
+            _ManagerRepository = managerRepository;
         }
     }
 }

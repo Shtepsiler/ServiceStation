@@ -31,11 +31,11 @@ namespace ServiceStation.BLL.Services
             }
         }
 
-        public async Task<Model> GetByIdAsync(int id)
+        public async Task<Manager> GetByIdAsync(int id)
         {
             try
             {
-                var result = await _unitOfWork._ModelRepository.GetByIdAsync(id);
+                var result = await _unitOfWork._ManagerRepository.GetByIdAsync(id);
                 if (result == null)
                 {
                     return null;
@@ -53,12 +53,12 @@ namespace ServiceStation.BLL.Services
         }
 
 
-        public async Task PostAsync(Model Model)
+        public async Task PostAsync(Manager Manager)
         {
             try
             {
 
-                await _unitOfWork._ModelRepository.InsertAsync(Model);
+                await _unitOfWork._ManagerRepository.InsertAsync(Manager);
 
             }
             catch (Exception ex)
@@ -67,20 +67,20 @@ namespace ServiceStation.BLL.Services
             }
         }
 
-        public async Task UpdateAsync(int id, Model Model)
+        public async Task UpdateAsync(int id, Manager Manager)
         {
 
             try
             {
 
 
-                var event_entity = await _unitOfWork._ModelRepository.GetByIdAsync(id);
+                var event_entity = await _unitOfWork._ManagerRepository.GetByIdAsync(id);
                 if (event_entity == null)
                 {
 
                 }
 
-                await _unitOfWork._ModelRepository.UpdateAsync(Model);
+                await _unitOfWork._ManagerRepository.UpdateAsync(Manager);
             }
             catch (Exception ex)
             {
@@ -93,13 +93,13 @@ namespace ServiceStation.BLL.Services
         {
             try
             {
-                var event_entity = await _unitOfWork._ModelRepository.GetByIdAsync(id);
+                var event_entity = await _unitOfWork._ManagerRepository.GetByIdAsync(id);
                 if (event_entity == null)
                 {
 
                 }
 
-                await _unitOfWork._ModelRepository.DeleteAsync(id);
+                await _unitOfWork._ManagerRepository.DeleteAsync(id);
             }
             catch (Exception ex)
             {

@@ -16,6 +16,7 @@ namespace ServiceStation.DAL.Entities
         public Job Job { get; set; }
         public DateTime IssueDate { get; set; }
         public bool Delivered { get; set; }
+        public bool IsOrdered { get; set; }
         [NotMapped]
         public List<OrderPart> OrderParts { get; set; }
 

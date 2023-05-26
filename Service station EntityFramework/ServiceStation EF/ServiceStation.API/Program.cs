@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ServiceStation.BLL.Mapping;
 using ServiceStation.BLL.Services;
 using ServiceStation.BLL.Services.Interfaces;
 using ServiceStation.DAL.Data;
@@ -29,18 +30,18 @@ builder.Services.AddIdentityCore<Client>()
                    .AddSignInManager<SignInManager<Client>>()
                    .AddDefaultTokenProviders()
                    .AddEntityFrameworkStores<ServiceStationDContext>();
-/*builder.Services.AddDefaultIdentity<Client>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ServiceStationDContext>();*/
+
 
 builder.Services.AddScoped<IJobRepository, JobRepository>();
 builder.Services.AddScoped<IModelRepository, ModelRepository>();
-builder.Services.AddScoped<IManagerRepositiry, ManagerRepository>();
+builder.Services.AddScoped<IManagerRepository, ManagerRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddScoped<IModelService, ModelService>();
-
+builder.Services.AddScoped<IManagerService,ManagerService>();
 builder.Services.AddScoped<IUnitOfBisnes, UnitOfBisnes>();
 
 
