@@ -81,6 +81,42 @@ namespace ServiceStation.BLL.Services
                 throw ex;
             }
         }
+        public async Task PostNewJobAsync(NewJobRequest job)
+        {
+            Model inmodel;
+            try
+            {
+                Job JOB = new Job { 
+                    ClientId = job.ClientId,
+                IssueDate = job.IssueDate,
+                Description = job.Description  
+                };
+                var model = _unitOfWork._ModelRepository.GetModelByName(job.ModelName);
+                if(model.Result == null)
+                {
+                    inmodel =  new Model(job.ModelName);
+                    _unitOfWork._ModelRepository.InsertAsync(inmodel);
+                    await _unitOfWork.SaveChangesAsync();
+
+                    JOB.Model = inmodel;
+
+                }
+                else
+                {
+                    JOB.Model = model.Result;
+
+                }
+                _unitOfWork._JobRepository.InsertAsync(JOB);
+                await _unitOfWork.SaveChangesAsync();
+
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public async Task UpdateAsync(int id, JobRequest job)
         {
@@ -96,6 +132,8 @@ namespace ServiceStation.BLL.Services
                 }
 
                 await _unitOfWork._JobRepository.UpdateAsync(_maper.Map<JobRequest, Job>(job));
+                await _unitOfWork.SaveChangesAsync();
+
             }
             catch (Exception ex)
             {

@@ -13,7 +13,7 @@ namespace ServiceStation.BLL.Services.Interfaces
         Task<JobResponse> GetByIdAsync(int id);
         Task<IEnumerable<JobResponse>> GetAllAsync();
         Task<IEnumerable<UsersJobsResponse>> GetAllClientsJobsAsync(int clientId);
-
+        Task PostNewJobAsync(NewJobRequest job);
 
     }
 }

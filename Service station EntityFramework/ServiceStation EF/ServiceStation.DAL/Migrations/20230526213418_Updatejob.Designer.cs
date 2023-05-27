@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiceStation.DAL.Data;
 
@@ -11,9 +12,11 @@ using ServiceStation.DAL.Data;
 namespace ServiceStation.DAL.Migrations
 {
     [DbContext(typeof(ServiceStationDContext))]
-    partial class ServiceStationDContextModelSnapshot : ModelSnapshot
+    [Migration("20230526213418_Updatejob")]
+    partial class Updatejob
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,7 +264,7 @@ namespace ServiceStation.DAL.Migrations
                     b.Property<int>("ModelId")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("Price")
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Status")

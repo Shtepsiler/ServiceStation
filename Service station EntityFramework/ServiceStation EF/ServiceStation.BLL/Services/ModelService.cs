@@ -59,7 +59,7 @@ namespace ServiceStation.BLL.Services
             {
 
               await _unitOfWork._ModelRepository.InsertAsync(_maper.Map<ModelRequest, Model>(Model));
-            
+                await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -81,6 +81,8 @@ namespace ServiceStation.BLL.Services
                 }
 
                 await _unitOfWork._ModelRepository.UpdateAsync(_maper.Map<ModelRequest, Model>(Model));
+                await _unitOfWork.SaveChangesAsync();
+
             }
             catch (Exception ex)
             {
@@ -100,6 +102,8 @@ namespace ServiceStation.BLL.Services
                 }
 
                 await _unitOfWork._ModelRepository.DeleteAsync(id);
+                await _unitOfWork.SaveChangesAsync();
+
             }
             catch (Exception ex)
             {

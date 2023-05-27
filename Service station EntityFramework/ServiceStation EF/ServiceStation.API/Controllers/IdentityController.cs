@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ServiceStation.BLL.DTO.Requests;
 using ServiceStation.BLL.DTO.Responses;
+using ServiceStation.BLL.Services;
 using ServiceStation.BLL.Services.Interfaces;
 using ServiceStation.DAL.Exceptions;
 
@@ -37,12 +38,31 @@ namespace ServiceStation.API.Controllers
             }
         }
 
+        [HttpPost("signUpWithoutJWT")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<JwtResponse>> SignUpWithoutJWTAsync(
+            [FromBody] ClientSignUpRequest request)
+        {
+            try
+            {
+                await _UnitOfBisnes._IdentityService.SignUpWihtoutjvtAsync(request);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { e.Message });
+            }
+        }
+
+
         [HttpPost("signUp")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<JwtResponse>> SignUpAsync(
-            [FromBody] ClientSignUpRequest request)
+         [FromBody] ClientSignUpRequest request)
         {
             try
             {

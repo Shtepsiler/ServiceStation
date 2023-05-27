@@ -95,7 +95,7 @@ namespace ServiceStation.API.Controllers
             }
         }
         //POST: api/jobs
-        [HttpPost]
+      /*  [HttpPost]
         public async Task<ActionResult> PostAsync([FromBody] JobRequest job)
         {
             try
@@ -111,6 +111,31 @@ namespace ServiceStation.API.Controllers
                     return BadRequest("Обєкт івенту є некоректним");
                 }
                 await _UnitOfBisnes._JobService.PostAsync(job);
+                return StatusCode(StatusCodes.Status201Created);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Транзакція сфейлилась! Щось пішло не так у методі PostAsync - {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
+            }
+        }*/
+        //POST: api/jobs
+        [HttpPost]
+        public async Task<ActionResult> PostNewAsync([FromBody] NewJobRequest job)
+        {
+            try
+            {
+                if (job == null)
+                {
+                    _logger.LogInformation($"Ми отримали пустий json зі сторони клієнта");
+                    return BadRequest("Обєкт івенту є null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogInformation($"Ми отримали некоректний json зі сторони клієнта");
+                    return BadRequest("Обєкт івенту є некоректним");
+                }
+                await _UnitOfBisnes._JobService.PostNewJobAsync(job);
                 return StatusCode(StatusCodes.Status201Created);
             }
             catch (Exception ex)

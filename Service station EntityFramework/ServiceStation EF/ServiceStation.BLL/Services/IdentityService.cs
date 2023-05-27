@@ -1,8 +1,4 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using ServiceStation.BLL.DTO.Requests;
 using ServiceStation.BLL.DTO.Responses;
@@ -11,6 +7,7 @@ using ServiceStation.BLL.Services.Interfaces;
 using ServiceStation.DAL.Entities;
 using ServiceStation.DAL.Exceptions;
 using ServiceStation.DAL.Repositories.Contracts;
+using System.IdentityModel.Tokens.Jwt;
 
 
 namespace ServiceStation.BLL.Services
@@ -58,6 +55,24 @@ namespace ServiceStation.BLL.Services
             var jwtToken = tokenFactory.BuildToken(user);
             return new() { Token = SerializeToken(jwtToken) };
         }
+        public async Task SignUpWihtoutjvtAsync(ClientSignUpRequest request)
+        {
+            var user = mapper.Map<ClientSignUpRequest, Client>(request);
+            var signUpResult = await userManager.CreateAsync(user, request.Password);
+
+            if (!signUpResult.Succeeded)
+            {
+                string errors = string.Join("\n",
+                    signUpResult.Errors.Select(error => error.Description));
+
+                throw new ArgumentException(errors);
+            }
+
+            await unitOfWork.SaveChangesAsync();
+
+          
+        }
+
 
         private static string SerializeToken(JwtSecurityToken jwtToken) =>
             new JwtSecurityTokenHandler().WriteToken(jwtToken);

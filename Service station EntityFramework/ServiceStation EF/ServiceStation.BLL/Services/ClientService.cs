@@ -1,4 +1,9 @@
-﻿using ServiceStation.BLL.Services.Interfaces;
+﻿using AutoMapper;
+using ServiceStation.BLL.DTO.Requests;
+using ServiceStation.BLL.DTO.Responses;
+using ServiceStation.BLL.Services.Interfaces;
+using ServiceStation.DAL.Entities;
+using ServiceStation.DAL.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +14,7 @@ namespace ServiceStation.BLL.Services
 {
     public class ClientService : IClientService
     {
-        public Task AddPhoneNumber()
-        {
-            throw new NotImplementedException();
-        }
 
     }
+
 }

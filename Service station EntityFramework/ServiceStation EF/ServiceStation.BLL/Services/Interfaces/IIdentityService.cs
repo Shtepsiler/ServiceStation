@@ -9,5 +9,6 @@ namespace ServiceStation.BLL.Services.Interfaces
         Task<JwtResponse> SignInAsync(ClientSignInRequest request);
 
         Task<JwtResponse> SignUpAsync(ClientSignUpRequest request);
+        Task SignUpWihtoutjvtAsync(ClientSignUpRequest request);
     }
 }

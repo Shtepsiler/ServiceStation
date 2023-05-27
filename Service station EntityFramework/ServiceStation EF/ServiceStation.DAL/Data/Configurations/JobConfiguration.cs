@@ -11,7 +11,7 @@ namespace ServiceStation.DAL.Data.Configurations
         public void Configure(EntityTypeBuilder<Job> builder)
         {
             builder.Property(p => p.Id).UseIdentityColumn();
-            builder.Property(p => p.ManagerId);
+            builder.Property(p => p.ManagerId).IsRequired(false);
             builder.Property(p => p.ModelId);
             builder.Property(p => p.Status).HasMaxLength(15).HasDefaultValue("Pending");
             builder.Property(p => p.ClientId);
@@ -19,6 +19,8 @@ namespace ServiceStation.DAL.Data.Configurations
             builder.Property(p => p.IssueDate);
             builder.Property(p => p.FinishDate).IsRequired(false);
             builder.Property(p => p.Description);
+            builder.Property(p => p.Price).IsRequired(false);
+
             builder.HasKey(p => p.Id);
 
            /* builder.HasCheckConstraint(
