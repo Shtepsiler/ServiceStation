@@ -34,7 +34,7 @@ namespace ServiceStation.BLL.Services
             }
 
             var jwtToken = tokenFactory.BuildToken(user);
-            return new() { Token = SerializeToken(jwtToken), ClientId = user.Id };
+            return new() { Token = SerializeToken(jwtToken), ClientId = user.Id, RefreshToken=GetRefreshToken(user.Id) };
         }
 
         public async Task<JwtResponse> SignUpAsync(ClientSignUpRequest request)
@@ -53,7 +53,7 @@ namespace ServiceStation.BLL.Services
             await unitOfWork.SaveChangesAsync();
 
             var jwtToken = tokenFactory.BuildToken(user);
-            return new() { Token = SerializeToken(jwtToken) };
+            return new() { Token = SerializeToken(jwtToken), RefreshToken = GetRefreshToken(user.Id) };
         }
         public async Task SignUpWihtoutjvtAsync(ClientSignUpRequest request)
         {
@@ -76,6 +76,33 @@ namespace ServiceStation.BLL.Services
 
         private static string SerializeToken(JwtSecurityToken jwtToken) =>
             new JwtSecurityTokenHandler().WriteToken(jwtToken);
+
+        private  string GetRefreshToken(int clientid)
+        {
+            try
+            {
+                var ifexisttoken = unitOfWork._TokenRepository.GetModelByClientId(clientid);
+                if (ifexisttoken.Result == null)
+                {
+                    var newguid = Guid.NewGuid();
+                    unitOfWork._TokenRepository.InsertAsync(new RefreshToken { ClientId = clientid, ClientSecret = newguid.ToString() });
+                    unitOfWork.SaveChangesAsync();
+                    return newguid.ToString();
+
+                }
+                else
+                {
+                    return ifexisttoken.Result.ClientSecret;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
 
         public IdentityService(
             IUnitOfWork unitOfWork,

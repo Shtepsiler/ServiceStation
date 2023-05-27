@@ -22,7 +22,7 @@ namespace ServiceStation.BLL.Factories
         {
             new(JwtRegisteredClaimNames.UniqueName, client.UserName),
             new(ClaimTypes.Name, client.UserName),
-           // new(ClaimTypes.Authentication, client.Email),
+            new(ClaimTypes.Authentication, client.UserName),
         };
 
         public JwtSecurityTokenFactory(JwtTokenConfiguration jwtTokenConfiguration) =>

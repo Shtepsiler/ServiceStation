@@ -46,6 +46,7 @@ builder.Services.AddTransient<IJwtSecurityTokenFactory, JwtSecurityTokenFactory>
 builder.Services.AddScoped<IJobRepository, JobRepository>();
 builder.Services.AddScoped<IModelRepository, ModelRepository>();
 builder.Services.AddScoped<IManagerRepository, ManagerRepository>();
+builder.Services.AddScoped<ITokenRepository, TokenRepository>(); 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));

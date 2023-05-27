@@ -13,7 +13,7 @@ namespace ServiceStation.BLL.Configurations
 
         public string Audience => configuration["JwtAudience"];
 
-        public static DateTime ExpirationDate => DateTime.UtcNow.AddYears(1);
+        public static DateTime ExpirationDate => DateTime.UtcNow.AddSeconds(30);
 
         public SymmetricSecurityKey Key =>
             new(Encoding.UTF8.GetBytes(configuration["JwtSecurityKey"]));

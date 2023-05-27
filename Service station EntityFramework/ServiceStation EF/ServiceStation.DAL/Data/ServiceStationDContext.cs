@@ -14,6 +14,7 @@ namespace ServiceStation.DAL.Data
 
 
         public DbSet<Client> Clients { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Job> Jobs { get; set; }
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Mechanic> Mechanics { get; set; }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceStation.BLL.DTO.Requests;
 using ServiceStation.BLL.DTO.Responses;
@@ -13,6 +14,10 @@ namespace ServiceStation.API.Controllers
     public class IdentityController : ControllerBase
     {
         private IUnitOfBisnes _UnitOfBisnes;
+        private IValidator<ClientSignUpRequest> _SingUpValidator;
+        private IValidator<ClientSignInRequest> _SingInValidator;
+
+
 
         [HttpPost("signIn")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -24,6 +29,10 @@ namespace ServiceStation.API.Controllers
         {
             try
             {
+                var valid = _SingInValidator.Validate(request);
+
+                if (request == null) { throw new ArgumentNullException(nameof(request)); }
+                if (!valid.IsValid) { throw new ValidationException(valid.Errors); }
 
                 var response = await _UnitOfBisnes._IdentityService.SignInAsync(request);
                 return Ok(response);
@@ -37,7 +46,7 @@ namespace ServiceStation.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { e.Message });
             }
         }
-
+/*
         [HttpPost("signUpWithoutJWT")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -54,7 +63,7 @@ namespace ServiceStation.API.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { e.Message });
             }
-        }
+        }*/
 
 
         [HttpPost("signUp")]
@@ -66,7 +75,11 @@ namespace ServiceStation.API.Controllers
         {
             try
             {
+                if (request == null) { throw new ArgumentNullException(nameof(request)); }
+                if (!_SingUpValidator.Validate(request).IsValid) { throw new Exception(nameof(request)); }
+
                 var response = await _UnitOfBisnes._IdentityService.SignUpAsync(request);
+                
                 return Ok(response);
             }
             catch (Exception e)
@@ -75,7 +88,15 @@ namespace ServiceStation.API.Controllers
             }
         }
 
-        public IdentityController(IUnitOfBisnes UnitOfBisnes) =>
+        public IdentityController(IUnitOfBisnes UnitOfBisnes, IValidator<ClientSignInRequest> singinvalidator, IValidator<ClientSignUpRequest>  singupvalidator)
+        {
             this._UnitOfBisnes = UnitOfBisnes;
-    }
+            this._SingInValidator = singinvalidator;
+            this._SingUpValidator = singupvalidator;
+
+
+
+
+        }
+        }
 }
