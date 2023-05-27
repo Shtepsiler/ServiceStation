@@ -1,5 +1,12 @@
 ﻿using AutoMapper;
+using Azure.Core;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Identity.Client;
+using Microsoft.IdentityModel.Tokens;
 using ServiceStation.BLL.DTO.Requests;
 using ServiceStation.BLL.DTO.Responses;
 using ServiceStation.BLL.Factories.Interfaces;
@@ -7,8 +14,6 @@ using ServiceStation.BLL.Services.Interfaces;
 using ServiceStation.DAL.Entities;
 using ServiceStation.DAL.Exceptions;
 using ServiceStation.DAL.Repositories.Contracts;
-using System.IdentityModel.Tokens.Jwt;
-
 
 namespace ServiceStation.BLL.Services
 {
@@ -18,11 +23,23 @@ namespace ServiceStation.BLL.Services
 
         private readonly IMapper mapper;
 
-        private readonly IJwtSecurityTokenFactory tokenFactory;
-
         private readonly UserManager<Client> userManager;
 
-        public async Task<JwtResponse> SignInAsync(ClientSignInRequest request)
+        private readonly ITokenService tokenService;
+        private readonly EmailSender emailSender;
+        public IdentityService(
+        IUnitOfWork unitOfWork,
+        IMapper mapper,
+        ITokenService tokenService
+        )
+        {
+            this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
+            userManager = this.unitOfWork._ClientManager;
+            this.tokenService = tokenService;
+        }
+
+        public async Task<JwtRtquest> SignInAsync(ClientSignInRequest request)
         {
             var user = await userManager.FindByNameAsync(request.UserName)
                 ?? throw new EntityNotFoundException(
@@ -33,11 +50,13 @@ namespace ServiceStation.BLL.Services
                 throw new EntityNotFoundException("Incorrect username or password.");
             }
 
-            var jwtToken = tokenFactory.BuildToken(user);
-            return new() { Token = SerializeToken(jwtToken), ClientId = user.Id };
+            var jwtToken = tokenService.BuildToken(user);
+            return new() { Token = tokenService.SerializeToken(jwtToken), ClientName = user.UserName, RefreshToken= tokenService.GetRefreshToken(user.UserName) };
         }
 
-        public async Task<JwtResponse> SignUpAsync(ClientSignUpRequest request)
+
+
+        public async Task<JwtRtquest> SignUpAsync(ClientSignUpRequest request)
         {
             var user = mapper.Map<ClientSignUpRequest, Client>(request);
             var signUpResult = await userManager.CreateAsync(user, request.Password);
@@ -51,41 +70,19 @@ namespace ServiceStation.BLL.Services
             }
 
             await unitOfWork.SaveChangesAsync();
+            var newClient = await userManager.FindByNameAsync(request.UserName);
 
-            var jwtToken = tokenFactory.BuildToken(user);
-            return new() { Token = SerializeToken(jwtToken) };
-        }
-        public async Task SignUpWihtoutjvtAsync(ClientSignUpRequest request)
-        {
-            var user = mapper.Map<ClientSignUpRequest, Client>(request);
-            var signUpResult = await userManager.CreateAsync(user, request.Password);
 
-            if (!signUpResult.Succeeded)
+
+            try
             {
-                string errors = string.Join("\n",
-                    signUpResult.Errors.Select(error => error.Description));
-
-                throw new ArgumentException(errors);
+              //  var newClient = await userManager.FindByNameAsync(request.UserName);
+                var jwtToken = tokenService.BuildToken(user);
+            return new() {ClientName = newClient.UserName  , Token = tokenService.SerializeToken(jwtToken), RefreshToken = tokenService.GetRefreshToken(user.UserName) };
             }
-
-            await unitOfWork.SaveChangesAsync();
-
-          
+            catch (Exception ex) { throw new Exception("database troble"); }
         }
 
 
-        private static string SerializeToken(JwtSecurityToken jwtToken) =>
-            new JwtSecurityTokenHandler().WriteToken(jwtToken);
-
-        public IdentityService(
-            IUnitOfWork unitOfWork,
-            IMapper mapper,
-            IJwtSecurityTokenFactory tokenFactory)
-        {
-            this.unitOfWork = unitOfWork;
-            this.mapper = mapper;
-            this.tokenFactory = tokenFactory;
-            userManager = this.unitOfWork._ClientManager;
-        }
     }
 }

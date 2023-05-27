@@ -17,22 +17,25 @@ namespace ServiceStation.BLL.Services
         public readonly IUnitOfWork _unitOfWork;
         public readonly IMapper _maper;
 
-        public ManagerService(IUnitOfWork unitOfWork)
+        public ManagerService(IUnitOfWork unitOfWork, IMapper maper)
         {
             _unitOfWork = unitOfWork;
+            _maper = maper;
         }
 
         public async Task<IEnumerable<ManagerResponse>> GetAllAsync()
         {
+            List<Manager> results;
             try
             {
-                var results =(List<Manager>) await _unitOfWork._ManagerRepository.GetAsync();
-                return _maper.Map<List<Manager>,List<ManagerResponse>>(results);
+                results = (List<Manager>) await _unitOfWork._ManagerRepository.GetAsync();
+         
             }
             catch (Exception ex)
             {
                 return null;
-            }
+            }    
+            return _maper.Map<List<Manager>,List<ManagerResponse>>(results);
         }
 
         public async Task<ManagerResponse> GetByIdAsync(int id)
@@ -57,62 +60,7 @@ namespace ServiceStation.BLL.Services
         }
 
 
-        public async Task PostAsync(ManagerRequest Manager)
-        {
-            try
-            {
-
-                await _unitOfWork._ManagerRepository.InsertAsync( _maper.Map<ManagerRequest, Manager>(Manager));
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public async Task UpdateAsync(int id, ManagerRequest Manager)
-        {
-
-            try
-            {
-
-
-                var event_entity = await _unitOfWork._ManagerRepository.GetByIdAsync(id);
-                if (event_entity == null)
-                {
-                    throw new Exception();
-
-                }
-
-                await _unitOfWork._ManagerRepository.UpdateAsync(_maper.Map<ManagerRequest, Manager>(Manager));
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-
-            }
-        }
-
-
-        public async Task DeleteByIdAsync(int id)
-        {
-            try
-            {
-                var event_entity = await _unitOfWork._ManagerRepository.GetByIdAsync(id);
-                if (event_entity == null)
-                {
-                    throw new Exception();
-                }
-
-                await _unitOfWork._ManagerRepository.DeleteAsync(id);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-
-            }
-        }
+       
 
     }
 }

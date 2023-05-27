@@ -132,6 +132,7 @@ namespace ServiceStation.DAL.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -521,6 +522,34 @@ namespace ServiceStation.DAL.Migrations
                     b.ToTable("PartsNeeded");
                 });
 
+            modelBuilder.Entity("ServiceStation.DAL.Entities.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClientName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("ClientSecret")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientName")
+                        .IsUnique();
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("ServiceStation.DAL.Entities.Vendor", b =>
                 {
                     b.Property<int>("Id")
@@ -721,6 +750,19 @@ namespace ServiceStation.DAL.Migrations
                     b.Navigation("Part");
                 });
 
+            modelBuilder.Entity("ServiceStation.DAL.Entities.RefreshToken", b =>
+                {
+                    b.HasOne("ServiceStation.DAL.Entities.Client", "Client")
+                        .WithOne("RefreshToken")
+                        .HasForeignKey("ServiceStation.DAL.Entities.RefreshToken", "ClientName")
+                        .HasPrincipalKey("ServiceStation.DAL.Entities.Client", "UserName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Client_Token");
+
+                    b.Navigation("Client");
+                });
+
             modelBuilder.Entity("ServiceStation.DAL.Entities.Job", b =>
                 {
                     b.Navigation("Orders");
@@ -767,6 +809,9 @@ namespace ServiceStation.DAL.Migrations
             modelBuilder.Entity("ServiceStation.DAL.Entities.Client", b =>
                 {
                     b.Navigation("Jobs");
+
+                    b.Navigation("RefreshToken")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

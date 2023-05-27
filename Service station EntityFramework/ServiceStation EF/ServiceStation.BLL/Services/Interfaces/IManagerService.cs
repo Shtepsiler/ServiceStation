@@ -13,8 +13,6 @@ namespace ServiceStation.BLL.Services.Interfaces
     {
         Task<IEnumerable<ManagerResponse>> GetAllAsync();
         Task<ManagerResponse> GetByIdAsync(int id);
-        Task PostAsync(ManagerRequest manager);
-        Task DeleteByIdAsync(int id);
-        Task UpdateAsync(int id, ManagerRequest manager);
+        
     }
 }

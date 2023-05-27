@@ -1,6 +1,6 @@
-﻿namespace ServiceStation.BLL.DTO.Responses
+﻿namespace ServiceStation.BLL.DTO.Requests
 {
-    public class JwtResponse
+    public class JwtRtquest
     {
         public string ClientName { get; set; }
 

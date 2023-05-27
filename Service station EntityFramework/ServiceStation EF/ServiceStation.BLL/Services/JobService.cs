@@ -4,6 +4,7 @@ using ServiceStation.BLL.DTO.Responses;
 using ServiceStation.BLL.Mapping;
 using ServiceStation.BLL.Services.Interfaces;
 using ServiceStation.DAL.Entities;
+using ServiceStation.DAL.Repositories;
 using ServiceStation.DAL.Repositories.Contracts;
 
 namespace ServiceStation.BLL.Services
@@ -75,6 +76,8 @@ namespace ServiceStation.BLL.Services
             {
 
                 await _unitOfWork._JobRepository.InsertAsync(_maper.Map<JobRequest, Job>(job));
+                await _unitOfWork.SaveChangesAsync();
+
             }
             catch (Exception ex)
             {

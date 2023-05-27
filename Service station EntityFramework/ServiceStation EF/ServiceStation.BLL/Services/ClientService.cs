@@ -14,6 +14,33 @@ namespace ServiceStation.BLL.Services
 {
     public class ClientService : IClientService
     {
+        private readonly IUnitOfWork unitOfWork;
+
+        public ClientService(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
+
+        public async Task RewokeRefreshToken(string clientMame,string token)
+        {
+            try
+            {
+                var tok = unitOfWork._TokenRepository.GeTokenByClientName(clientMame);
+
+                tok.Result.ExpirationDate = DateTime.Now.AddDays(1);
+
+
+
+
+
+            }
+            catch { }
+
+
+
+        }
+ 
+
 
     }
 

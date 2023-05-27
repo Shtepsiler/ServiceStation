@@ -12,11 +12,12 @@ namespace ServiceStation.BLL.Services
         public readonly IUnitOfWork _unitOfWork;
         public readonly IMapper _maper;
 
-        public ModelService(IUnitOfWork unitOfWork)
+        public ModelService(IUnitOfWork unitOfWork, IMapper maper)
         {
             _unitOfWork = unitOfWork;
+            _maper = maper;
         }
-        
+
         public async Task<IEnumerable<ModelResponse>> GetAllAsync()
         {
             try

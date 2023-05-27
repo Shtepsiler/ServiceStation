@@ -6,9 +6,11 @@ namespace ServiceStation.BLL.Services.Interfaces
 {
     public interface IIdentityService
     {
-        Task<JwtResponse> SignInAsync(ClientSignInRequest request);
+        Task<JwtRtquest> SignInAsync(ClientSignInRequest request);
 
-        Task<JwtResponse> SignUpAsync(ClientSignUpRequest request);
-        Task SignUpWihtoutjvtAsync(ClientSignUpRequest request);
+        Task<JwtRtquest> SignUpAsync(ClientSignUpRequest request);
+
+
+    //    Task SignUpWihtoutjvtAsync(ClientSignUpRequest request);
     }
 }

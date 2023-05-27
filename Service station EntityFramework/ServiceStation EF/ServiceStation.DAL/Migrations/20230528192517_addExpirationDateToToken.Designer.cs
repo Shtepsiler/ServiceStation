@@ -12,8 +12,8 @@ using ServiceStation.DAL.Data;
 namespace ServiceStation.DAL.Migrations
 {
     [DbContext(typeof(ServiceStationDContext))]
-    [Migration("20230526164436_UpdateClient")]
-    partial class UpdateClient
+    [Migration("20230528192517_addExpirationDateToToken")]
+    partial class addExpirationDateToToken
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -135,6 +135,7 @@ namespace ServiceStation.DAL.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -255,7 +256,7 @@ namespace ServiceStation.DAL.Migrations
                     b.Property<DateTime>("IssueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ManagerId")
+                    b.Property<int?>("ManagerId")
                         .HasColumnType("int");
 
                     b.Property<int?>("MechanicId")
@@ -264,11 +265,10 @@ namespace ServiceStation.DAL.Migrations
                     b.Property<int>("ModelId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal?>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)")
@@ -525,6 +525,34 @@ namespace ServiceStation.DAL.Migrations
                     b.ToTable("PartsNeeded");
                 });
 
+            modelBuilder.Entity("ServiceStation.DAL.Entities.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClientName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("ClientSecret")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientName")
+                        .IsUnique();
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("ServiceStation.DAL.Entities.Vendor", b =>
                 {
                     b.Property<int>("Id")
@@ -558,7 +586,6 @@ namespace ServiceStation.DAL.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
@@ -626,15 +653,11 @@ namespace ServiceStation.DAL.Migrations
 
                     b.HasOne("ServiceStation.DAL.Entities.Manager", "Manager")
                         .WithMany("Jobs")
-                        .HasForeignKey("ManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ManagerId");
 
                     b.HasOne("ServiceStation.DAL.Entities.Mechanic", "Mechanic")
                         .WithMany("Jobs")
-                        .HasForeignKey("MechanicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MechanicId");
 
                     b.HasOne("ServiceStation.DAL.Entities.Model", "Model")
                         .WithMany("Jobs")
@@ -730,6 +753,19 @@ namespace ServiceStation.DAL.Migrations
                     b.Navigation("Part");
                 });
 
+            modelBuilder.Entity("ServiceStation.DAL.Entities.RefreshToken", b =>
+                {
+                    b.HasOne("ServiceStation.DAL.Entities.Client", "Client")
+                        .WithOne("RefreshToken")
+                        .HasForeignKey("ServiceStation.DAL.Entities.RefreshToken", "ClientName")
+                        .HasPrincipalKey("ServiceStation.DAL.Entities.Client", "UserName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Client_Token");
+
+                    b.Navigation("Client");
+                });
+
             modelBuilder.Entity("ServiceStation.DAL.Entities.Job", b =>
                 {
                     b.Navigation("Orders");
@@ -776,6 +812,9 @@ namespace ServiceStation.DAL.Migrations
             modelBuilder.Entity("ServiceStation.DAL.Entities.Client", b =>
                 {
                     b.Navigation("Jobs");
+
+                    b.Navigation("RefreshToken")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

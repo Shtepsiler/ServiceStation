@@ -4,6 +4,8 @@ using ServiceStation.DAL.Entities;
 using ServiceStation.BLL.Services.Interfaces;
 using ServiceStation.BLL.DTO.Responses;
 using ServiceStation.BLL.DTO.Requests;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace ServiceStation.API.Controllers
 {
@@ -25,6 +27,7 @@ namespace ServiceStation.API.Controllers
         }
 
         //GET: api/jobs
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<JobResponse>>> GetAllAsync()
         {
@@ -44,6 +47,7 @@ namespace ServiceStation.API.Controllers
         }
 
         //GET: api/jobs/Id
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<JobResponse>> GetByIdAsync(int id)
         {
@@ -70,6 +74,7 @@ namespace ServiceStation.API.Controllers
         }
 
         //GET: api/jobs/Id
+        [Authorize]
         [HttpGet("user/{id}")]
         public async Task<ActionResult<UsersJobsResponse>> GetByUserIdAsync(int id)
         {
@@ -95,31 +100,32 @@ namespace ServiceStation.API.Controllers
             }
         }
         //POST: api/jobs
-      /*  [HttpPost]
-        public async Task<ActionResult> PostAsync([FromBody] JobRequest job)
-        {
-            try
-            {
-                if (job == null)
-                {
-                    _logger.LogInformation($"Ми отримали пустий json зі сторони клієнта");
-                    return BadRequest("Обєкт івенту є null");
-                }
-                if (!ModelState.IsValid)
-                {
-                    _logger.LogInformation($"Ми отримали некоректний json зі сторони клієнта");
-                    return BadRequest("Обєкт івенту є некоректним");
-                }
-                await _UnitOfBisnes._JobService.PostAsync(job);
-                return StatusCode(StatusCodes.Status201Created);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Транзакція сфейлилась! Щось пішло не так у методі PostAsync - {ex.Message}");
-                return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
-            }
-        }*/
+        /*  [HttpPost]
+          public async Task<ActionResult> PostAsync([FromBody] JobRequest job)
+          {
+              try
+              {
+                  if (job == null)
+                  {
+                      _logger.LogInformation($"Ми отримали пустий json зі сторони клієнта");
+                      return BadRequest("Обєкт івенту є null");
+                  }
+                  if (!ModelState.IsValid)
+                  {
+                      _logger.LogInformation($"Ми отримали некоректний json зі сторони клієнта");
+                      return BadRequest("Обєкт івенту є некоректним");
+                  }
+                  await _UnitOfBisnes._JobService.PostAsync(job);
+                  return StatusCode(StatusCodes.Status201Created);
+              }
+              catch (Exception ex)
+              {
+                  _logger.LogError($"Транзакція сфейлилась! Щось пішло не так у методі PostAsync - {ex.Message}");
+                  return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
+              }
+          }*/
         //POST: api/jobs
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> PostNewAsync([FromBody] NewJobRequest job)
         {
@@ -146,6 +152,7 @@ namespace ServiceStation.API.Controllers
         }
 
         //POST: api/jobs/id
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAsync(int id, [FromBody] JobRequest job)
         {
@@ -173,7 +180,8 @@ namespace ServiceStation.API.Controllers
             }
         }
 
-        //GET: api/jobs/Id
+      /*  //GET: api/jobs/Id
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteByIdAsync(int id)
         {
@@ -194,7 +202,7 @@ namespace ServiceStation.API.Controllers
                 _logger.LogError($"Транзакція сфейлилась! Щось пішло не так у методі GetAllAsync() - {ex.Message}");
                 return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
             }
-        }
+        }*/
 
     }
 }

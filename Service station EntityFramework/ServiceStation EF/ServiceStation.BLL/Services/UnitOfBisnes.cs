@@ -9,7 +9,7 @@ namespace ServiceStation.BLL.Services
         public IJobService _JobService { get; }
         public IModelService _ModelService { get; }
         public IManagerService _ManagerService { get; }
-
+        public ITokenService _TokenService { get; }
 
                 
 
@@ -18,13 +18,15 @@ namespace ServiceStation.BLL.Services
             IIdentityService identityService,
             IJobService jobService, 
             IModelService modelService, 
-            IManagerService managerService)
+            IManagerService managerService,
+            ITokenService tokenService)
         {
             _ClientService = clientService;
             _IdentityService = identityService;
             _JobService = jobService;
             _ModelService = modelService;
             _ManagerService = managerService;
+            _TokenService = tokenService;
         }
     }
 }
