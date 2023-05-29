@@ -11,10 +11,10 @@ namespace ServiceStation.BLL.Services.Interfaces
     public interface IClientService
     {
         // Task AddPhoneNumber();
-    
 
 
-
+        Task<ClientResponse> GetClientByName(string name);
+        Task RewokeRefreshToken(string clientMame, string token);
 
 
     }

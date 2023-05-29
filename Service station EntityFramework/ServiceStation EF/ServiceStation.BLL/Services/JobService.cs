@@ -32,13 +32,13 @@ namespace ServiceStation.BLL.Services
                 return null;
             }
         }
-        public async Task<IEnumerable<UsersJobsResponse>> GetAllClientsJobsAsync(int clientId)
+        public async Task<IEnumerable<ClientsJobsResponse>> GetAllClientsJobsAsync(int clientId)
         {
             try
             {
                 var results = (List<Job>)await _unitOfWork._JobRepository.GetByClientIdAsync(clientId);
 
-                return  _maper.Map<List<Job>,List<UsersJobsResponse>>(results);
+                return  _maper.Map<List<Job>,List<ClientsJobsResponse>>(results);
 
             }
             catch (Exception ex)

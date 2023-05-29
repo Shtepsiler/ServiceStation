@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ServiceStation.BLL.DTO.Responses
 {
-    public class UsersJobsResponse
+    public class ClientsJobsResponse
     {
         public int Id { get; set; }
         public string? Model { get; set; }

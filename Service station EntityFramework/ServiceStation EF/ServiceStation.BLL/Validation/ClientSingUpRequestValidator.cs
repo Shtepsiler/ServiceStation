@@ -24,7 +24,9 @@ namespace ServiceStation.BLL.Validation
                 .Must(password => password is not null && password.Any(char.IsLower))
                 .WithMessage(request => $"{nameof(request.Password)} must contain a lowercase character.")
                 .Must(password => password is not null && password.Any(char.IsDigit))
-                .WithMessage(request => $"{nameof(request.Password)} must contain a digit.");
+                .WithMessage(request => $"{nameof(request.Password)} must contain a digit.")
+                .MinimumLength(8)
+                .WithMessage(request=>$"{nameof(request.Password)} must be longer then 8 character");
 
             RuleFor(request => request.FirstName)
                 .NotEmpty()

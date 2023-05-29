@@ -24,7 +24,7 @@ namespace ServiceStation.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<JwtRtquest>> SignInAsync(
+        public async Task<ActionResult<JwtResponse>> SignInAsync(
             [FromBody] ClientSignInRequest request)
         {
             try
@@ -46,31 +46,14 @@ namespace ServiceStation.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { e.Message });
             }
         }
-/*
-        [HttpPost("signUpWithoutJWT")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<JwtResponse>> SignUpWithoutJWTAsync(
-            [FromBody] ClientSignUpRequest request)
-        {
-            try
-            {
-                await _UnitOfBisnes._IdentityService.SignUpWihtoutjvtAsync(request);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { e.Message });
-            }
-        }*/
+
 
 
         [HttpPost("signUp")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<JwtRtquest>> SignUpAsync(
+        public async Task<ActionResult<JwtResponse>> SignUpAsync(
          [FromBody] ClientSignUpRequest request)
         {
             try

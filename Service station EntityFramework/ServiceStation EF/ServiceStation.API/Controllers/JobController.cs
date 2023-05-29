@@ -76,7 +76,7 @@ namespace ServiceStation.API.Controllers
         //GET: api/jobs/Id
         [Authorize]
         [HttpGet("user/{id}")]
-        public async Task<ActionResult<UsersJobsResponse>> GetByUserIdAsync(int id)
+        public async Task<ActionResult<ClientsJobsResponse>> GetByUserIdAsync(int id)
         {
             try
             {

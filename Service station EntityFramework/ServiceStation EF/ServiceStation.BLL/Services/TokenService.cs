@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using ServiceStation.BLL.DTO.Responses;
 using ServiceStation.BLL.Factories.Interfaces;
@@ -69,22 +70,28 @@ namespace ServiceStation.BLL.Services
             }
             catch (Exception ex) { throw ex; }
 
+        }
 
 
 
-
-
-
-
+        public void DeleteRefreshToken(string clientName)
+        {
+            try
+            {
+                unitOfWork._TokenRepository.DeleteTokenByClientName(clientName);
+                unitOfWork.SaveChangesAsync();
+            }
+            catch(Exception ex) { throw ex; }   
 
         }
+
 
         public string GetRefreshToken(string username)
         {
             try
             {
-                var ifexisttoken = unitOfWork._TokenRepository.GeTokenByClientName(username);
-                if (ifexisttoken.Result == null)
+                var ifrexisttoken = unitOfWork._TokenRepository.GeTokenByClientName(username);
+                if (ifrexisttoken.Result == null)
                 {
                     var newguid = Guid.NewGuid();
                     unitOfWork._TokenRepository.InsertAsync(new RefreshToken { ClientName = username, ClientSecret = newguid.ToString(), ExpirationDate = DateTime.Now.AddDays(1) });
@@ -93,15 +100,18 @@ namespace ServiceStation.BLL.Services
 
                 }
                 else
+                if (ifrexisttoken.Result.ExpirationDate>DateTime.Now)
                 {
-                    ifexisttoken.Result.ExpirationDate = DateTime.Now.AddDays(1);
+                    ifrexisttoken.Result.ExpirationDate = DateTime.Now.AddDays(1);
 
-                    unitOfWork._TokenRepository.UpdateAsync(ifexisttoken.Result);
+                    unitOfWork._TokenRepository.UpdateAsync(ifrexisttoken.Result);
 
-                    return ifexisttoken.Result.ClientSecret;
+                    return ifrexisttoken.Result.ClientSecret;
 
 
                 }
+
+                throw new Exception("Token is Expirationed");
             }
             catch (Exception ex)
             {
@@ -109,44 +119,7 @@ namespace ServiceStation.BLL.Services
             }
 
         }
-        public bool IsValid(string response, out string username)
-        {
-            username = string.Empty;
-          
-
-
-            if (string.IsNullOrEmpty(username))
-            {
-                throw new UnauthorizedAccessException("No user name");
-            }
-
-            if (!Guid.TryParse(response, out Guid givenRefreshToken))
-            {
-                throw new UnauthorizedAccessException("Refresh token malformed");
-            }
-            var curenttoken = unitOfWork._TokenRepository.GeTokenByClientName(response);
-            Guid curentRefreshToken = Guid.Parse(curenttoken.Result.ClientSecret);
-
-            if (curenttoken.Result.ExpirationDate >= DateTime.Now)
-            {
-                unitOfWork._TokenRepository.DeleteTokenByClientName(username);
-                throw new UnauthorizedAccessException("Refresh Token is expired,it will be deleted");
-
-            }
-
-            if (curentRefreshToken == null)
-            {
-                throw new UnauthorizedAccessException("No valid refresh token in system");
-
-            }
-            if (curentRefreshToken != givenRefreshToken)
-            {
-                throw new UnauthorizedAccessException("invalid refresh token");
-            }
-
-            return true;
-
-        }
+    
 
 
 

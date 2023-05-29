@@ -13,13 +13,14 @@ namespace ServiceStation.BLL.Mapping
             CreateManagerMap();
             CreateModelMap();
             CreateIdentityMap();
+            CreateClientMap();
         }
 
 
 
         private void CreateJobMap()
         {
-            CreateMap<Job, UsersJobsResponse>()
+            CreateMap<Job, ClientsJobsResponse>()
                 .ForMember(r=>r.ManagerName,opt=>opt.MapFrom(manager => $"{manager.Manager.FullName}"))
                 .ForMember(r => r.ManagerPhone, opt => opt.MapFrom(manager => $"{manager.Manager.Phone}"))
                 .ForMember(r=>r.MechanicFullName,opt=>opt.MapFrom(mech=>$"{mech.Mechanic.FirstName} {mech.Mechanic.LastName}"))
@@ -45,6 +46,12 @@ namespace ServiceStation.BLL.Mapping
         {
             CreateMap<Client, ClientSignUpRequest>().ReverseMap();
         }
+        private void CreateClientMap()
+        {
+            CreateMap<Client, ClientResponse>().ForMember(r => r.ClientName, opt => opt.MapFrom(client => client.UserName)).ReverseMap();
+        }
+
+
 
 
         /*

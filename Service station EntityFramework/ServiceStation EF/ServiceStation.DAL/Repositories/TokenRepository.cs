@@ -30,5 +30,8 @@ namespace ServiceStation.DAL.Repositories
         public async Task<RefreshToken> GeTokenByToken(string token) => await table.Where(p => p.ClientSecret == token).FirstOrDefaultAsync();
 
 
+
+
+
     }
 }

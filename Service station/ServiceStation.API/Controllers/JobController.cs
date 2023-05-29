@@ -146,7 +146,7 @@ namespace ServiceStation.API.Controllers
                     return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
                 }
             }
-        [HttpPut("{id,status}")]
+        [HttpPut("UpdateStatus")]
         public async Task<ActionResult> UpdateStatus(int id, string status)
         {
             try

@@ -4,6 +4,7 @@ using ServiceStation.DAL.Entities;
 using ServiceStation.BLL.Services.Interfaces;
 using ServiceStation.BLL.DTO.Responses;
 using ServiceStation.BLL.DTO.Requests;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ServiceStation.API.Controllers
 {
@@ -26,6 +27,8 @@ namespace ServiceStation.API.Controllers
 
         //GET: api/jobs
         [HttpGet]
+        [Authorize]
+
         public async Task<ActionResult<IEnumerable<ModelResponse>>> GetAllAsync()
         {
             try
@@ -45,6 +48,8 @@ namespace ServiceStation.API.Controllers
 
         //GET: api/jobs/Id
         [HttpGet("{id}")]
+        [Authorize]
+
         public async Task<ActionResult<ModelResponse>> GetByIdAsync(int id)
         {
             try
@@ -71,6 +76,8 @@ namespace ServiceStation.API.Controllers
 
         //POST: api/jobs
         [HttpPost]
+        [Authorize]
+
         public async Task<ActionResult> PostAsync([FromBody] ModelRequest manager)
         {
             try
@@ -97,6 +104,8 @@ namespace ServiceStation.API.Controllers
 
         //POST: api/jobs/id
         [HttpPut("{id}")]
+        [Authorize]
+
         public async Task<ActionResult> UpdateAsync(int id, [FromBody] ModelRequest manager)
         {
             try
@@ -125,6 +134,8 @@ namespace ServiceStation.API.Controllers
 
         //GET: api/jobs/Id
         [HttpDelete("{id}")]
+        [Authorize]
+
         public async Task<ActionResult> DeleteByIdAsync(int id)
         {
             try

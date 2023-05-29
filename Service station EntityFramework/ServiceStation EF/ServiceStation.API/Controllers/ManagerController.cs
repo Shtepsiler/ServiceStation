@@ -4,6 +4,7 @@ using ServiceStation.DAL.Entities;
 using ServiceStation.BLL.Services.Interfaces;
 using ServiceStation.BLL.DTO.Responses;
 using ServiceStation.BLL.DTO.Requests;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ServiceStation.API.Controllers
 {
@@ -26,6 +27,8 @@ namespace ServiceStation.API.Controllers
 
         //GET: api/jobs
         [HttpGet]
+        [Authorize]
+
         public async Task<ActionResult<IEnumerable<ManagerResponse>>> GetAllAsync()
         {
             try
@@ -45,6 +48,8 @@ namespace ServiceStation.API.Controllers
 
         //GET: api/jobs/Id
         [HttpGet("{id}")]
+        [Authorize]
+
         public async Task<ActionResult<ManagerResponse>> GetByIdAsync(int id)
         {
             try

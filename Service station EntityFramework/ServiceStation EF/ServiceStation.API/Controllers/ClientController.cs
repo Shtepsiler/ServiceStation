@@ -16,7 +16,7 @@ namespace ServiceStation.API.Controllers
             _UnitOfBisnes = unitOfBisnes;
         }
 
-        [HttpPost("GetaccessTokenByRefreshToken")]
+        [HttpPost("GetAccessTokenByRefreshToken")]
         public async Task<IActionResult> RenewAccessToken([FromBody] string requesttoken)
         {
             try
@@ -29,8 +29,8 @@ namespace ServiceStation.API.Controllers
 
 
         }
-        //rewoke refresh token
-        //client/id/token
+
+
 
 
 

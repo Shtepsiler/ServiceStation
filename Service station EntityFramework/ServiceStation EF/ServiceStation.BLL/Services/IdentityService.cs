@@ -39,7 +39,7 @@ namespace ServiceStation.BLL.Services
             this.tokenService = tokenService;
         }
 
-        public async Task<JwtRtquest> SignInAsync(ClientSignInRequest request)
+        public async Task<JwtResponse> SignInAsync(ClientSignInRequest request)
         {
             var user = await userManager.FindByNameAsync(request.UserName)
                 ?? throw new EntityNotFoundException(
@@ -56,7 +56,7 @@ namespace ServiceStation.BLL.Services
 
 
 
-        public async Task<JwtRtquest> SignUpAsync(ClientSignUpRequest request)
+        public async Task<JwtResponse> SignUpAsync(ClientSignUpRequest request)
         {
             var user = mapper.Map<ClientSignUpRequest, Client>(request);
             var signUpResult = await userManager.CreateAsync(user, request.Password);

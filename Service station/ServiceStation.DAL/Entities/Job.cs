@@ -3,6 +3,7 @@
     public class Job
     {
         public int Id { get; set; }
+        public int? ManagerId { get; set; }
         public int ModelId { get; set; }
         public string Status { get; set; }
         public int ClientId { get; set; }
