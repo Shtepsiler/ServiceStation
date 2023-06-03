@@ -339,6 +339,10 @@ namespace ServiceStation.DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasMaxLength(12)
@@ -581,10 +585,6 @@ namespace ServiceStation.DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Phone")
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)");
 
                     b.HasDiscriminator().HasValue("Client");
                 });

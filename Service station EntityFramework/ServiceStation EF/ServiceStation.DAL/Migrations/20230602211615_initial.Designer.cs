@@ -12,8 +12,8 @@ using ServiceStation.DAL.Data;
 namespace ServiceStation.DAL.Migrations
 {
     [DbContext(typeof(ServiceStationDContext))]
-    [Migration("20230527150442_Addtokentable")]
-    partial class Addtokentable
+    [Migration("20230602211615_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -135,6 +135,7 @@ namespace ServiceStation.DAL.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -341,6 +342,10 @@ namespace ServiceStation.DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasMaxLength(12)
@@ -532,16 +537,22 @@ namespace ServiceStation.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
+                    b.Property<string>("ClientName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("ClientSecret")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("ClientName")
+                        .IsUnique();
 
                     b.ToTable("RefreshTokens");
                 });
@@ -577,10 +588,6 @@ namespace ServiceStation.DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Phone")
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)");
 
                     b.HasDiscriminator().HasValue("Client");
                 });
@@ -749,10 +756,12 @@ namespace ServiceStation.DAL.Migrations
             modelBuilder.Entity("ServiceStation.DAL.Entities.RefreshToken", b =>
                 {
                     b.HasOne("ServiceStation.DAL.Entities.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId")
+                        .WithOne("RefreshToken")
+                        .HasForeignKey("ServiceStation.DAL.Entities.RefreshToken", "ClientName")
+                        .HasPrincipalKey("ServiceStation.DAL.Entities.Client", "UserName")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Client_Token");
 
                     b.Navigation("Client");
                 });
@@ -803,6 +812,9 @@ namespace ServiceStation.DAL.Migrations
             modelBuilder.Entity("ServiceStation.DAL.Entities.Client", b =>
                 {
                     b.Navigation("Jobs");
+
+                    b.Navigation("RefreshToken")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

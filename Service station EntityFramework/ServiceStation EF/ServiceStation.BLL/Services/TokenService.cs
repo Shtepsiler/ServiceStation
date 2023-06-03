@@ -99,19 +99,18 @@ namespace ServiceStation.BLL.Services
                     return newguid.ToString();
 
                 }
-                else
+                
                 if (ifrexisttoken.Result.ExpirationDate>DateTime.Now)
                 {
-                    ifrexisttoken.Result.ExpirationDate = DateTime.Now.AddDays(1);
+                    unitOfWork._TokenRepository.DeleteTokenByClientName(ifrexisttoken.Result.ClientName);
+                    unitOfWork.SaveChangesAsync().Wait();   
 
-                    unitOfWork._TokenRepository.UpdateAsync(ifrexisttoken.Result);
-
-                    return ifrexisttoken.Result.ClientSecret;
+                throw new Exception("Token is Expirationed it will be deleted you must login again");
 
 
                 }
+                    return ifrexisttoken.Result.ClientSecret;
 
-                throw new Exception("Token is Expirationed");
             }
             catch (Exception ex)
             {

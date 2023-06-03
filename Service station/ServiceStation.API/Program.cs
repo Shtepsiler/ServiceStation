@@ -4,8 +4,8 @@ using System.Data;
 using System.Data.SqlClient;
 using ServiceStation.BAL.Services.Interfaces;
 using ServiceStation.BAL.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
+/*using Microsoft.EntityFrameworkCore;
+*/using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 

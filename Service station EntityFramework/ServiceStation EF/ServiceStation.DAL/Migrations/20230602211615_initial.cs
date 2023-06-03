@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ServiceStation.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class initialcreate : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,8 +48,7 @@ namespace ServiceStation.DAL.Migrations
                     AccessFailedCount = table.Column<int>(type: "int", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true)
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -83,6 +82,7 @@ namespace ServiceStation.DAL.Migrations
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Phone = table.Column<string>(type: "nchar(12)", fixedLength: true, maxLength: 12, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Specialization = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -229,7 +229,8 @@ namespace ServiceStation.DAL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ClientName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    ClientSecret = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ClientSecret = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
