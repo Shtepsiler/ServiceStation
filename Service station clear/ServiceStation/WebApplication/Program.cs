@@ -1,9 +1,14 @@
-using Persistence.Data;
-using Persistence.Entities;
+using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Infrastructure.Persistence.Data;
+using Application;
+using System.Reflection;
+using Application.Interfaces;
+using MediatR;
+using Microsoft.AspNetCore.Hosting;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -13,7 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-
+builder.Services.AddScoped<IServiceStationDContext, ServiceStationDContext>();
 builder.Services.AddDbContext<ServiceStationDContext>(options =>
 {
     string connectionString = builder.Configuration.GetConnectionString("MSSQLConnection");
@@ -27,6 +32,9 @@ builder.Services.AddIdentityCore<Client>()
                    .AddSignInManager<SignInManager<Client>>()
                    .AddDefaultTokenProviders()
                    .AddEntityFrameworkStores<ServiceStationDContext>();
+
+
+builder.Services.AddApplication();
 
 var app = builder.Build();
 

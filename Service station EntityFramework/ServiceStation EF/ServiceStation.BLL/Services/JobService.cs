@@ -158,6 +158,7 @@ namespace ServiceStation.BLL.Services
                 }
 
                 await _unitOfWork._JobRepository.DeleteAsync(id);
+                await _unitOfWork.SaveChangesAsync();
                
             }
             catch (Exception ex)

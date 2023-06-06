@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Operations\Clients\Queries\" />
+    <Folder Include="Operations\Jobs\Queries\" />
+    <Folder Include="Operations\Managers\Queries\" />
+    <Folder Include="Operations\MechanicsTasks\Queries\" />
+    <Folder Include="Operations\Mechanics\Queries\" />
+    <Folder Include="Operations\Models\Queries\" />
+    <Folder Include="Operations\OrderParts\Queries\" />
+    <Folder Include="Operations\Orders\Queries\" />
+    <Folder Include="Operations\PartsNeeded\Queries\" />
+    <Folder Include="Operations\Parts\Queries\" />
+    <Folder Include="Operations\Vendors\Queries\" />
+  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="12.0.1" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+		<PackageReference Include="MediatR" Version="12.0.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Domain\Domain.csproj" />
+	</ItemGroup>
+</Project>

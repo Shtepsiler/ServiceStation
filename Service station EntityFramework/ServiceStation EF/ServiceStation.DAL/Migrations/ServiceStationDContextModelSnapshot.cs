@@ -366,7 +366,7 @@ namespace ServiceStation.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("JobId")
+                    b.Property<int?>("JobId")
                         .HasColumnType("int");
 
                     b.Property<int>("MechanicId")
@@ -676,8 +676,7 @@ namespace ServiceStation.DAL.Migrations
                     b.HasOne("ServiceStation.DAL.Entities.Job", "Job")
                         .WithMany("Tasks")
                         .HasForeignKey("JobId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ServiceStation.DAL.Entities.Mechanic", "Mechanic")
                         .WithMany("Tasks")

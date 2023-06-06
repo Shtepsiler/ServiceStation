@@ -14,5 +14,6 @@ namespace Domain.Entities
 
         public DateTime ExpirationDate { get; set; }
 
+        public Client Client { get; set; }
     }
 }

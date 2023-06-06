@@ -11,9 +11,11 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
         public int MechanicId { get; set; }
-       
-        public int JobId { get; set; }
-        
+        [NotMapped]
+        public Mechanic Mechanic { get; set; }
+        public int? JobId { get; set; }
+        [NotMapped]
+        public Job? Job { get; set; }
         public string Task { get; set; }
         public string Status { get; set; }
 

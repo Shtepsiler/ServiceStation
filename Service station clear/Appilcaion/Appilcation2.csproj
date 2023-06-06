@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Operations\Clients\Commands\" />
+    <Folder Include="Operations\Clients\Queries\" />
+    <Folder Include="Operations\Jobs\Queries\" />
+    <Folder Include="Operations\Managers\Commands\" />
+    <Folder Include="Operations\Managers\Queries\" />
+    <Folder Include="Operations\MechanicsTasks\Commands\" />
+    <Folder Include="Operations\MechanicsTasks\Queries\" />
+    <Folder Include="Operations\Mechanics\Commands\" />
+    <Folder Include="Operations\Mechanics\Queries\" />
+	  <Folder Include="Operations\Models\Commands\" />
+	  <Folder Include="Operations\Models\Queries\" />
+	  <Folder Include="Operations\OrderParts\Commands\" />
+	  <Folder Include="Operations\OrderParts\Queries\" />
+	  <Folder Include="Operations\Orders\Commands\" />
+	  <Folder Include="Operations\Orders\Queries\" />
+	  <Folder Include="Operations\PartsNeeded\Commands\" />
+	  <Folder Include="Operations\PartsNeeded\Queries\" />
+	  <Folder Include="Operations\Parts\Commands\" />
+	  <Folder Include="Operations\Parts\Queries\" />
+	  <Folder Include="Operations\Vendors\Commands\" />
+	  <Folder Include="Operations\Vendors\Queries\" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="MediatR" Version="12.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+</Project>

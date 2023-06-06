@@ -16,6 +16,7 @@ namespace Domain.Entities
 
         public string Password { get; set; }
 
-        
+        [NotMapped]
+        public List<Job> Jobs { get; set; }
     }
 }

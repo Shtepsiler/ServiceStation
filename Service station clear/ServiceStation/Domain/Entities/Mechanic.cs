@@ -16,6 +16,9 @@ namespace Domain.Entities
         public string Phone { get; set; }
         public string Password { get; set; }
         public string Specialization { get; set; }
-      
+        [NotMapped]
+        public List<Job> Jobs { get; set; }
+        [NotMapped]
+        public List<MechanicsTasks> Tasks { get; set; }
     }
 }

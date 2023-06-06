@@ -180,7 +180,7 @@ namespace ServiceStation.API.Controllers
             }
         }
 
-      /*  //GET: api/jobs/Id
+        //GET: api/jobs/Id
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteByIdAsync(int id)
@@ -202,7 +202,7 @@ namespace ServiceStation.API.Controllers
                 _logger.LogError($"Транзакція сфейлилась! Щось пішло не так у методі GetAllAsync() - {ex.Message}");
                 return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
             }
-        }*/
+        }
 
     }
 }
