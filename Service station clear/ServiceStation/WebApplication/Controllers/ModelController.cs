@@ -26,7 +26,15 @@ namespace WebApplication.Controllers
             return NoContent();
 
         }
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Create(CreateModelCommand comand)
+        {
+            await Mediator.Send(comand);
+            return NoContent();
 
+        }
 
 
     }

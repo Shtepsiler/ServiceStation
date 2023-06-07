@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.DTOs.Respponces;
+using Application.Interfaces;
 using Domain.Entities;
 using Domain.Exeptions;
 using MediatR;
@@ -21,15 +22,15 @@ namespace Application.Operations.OrderParts.Commands
             }
             async Task IRequestHandler<DeleteOrderPartCommand>.Handle(DeleteOrderPartCommand request, CancellationToken cancellationToken)
             {
-                var entity = await _context.Jobs
+                var entity = await _context.OrderParts
                     .FindAsync(request.Id);
 
                 if (entity == null)
                 {
-                    throw new NotFoundException(nameof(Job), request.Id);
+                    throw new NotFoundException(nameof(OrderPart), request.Id);
                 }
 
-                _context.Jobs.Remove(entity);
+                _context.OrderParts.Remove(entity);
 
                 await _context.SaveChangesAsync(cancellationToken);
 

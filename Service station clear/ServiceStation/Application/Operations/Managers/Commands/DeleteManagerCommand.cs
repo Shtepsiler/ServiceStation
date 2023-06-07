@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.DTOs.Respponces;
+using Application.Interfaces;
 using Domain.Entities;
 using Domain.Exeptions;
 using MediatR;
@@ -26,7 +27,7 @@ public class DeleteManagerCommand : IRequest
 
             if (entity == null)
             {
-                throw new NotFoundException(nameof(Job), request.Id);
+                throw new NotFoundException(nameof(Manager), request.Id);
             }
 
             _context.Managers.Remove(entity);

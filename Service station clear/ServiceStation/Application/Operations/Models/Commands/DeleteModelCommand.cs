@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.DTOs.Respponces;
+using Application.Interfaces;
 using Domain.Entities;
 using Domain.Exeptions;
 using MediatR;
@@ -21,35 +22,20 @@ namespace Application.Operations.Models.Commands
             }
             async Task IRequestHandler<DeleteModelCommand>.Handle(DeleteModelCommand request, CancellationToken cancellationToken)
             {
-                var entity = await _context.Jobs
+                var entity = await _context.Models
                     .FindAsync(request.Id);
 
                 if (entity == null)
                 {
-                    throw new NotFoundException(nameof(Job), request.Id);
+                    throw new NotFoundException(nameof(Model), request.Id);
                 }
 
-                _context.Jobs.Remove(entity);
+                _context.Models.Remove(entity);
 
                 await _context.SaveChangesAsync(cancellationToken);
 
             }
-            /*            public async Task Handle(DeleteJobCommand request, CancellationToken cancellationToken)
-                        {
-                            var entity = await _context.Jobs
-                                .FindAsync(request.Id);
-
-                            if (entity == null)
-                            {
-                                throw new NotFoundException(nameof(Job), request.Id);
-                            }
-
-                            _context.Jobs.Remove(entity);
-
-                            await _context.SaveChangesAsync(cancellationToken);
-
-                            return Unit.Value;
-                        }*/
+            
 
 
         }

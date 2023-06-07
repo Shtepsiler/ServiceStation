@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.DTOs.Respponces;
+using Application.Interfaces;
 using Domain.Entities;
 using Domain.Exeptions;
 using MediatR;
@@ -7,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Application.Operations.PartsNeeded.Commands
 {
-    public class DeletePartneededCommand : IRequest
+    public class DeletePartNeededCommand : IRequest
     {
         public int Id { get; set; }
 
-        public class DeletePartNeededHandler : IRequestHandler<DeletePartneededCommand>
+        public class DeletePartNeededHandler : IRequestHandler<DeletePartNeededCommand>
         {
             private readonly IServiceStationDContext _context;
 
@@ -19,37 +20,22 @@ namespace Application.Operations.PartsNeeded.Commands
             {
                 _context = context;
             }
-            async Task IRequestHandler<DeletePartneededCommand>.Handle(DeletePartneededCommand request, CancellationToken cancellationToken)
+            async Task IRequestHandler<DeletePartNeededCommand>.Handle(DeletePartNeededCommand request, CancellationToken cancellationToken)
             {
-                var entity = await _context.Jobs
+                var entity = await _context.PartsNeeded
                     .FindAsync(request.Id);
 
                 if (entity == null)
                 {
-                    throw new NotFoundException(nameof(Job), request.Id);
+                    throw new NotFoundException(nameof(PartNeeded), request.Id);
                 }
 
-                _context.Jobs.Remove(entity);
+                _context.PartsNeeded.Remove(entity);
 
                 await _context.SaveChangesAsync(cancellationToken);
 
             }
-            /*            public async Task Handle(DeleteJobCommand request, CancellationToken cancellationToken)
-                        {
-                            var entity = await _context.Jobs
-                                .FindAsync(request.Id);
-
-                            if (entity == null)
-                            {
-                                throw new NotFoundException(nameof(Job), request.Id);
-                            }
-
-                            _context.Jobs.Remove(entity);
-
-                            await _context.SaveChangesAsync(cancellationToken);
-
-                            return Unit.Value;
-                        }*/
+           
 
 
         }

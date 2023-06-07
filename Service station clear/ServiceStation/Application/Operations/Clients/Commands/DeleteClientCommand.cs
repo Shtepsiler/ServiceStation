@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.DTOs.Respponces;
+using Application.Interfaces;
 using Domain.Entities;
 using Domain.Exeptions;
 using MediatR;
@@ -26,7 +27,7 @@ namespace Application.Operations.Clients.Commands
 
                 if (entity == null)
                 {
-                    throw new NotFoundException(nameof(Job), request.Id);
+                    throw new NotFoundException(nameof(Client), request.Id);
                 }
 
                 _context.Clients.Remove(entity);

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Domain.Entities;
+using Application.DTOs.Respponces;
+
 namespace Infrastructure.Persistence.Data.Configurations
 {
     public class MechanicsTasksConfiguration : IEntityTypeConfiguration<MechanicsTasks>

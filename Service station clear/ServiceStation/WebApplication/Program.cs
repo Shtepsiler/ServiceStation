@@ -7,6 +7,7 @@ using System.Reflection;
 using Application.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
+using Application.DTOs.Respponces;
 
 var builder = Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder(args);
 

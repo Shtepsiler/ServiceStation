@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
+using Application.DTOs.Respponces;
 
 namespace Application.Interfaces
 {
@@ -19,7 +20,7 @@ namespace Application.Interfaces
         DbSet<Vendor> Vendors { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 
-        DbSet<TEntity> Set<TEntity> () where TEntity : class;
+       /* DbSet<TEntity> Set<TEntity> () where TEntity : class;*/
 
     }
 }

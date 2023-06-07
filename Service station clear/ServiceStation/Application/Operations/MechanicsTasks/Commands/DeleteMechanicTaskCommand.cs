@@ -1,5 +1,4 @@
 ﻿using Application.Interfaces;
-using Domain.Entities;
 using Domain.Exeptions;
 using MediatR;
 using System.Threading;
@@ -21,36 +20,20 @@ namespace Application.Operations.MechanicsTasks.Commands
             }
             async Task IRequestHandler<DeleteMechanicTaskCommand>.Handle(DeleteMechanicTaskCommand request, CancellationToken cancellationToken)
             {
-                var entity = await _context.Jobs
+                var entity = await _context.MechanicsTasks
                     .FindAsync(request.Id);
 
                 if (entity == null)
                 {
-                    throw new NotFoundException(nameof(Job), request.Id);
+                    throw new NotFoundException(nameof(DTOs.Respponces.MechanicsTasksDTO), request.Id);
                 }
 
-                _context.Jobs.Remove(entity);
+                _context.MechanicsTasks.Remove(entity);
 
                 await _context.SaveChangesAsync(cancellationToken);
 
             }
-            /*            public async Task Handle(DeleteJobCommand request, CancellationToken cancellationToken)
-                        {
-                            var entity = await _context.Jobs
-                                .FindAsync(request.Id);
-
-                            if (entity == null)
-                            {
-                                throw new NotFoundException(nameof(Job), request.Id);
-                            }
-
-                            _context.Jobs.Remove(entity);
-
-                            await _context.SaveChangesAsync(cancellationToken);
-
-                            return Unit.Value;
-                        }*/
-
+          
 
         }
     }

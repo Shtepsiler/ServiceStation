@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using MediatR;
 using Application.Operations.Jobs.Commands;
+using Application.DTOs.Respponces;
+using Application.Operations.Jobs.Queries;
+using Application.Operations.Managers.Commands;
 
 namespace ServiceStation.API.Controllers
 {
@@ -18,7 +21,6 @@ namespace ServiceStation.API.Controllers
             Mediator = mediator;
         }
 
-        //protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -29,35 +31,37 @@ namespace ServiceStation.API.Controllers
 
             return NoContent();
         }
-        /*
-                private readonly ILogger<JobController> _logger;
-                public JobController(
-                    ILogger<JobController> logger
-                    )
-                {
-                    _logger = logger;
-                }
-        */
-        /* //GET: api/jobs
-         [Authorize]
-         [HttpGet]
-         public async Task<ActionResult<IEnumerable<JobResponse>>> GetAllAsync()
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Create(CreateJobCommand comand)
+        {
+            await Mediator.Send(comand);
+            return NoContent();
+
+        }
+
+
+
+
+        //GET: api/jobs
+        [HttpGet]
+         public async Task<ActionResult<IEnumerable<JobDTO>>> GetAllAsync()
          {
              try
              {
-                 var results = await _UnitOfBisnes._JobService.GetAllAsync();
+               var results = await Mediator.Send(new GetManagersQuery());
+                 
 
-
-                 _logger.LogInformation($"Отримали всі івенти з бази даних!");
-                 return Ok(results);
+                return Ok(results);
              }
              catch (Exception ex)
              {
-                 _logger.LogError($"Транзакція сфейлилась! Щось пішло не так у методі GetAllEventsAsync() - {ex.Message}");
                  return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
              }
          }
-
+        /*
          //GET: api/jobs/Id
          [Authorize]
          [HttpGet("{id}")]

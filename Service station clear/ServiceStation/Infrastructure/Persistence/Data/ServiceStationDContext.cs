@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Domain.Entities;
 using Infrastructure.Persistence.Data.Configurations;
 using Application.Interfaces;
+using Application.DTOs.Respponces;
 
 namespace Infrastructure.Persistence.Data
 {
