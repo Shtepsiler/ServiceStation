@@ -10,15 +10,9 @@ namespace CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
 public record UpdateMechanicTaskCommand : IRequest
 {
     public int Id { get; set; }
-    public int? ManagerId { get; set; }
-    public int ModelId { get; set; }
-    public string? Status { get; set; }
-    public int ClientId { get; set; }
-    public int? MechanicId { get; set; }
-    public DateTime IssueDate { get; set; }
-    public DateTime? FinishDate { get; set; }
-    public string Description { get; set; }
-    public decimal? Price { get; set; }
+    public int MechanicId { get; set; }
+    public int? JobId { get; set; }
+    public string Task { get; set; }
 }
 
 public class UpdateMechanicTaskCommandHandler : IRequestHandler<UpdateMechanicTaskCommand>
@@ -32,23 +26,17 @@ public class UpdateMechanicTaskCommandHandler : IRequestHandler<UpdateMechanicTa
 
     public async Task Handle(UpdateMechanicTaskCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Jobs
+        var entity = await _context.MechanicsTasks
             .FindAsync(new object[] { request.Id }, cancellationToken);
 
         if (entity == null)
         {
             throw new NotFoundException(nameof(Job), request.Id);
         }
-
-        entity.ManagerId = request.ManagerId;
-        entity.ModelId = request.ModelId;
-        entity.Status = request.Status;
-        entity.ClientId = request.ClientId;
         entity.MechanicId = request.MechanicId;
-        entity.IssueDate = request.IssueDate;
-        entity.FinishDate = request.FinishDate;
-        entity.Description = request.Description;
-        entity.Price = request.Price;
+        entity.JobId = request.JobId;
+        entity.Task = request.Task;
+
 
         await _context.SaveChangesAsync(cancellationToken);
     }

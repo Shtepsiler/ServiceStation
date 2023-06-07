@@ -7,6 +7,7 @@ using Application.Operations.Jobs.Commands;
 using Application.DTOs.Respponces;
 using Application.Operations.Jobs.Queries;
 using Application.Operations.Managers.Commands;
+using CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
 
 namespace ServiceStation.API.Controllers
 {
@@ -51,7 +52,7 @@ namespace ServiceStation.API.Controllers
          {
              try
              {
-               var results = await Mediator.Send(new GetManagersQuery());
+               var results = await Mediator.Send(new GetJobsQuery());
                  
 
                 return Ok(results);
@@ -61,6 +62,29 @@ namespace ServiceStation.API.Controllers
                  return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
              }
          }
+
+        [HttpPut]
+        public async Task Update(UpdateJobCommand comand)
+        {
+
+            try
+            {
+                await Mediator.Send(comand);
+               
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+
+
+
+
+
         /*
          //GET: api/jobs/Id
          [Authorize]

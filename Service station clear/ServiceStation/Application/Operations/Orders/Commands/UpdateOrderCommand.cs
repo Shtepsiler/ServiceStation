@@ -10,15 +10,11 @@ namespace CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
 public record UpdateOrderCommand : IRequest
 {
     public int Id { get; set; }
-    public int? ManagerId { get; set; }
-    public int ModelId { get; set; }
-    public string? Status { get; set; }
-    public int ClientId { get; set; }
-    public int? MechanicId { get; set; }
+    public int JobId { get; set; }
     public DateTime IssueDate { get; set; }
-    public DateTime? FinishDate { get; set; }
-    public string Description { get; set; }
-    public decimal? Price { get; set; }
+    public bool Delivered { get; set; }
+    public bool IsOrdered { get; set; }
+
 }
 
 public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand>
@@ -32,23 +28,17 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand>
 
     public async Task Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Jobs
+        var entity = await _context.Orders
             .FindAsync(new object[] { request.Id }, cancellationToken);
 
         if (entity == null)
         {
             throw new NotFoundException(nameof(Job), request.Id);
         }
-
-        entity.ManagerId = request.ManagerId;
-        entity.ModelId = request.ModelId;
-        entity.Status = request.Status;
-        entity.ClientId = request.ClientId;
-        entity.MechanicId = request.MechanicId;
+        entity.JobId = request.JobId;
         entity.IssueDate = request.IssueDate;
-        entity.FinishDate = request.FinishDate;
-        entity.Description = request.Description;
-        entity.Price = request.Price;
+        entity.Delivered = request.Delivered;
+        entity.IsOrdered = request.IsOrdered;
 
         await _context.SaveChangesAsync(cancellationToken);
     }

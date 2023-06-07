@@ -10,15 +10,11 @@ namespace CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
 public record UpdatePartCommand : IRequest
 {
     public int Id { get; set; }
-    public int? ManagerId { get; set; }
-    public int ModelId { get; set; }
-    public string? Status { get; set; }
-    public int ClientId { get; set; }
-    public int? MechanicId { get; set; }
-    public DateTime IssueDate { get; set; }
-    public DateTime? FinishDate { get; set; }
+    public string SerialNumber { get; set; }
     public string Description { get; set; }
-    public decimal? Price { get; set; }
+    public decimal Price { get; set; }
+    public int VendorId { get; set; }
+    public int StockQty { get; set; }
 }
 
 public class UpdatePartCommandHandler : IRequestHandler<UpdatePartCommand>
@@ -32,23 +28,18 @@ public class UpdatePartCommandHandler : IRequestHandler<UpdatePartCommand>
 
     public async Task Handle(UpdatePartCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Jobs
+        var entity = await _context.Parts
             .FindAsync(new object[] { request.Id }, cancellationToken);
 
         if (entity == null)
         {
             throw new NotFoundException(nameof(Job), request.Id);
         }
-
-        entity.ManagerId = request.ManagerId;
-        entity.ModelId = request.ModelId;
-        entity.Status = request.Status;
-        entity.ClientId = request.ClientId;
-        entity.MechanicId = request.MechanicId;
-        entity.IssueDate = request.IssueDate;
-        entity.FinishDate = request.FinishDate;
+        entity.SerialNumber = request.SerialNumber;
         entity.Description = request.Description;
         entity.Price = request.Price;
+        entity.VendorId = request.VendorId;
+        entity.StockQty = request.StockQty;
 
         await _context.SaveChangesAsync(cancellationToken);
     }

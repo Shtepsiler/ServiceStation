@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace Application.Operations.Jobs.Queries
 {
-    public class GetVendorsQuery : IRequest<IEnumerable<JobDTO>>
+    public class GetVendorsQuery : IRequest<IEnumerable<VendorDTO>>
     {
     }
 
-    public class GetVendorsQueryHendler : IRequestHandler<GetVendorsQuery, IEnumerable<JobDTO>>
+    public class GetVendorsQueryHendler : IRequestHandler<GetVendorsQuery, IEnumerable<VendorDTO>>
     {
         private readonly IServiceStationDContext _context;
         private readonly IMapper _mapper;
@@ -27,9 +27,9 @@ namespace Application.Operations.Jobs.Queries
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<JobDTO>> Handle(GetVendorsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<VendorDTO>> Handle(GetVendorsQuery request, CancellationToken cancellationToken)
         {
-            return _mapper.Map<IEnumerable<Job>,IEnumerable<JobDTO>>(await _context.Jobs.ToListAsync());
+            return _mapper.Map<IEnumerable<Vendor>, IEnumerable<VendorDTO>>(await _context.Vendors.ToListAsync());
         }
     }
 

@@ -10,18 +10,14 @@ namespace CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
 public record UpdateMechanicCommand : IRequest
 {
     public int Id { get; set; }
-    public int? ManagerId { get; set; }
-    public int ModelId { get; set; }
-    public string? Status { get; set; }
-    public int ClientId { get; set; }
-    public int? MechanicId { get; set; }
-    public DateTime IssueDate { get; set; }
-    public DateTime? FinishDate { get; set; }
-    public string Description { get; set; }
-    public decimal? Price { get; set; }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public string? Address { get; set; }
+    public string? Phone { get; set; }
+    public string? Specialization { get; set; }
 }
 
-public class UpdateMechanicCommandHandler : IRequestHandler<UpdateMechanicCommand>
+    public class UpdateMechanicCommandHandler : IRequestHandler<UpdateMechanicCommand>
 {
     private readonly IServiceStationDContext _context;
 
@@ -32,24 +28,20 @@ public class UpdateMechanicCommandHandler : IRequestHandler<UpdateMechanicComman
 
     public async Task Handle(UpdateMechanicCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Jobs
+        var entity = await _context.Mechanics
             .FindAsync(new object[] { request.Id }, cancellationToken);
 
         if (entity == null)
         {
-            throw new NotFoundException(nameof(Job), request.Id);
+            throw new NotFoundException(nameof(Mechanic), request.Id);
         }
 
-        entity.ManagerId = request.ManagerId;
-        entity.ModelId = request.ModelId;
-        entity.Status = request.Status;
-        entity.ClientId = request.ClientId;
-        entity.MechanicId = request.MechanicId;
-        entity.IssueDate = request.IssueDate;
-        entity.FinishDate = request.FinishDate;
-        entity.Description = request.Description;
-        entity.Price = request.Price;
-
+            entity.FirstName = request.FirstName;
+        entity.LastName = request.LastName;
+        entity.Address = request.Address;
+        entity.Phone = request.Phone;
+        entity.Specialization = request.Specialization;
+            
         await _context.SaveChangesAsync(cancellationToken);
     }
 }

@@ -10,15 +10,8 @@ namespace CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
 public record UpdateModelCommand : IRequest
 {
     public int Id { get; set; }
-    public int? ManagerId { get; set; }
-    public int ModelId { get; set; }
-    public string? Status { get; set; }
-    public int ClientId { get; set; }
-    public int? MechanicId { get; set; }
-    public DateTime IssueDate { get; set; }
-    public DateTime? FinishDate { get; set; }
-    public string Description { get; set; }
-    public decimal? Price { get; set; }
+    public string Name { get; set; }
+
 }
 
 public class UpdateModelCommandHandler : IRequestHandler<UpdateModelCommand>
@@ -32,7 +25,7 @@ public class UpdateModelCommandHandler : IRequestHandler<UpdateModelCommand>
 
     public async Task Handle(UpdateModelCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Jobs
+        var entity = await _context.Models
             .FindAsync(new object[] { request.Id }, cancellationToken);
 
         if (entity == null)
@@ -40,15 +33,8 @@ public class UpdateModelCommandHandler : IRequestHandler<UpdateModelCommand>
             throw new NotFoundException(nameof(Job), request.Id);
         }
 
-        entity.ManagerId = request.ManagerId;
-        entity.ModelId = request.ModelId;
-        entity.Status = request.Status;
-        entity.ClientId = request.ClientId;
-        entity.MechanicId = request.MechanicId;
-        entity.IssueDate = request.IssueDate;
-        entity.FinishDate = request.FinishDate;
-        entity.Description = request.Description;
-        entity.Price = request.Price;
+        entity.Name = request.Name;
+
 
         await _context.SaveChangesAsync(cancellationToken);
     }
