@@ -17,7 +17,7 @@ namespace Domain.Entities
         [NotMapped]
         public Job? Job { get; set; }
         public string Task { get; set; }
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
 
     }

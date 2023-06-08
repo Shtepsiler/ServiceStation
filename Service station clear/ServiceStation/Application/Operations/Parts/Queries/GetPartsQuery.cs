@@ -10,13 +10,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Operations.Jobs.Queries
+namespace Application.Operations.Parts.Queries
 {
-    public class GetPartsQuery : IRequest<IEnumerable<JobDTO>>
+    public class GetPartsQuery : IRequest<IEnumerable<PartDTO>>
     {
     }
 
-    public class GetPartsQueryHendler : IRequestHandler<GetPartsQuery, IEnumerable<JobDTO>>
+    public class GetPartsQueryHendler : IRequestHandler<GetPartsQuery, IEnumerable<PartDTO>>
     {
         private readonly IServiceStationDContext _context;
         private readonly IMapper _mapper;
@@ -27,9 +27,9 @@ namespace Application.Operations.Jobs.Queries
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<JobDTO>> Handle(GetPartsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<PartDTO>> Handle(GetPartsQuery request, CancellationToken cancellationToken)
         {
-            return _mapper.Map<IEnumerable<Job>,IEnumerable<JobDTO>>(await _context.Jobs.ToListAsync());
+            return _mapper.Map<IEnumerable<Part>, IEnumerable<PartDTO>>(await _context.Parts.ToListAsync());
         }
     }
 

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Operations.Jobs.Queries
+namespace Application.Operations.Mechanics.Queries
 {
     public class GetMechanicsQuery : IRequest<IEnumerable<MechanicDTO>>
     {
@@ -29,7 +29,7 @@ namespace Application.Operations.Jobs.Queries
 
         public async Task<IEnumerable<MechanicDTO>> Handle(GetMechanicsQuery request, CancellationToken cancellationToken)
         {
-            return _mapper.Map<IEnumerable<Mechanic>,IEnumerable<MechanicDTO>>(await _context.Mechanics.ToListAsync());
+            return _mapper.Map<IEnumerable<Mechanic>, IEnumerable<MechanicDTO>>(await _context.Mechanics.ToListAsync());
         }
     }
 

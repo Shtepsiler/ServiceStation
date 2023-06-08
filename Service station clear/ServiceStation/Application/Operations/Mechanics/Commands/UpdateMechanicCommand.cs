@@ -5,7 +5,7 @@ using Domain.Exeptions;
 using MediatR;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
+namespace Application.Operations.Mechanics.Commands;
 
 public record UpdateMechanicCommand : IRequest
 {
@@ -17,7 +17,7 @@ public record UpdateMechanicCommand : IRequest
     public string? Specialization { get; set; }
 }
 
-    public class UpdateMechanicCommandHandler : IRequestHandler<UpdateMechanicCommand>
+public class UpdateMechanicCommandHandler : IRequestHandler<UpdateMechanicCommand>
 {
     private readonly IServiceStationDContext _context;
 
@@ -36,12 +36,12 @@ public record UpdateMechanicCommand : IRequest
             throw new NotFoundException(nameof(Mechanic), request.Id);
         }
 
-            entity.FirstName = request.FirstName;
+        entity.FirstName = request.FirstName;
         entity.LastName = request.LastName;
         entity.Address = request.Address;
         entity.Phone = request.Phone;
         entity.Specialization = request.Specialization;
-            
+
         await _context.SaveChangesAsync(cancellationToken);
     }
 }

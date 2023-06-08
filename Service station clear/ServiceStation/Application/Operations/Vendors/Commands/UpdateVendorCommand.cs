@@ -5,7 +5,7 @@ using Domain.Exeptions;
 using MediatR;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
+namespace Application.Operations.Vendors.Commands;
 
 public record UpdateVendorCommand : IRequest
 {
@@ -36,6 +36,6 @@ public class UpdateVendorCommandHandler : IRequestHandler<UpdateVendorCommand>
         entity.Name = request.Name;
 
 
-    await _context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }

@@ -5,13 +5,15 @@ using Domain.Exeptions;
 using MediatR;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
+namespace Application.Operations.PartsNeeded.Commands;
 
 public record UpdatePartneededCommand : IRequest
 {
     public int Id { get; set; }
     public int JobId { get; set; }
     public int PartId { get; set; }
+    public int Quantity { get; set; }
+
 }
 
 public class UpdatePartneededCommandHandler : IRequestHandler<UpdatePartneededCommand>
@@ -34,6 +36,7 @@ public class UpdatePartneededCommandHandler : IRequestHandler<UpdatePartneededCo
         }
         entity.JobId = request.JobId;
         entity.PartId = request.PartId;
+        entity.Quantity = request.Quantity;
 
 
 

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Operations.Jobs.Queries
+namespace Application.Operations.Models.Queries
 {
     public class GetModelsQuery : IRequest<IEnumerable<ModelDTO>>
     {

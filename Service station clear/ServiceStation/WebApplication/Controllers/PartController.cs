@@ -2,7 +2,7 @@
 using Application.Operations.Jobs.Queries;
 using Application.Operations.Models.Commands;
 using Application.Operations.Parts.Commands;
-using CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
+using Application.Operations.Parts.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +45,22 @@ namespace WebApplication.Controllers
         {
             try
             {
-                var results = await Mediator.Send(new GetPartsQuery());
+                var results = await Mediator.Send(new Application.Operations.Parts.Queries.GetPartsQuery());
+
+
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
+            }
+        }        //GET: api/jobs
+        [HttpGet("{id}")]
+        public async Task<ActionResult<PartDTO>> GetByIdAsync(int id)
+        {
+            try
+            {
+                var results = await Mediator.Send(new GetPartByIdQuery() { Id = id });
 
 
                 return Ok(results);

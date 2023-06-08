@@ -1,7 +1,7 @@
 ﻿using Application.DTOs.Respponces;
 using Application.Operations.Jobs.Queries;
 using Application.Operations.Models.Commands;
-using CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
+using Application.Operations.Models.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +45,21 @@ namespace WebApplication.Controllers
             try
             {
                 var results = await Mediator.Send(new GetModelsQuery());
+
+
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
+            }
+        }        //GET: api/jobs
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ModelDTO>> GetByIdAsync(int id)
+        {
+            try
+            {
+                var results = await Mediator.Send(new GetModelByIdQuery() { Id = id });
 
 
                 return Ok(results);

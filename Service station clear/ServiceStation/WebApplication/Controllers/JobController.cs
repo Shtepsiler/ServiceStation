@@ -7,7 +7,6 @@ using Application.Operations.Jobs.Commands;
 using Application.DTOs.Respponces;
 using Application.Operations.Jobs.Queries;
 using Application.Operations.Managers.Commands;
-using CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
 
 namespace ServiceStation.API.Controllers
 {
@@ -48,20 +47,36 @@ namespace ServiceStation.API.Controllers
 
         //GET: api/jobs
         [HttpGet]
-         public async Task<ActionResult<IEnumerable<JobDTO>>> GetAllAsync()
-         {
-             try
-             {
-               var results = await Mediator.Send(new GetJobsQuery());
-                 
+        public async Task<ActionResult<IEnumerable<JobDTO>>> GetAllAsync()
+        {
+            try
+            {
+                var results = await Mediator.Send(new GetJobsQuery());
+
 
                 return Ok(results);
-             }
-             catch (Exception ex)
-             {
-                 return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
-             }
-         }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
+            }
+        }
+        //GET: api/jobs
+        [HttpGet("{id}")]
+        public async Task<ActionResult<JobDTO>> GetByIdAsync(int id)
+        {
+            try
+            {
+                var results = await Mediator.Send(new GetJobByIdQuery() {Id = id });
+
+
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
+            }
+        }
 
         [HttpPut]
         public async Task Update(UpdateJobCommand comand)

@@ -1,7 +1,7 @@
 ﻿using Application.DTOs.Respponces;
 using Application.Operations.Jobs.Queries;
 using Application.Operations.Mechanics.Commands;
-using CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
+using Application.Operations.Mechanics.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +20,8 @@ namespace WebApplication.Controllers
             Mediator = mediator;
         }
 
+
+
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -29,6 +31,9 @@ namespace WebApplication.Controllers
             return NoContent();
 
         }
+
+
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -38,6 +43,8 @@ namespace WebApplication.Controllers
             return NoContent();
 
         }
+
+
 
         //GET: api/jobs
         [HttpGet]
@@ -54,7 +61,32 @@ namespace WebApplication.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
             }
+        }       
+        
+        
+        
+        
+        //GET: api/jobs
+        [HttpGet("{id}")]
+        public async Task<ActionResult<MechanicDTO>> GetByIdAsync(int id)
+        {
+            try
+            {
+                var results = await Mediator.Send(new GetMechaincByIdQuery() { Id = id });
+
+
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
+            }
         }
+
+
+
+
+
         [HttpPut]
         public async Task Update(UpdateMechanicCommand comand)
         {

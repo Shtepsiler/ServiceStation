@@ -10,6 +10,8 @@ public record CreateOrderPartCommand : IRequest<int>
     public int OrderId { get; set; }
 
     public int PartId { get; set; }
+    public int Quantity { get; set; }
+
 }
 
 public class CreateOrderPartCommandHandler : IRequestHandler<CreateOrderPartCommand, int>
@@ -26,8 +28,8 @@ public class CreateOrderPartCommandHandler : IRequestHandler<CreateOrderPartComm
         var entity = new OrderPart()
         {
             OrderId = request.OrderId,
-            PartId = request.PartId
-
+            PartId = request.PartId,
+            Quantity = request.Quantity
         };
 
         await _context.OrderParts.AddAsync(entity);

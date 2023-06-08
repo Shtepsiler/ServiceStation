@@ -13,7 +13,7 @@ namespace Infrastructure.Persistence.Data.Configurations
             builder.Property(p => p.MechanicId);
             builder.Property(p => p.JobId).IsRequired(false) ;
             builder.Property(p => p.Task).HasMaxLength(200);
-            builder.Property(p => p.Status).HasMaxLength(20);
+            builder.Property(p => p.Status).HasMaxLength(20).HasDefaultValue("Pending");
 
             builder.HasKey(p => p.Id);
             builder.HasOne(p => p.Mechanic).WithMany(p => p.Tasks).OnDelete(DeleteBehavior.Restrict);

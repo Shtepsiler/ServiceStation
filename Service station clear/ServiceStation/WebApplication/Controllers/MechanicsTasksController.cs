@@ -1,8 +1,8 @@
 ﻿using Application.DTOs.Respponces;
 using Application.Operations.Jobs.Queries;
 using Application.Operations.MechanicsTasks.Commands;
+using Application.Operations.MechanicsTasks.Queries;
 using Application.Operations.Models.Commands;
-using CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -54,7 +54,27 @@ namespace WebApplication.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
             }
+        }      
+        
+        
+        //GET: api/jobs
+        [HttpGet("{id}")]
+        public async Task<ActionResult<MechanicsTasksDTO>> GetByIdAsync(int id)
+        {
+            try
+            {
+                var results = await Mediator.Send(new GetMechanicTaskByIdQuery() { Id = id });
+
+
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "вот так вот!");
+            }
         }
+
+
         [HttpPut]
         public async Task Update(UpdateMechanicTaskCommand comand)
         {

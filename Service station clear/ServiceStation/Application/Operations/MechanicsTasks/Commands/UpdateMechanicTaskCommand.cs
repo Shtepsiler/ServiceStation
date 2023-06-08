@@ -5,7 +5,7 @@ using Domain.Exeptions;
 using MediatR;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
+namespace Application.Operations.MechanicsTasks.Commands;
 
 public record UpdateMechanicTaskCommand : IRequest
 {

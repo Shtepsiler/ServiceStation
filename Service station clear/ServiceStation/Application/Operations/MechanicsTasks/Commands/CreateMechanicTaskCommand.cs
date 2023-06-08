@@ -10,6 +10,7 @@ public record CreateMechanicTaskCommand : IRequest<int>
     public int MechanicId { get; set; }
     public int? JobId { get; set; }
     public string Task { get; set; }
+    public string Status { get; set; }
 }
 
 public class CreateMechanicTaskCommandHandler : IRequestHandler<CreateMechanicTaskCommand, int>
@@ -27,7 +28,9 @@ public class CreateMechanicTaskCommandHandler : IRequestHandler<CreateMechanicTa
         {
             MechanicId = request.MechanicId,
             JobId = request.JobId,
-            Task = request.Task
+            Task = request.Task,
+            Status = request.Status,
+
         };
 
         await _context.MechanicsTasks.AddAsync(entity);

@@ -18,7 +18,7 @@ namespace Application.DTOs.Respponces
         public int? JobId { get; set; }
 
         public string Task { get; set; }
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
         public void Mapping(Profile profile)
         {

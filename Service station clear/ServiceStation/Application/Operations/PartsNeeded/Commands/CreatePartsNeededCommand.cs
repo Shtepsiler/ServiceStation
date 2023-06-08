@@ -9,6 +9,7 @@ public record CreatePartsNeededCommand : IRequest<int>
 {
     public int JobId { get; set; }
     public int PartId { get; set; }
+    public int Quantity { get; set; }
 }
 
 public class CreatePartNeededCommandHandler : IRequestHandler<CreatePartsNeededCommand, int>
@@ -25,7 +26,8 @@ public class CreatePartNeededCommandHandler : IRequestHandler<CreatePartsNeededC
         var entity = new PartNeeded()
         {
             JobId = request.JobId,
-            PartId = request.PartId
+            PartId = request.PartId,
+            Quantity = request.Quantity,
         };
 
         await _context.PartsNeeded.AddAsync(entity);

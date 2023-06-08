@@ -5,7 +5,7 @@ using Domain.Exeptions;
 using MediatR;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
+namespace Application.Operations.Orders.Commands;
 
 public record UpdateOrderCommand : IRequest
 {

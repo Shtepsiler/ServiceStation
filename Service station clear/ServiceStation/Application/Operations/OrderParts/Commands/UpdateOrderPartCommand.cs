@@ -5,7 +5,7 @@ using Domain.Exeptions;
 using MediatR;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
+namespace Application.Operations.OrderParts.Commands;
 
 public record UpdateOrderPartCommand : IRequest
 {
@@ -13,6 +13,8 @@ public record UpdateOrderPartCommand : IRequest
     public int OrderId { get; set; }
 
     public int PartId { get; set; }
+    public int Quantity { get; set; }
+
 }
 
 public class UpdateOrderPartCommandHandler : IRequestHandler<UpdateOrderPartCommand>
@@ -36,7 +38,7 @@ public class UpdateOrderPartCommandHandler : IRequestHandler<UpdateOrderPartComm
 
         entity.OrderId = request.OrderId;
         entity.PartId = request.PartId;
-
+        entity.Quantity = request.Quantity;
 
         await _context.SaveChangesAsync(cancellationToken);
     }
