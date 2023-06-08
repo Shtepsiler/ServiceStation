@@ -33,7 +33,7 @@ public class UpdateOrderPartCommandHandler : IRequestHandler<UpdateOrderPartComm
 
         if (entity == null)
         {
-            throw new NotFoundException(nameof(Job), request.Id);
+            throw new NotFoundException(nameof(OrderPart), request.Id);
         }
 
         entity.OrderId = request.OrderId;

@@ -25,7 +25,7 @@ namespace Application.Operations.MechanicsTasks.Commands
 
                 if (entity == null)
                 {
-                    throw new NotFoundException(nameof(DTOs.Respponces.MechanicsTasksDTO), request.Id);
+                    throw new NotFoundException(nameof(Domain.Entities.MechanicsTasks), request.Id);
                 }
 
                 _context.MechanicsTasks.Remove(entity);

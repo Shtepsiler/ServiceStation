@@ -31,7 +31,7 @@ public class UpdateMechanicTaskCommandHandler : IRequestHandler<UpdateMechanicTa
 
         if (entity == null)
         {
-            throw new NotFoundException(nameof(Job), request.Id);
+            throw new NotFoundException(nameof(Domain.Entities.MechanicsTasks), request.Id);
         }
         entity.MechanicId = request.MechanicId;
         entity.JobId = request.JobId;

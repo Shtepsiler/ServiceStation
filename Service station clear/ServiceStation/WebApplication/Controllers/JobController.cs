@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using FluentValidation;
 
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
@@ -7,6 +8,7 @@ using Application.Operations.Jobs.Commands;
 using Application.DTOs.Respponces;
 using Application.Operations.Jobs.Queries;
 using Application.Operations.Managers.Commands;
+using Application.Common.Validation;
 
 namespace ServiceStation.API.Controllers
 {
@@ -15,10 +17,11 @@ namespace ServiceStation.API.Controllers
     public class JobController : ControllerBase
     {
         private IMediator Mediator;
-
-        public JobController(IMediator mediator)
+        private UpdateJobCommandValidator UdateJobCommandValidator;
+        public JobController(IMediator mediator, UpdateJobCommandValidator updateJobCommandValidator)
         {
             Mediator = mediator;
+            UdateJobCommandValidator = updateJobCommandValidator;
         }
 
 
@@ -84,6 +87,9 @@ namespace ServiceStation.API.Controllers
 
             try
             {
+                var isValid = UdateJobCommandValidator.Validate(comand);
+                if (!isValid.IsValid)
+                    throw new  ValidationException(isValid.Errors);
                 await Mediator.Send(comand);
                
             }
