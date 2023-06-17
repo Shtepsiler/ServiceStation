@@ -18,10 +18,12 @@ namespace ServiceStation.API.Controllers
     {
         private IMediator Mediator;
         private UpdateJobCommandValidator UdateJobCommandValidator;
-        public JobController(IMediator mediator, UpdateJobCommandValidator updateJobCommandValidator)
+        private CreateJobCommandValidator CreateJobCommandValidator;
+        public JobController(IMediator mediator, UpdateJobCommandValidator updateJobCommandValidator, CreateJobCommandValidator createJobCommandValidator)
         {
             Mediator = mediator;
             UdateJobCommandValidator = updateJobCommandValidator;
+            CreateJobCommandValidator = createJobCommandValidator;  
         }
 
 
@@ -40,8 +42,27 @@ namespace ServiceStation.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Create(CreateJobCommand comand)
         {
-            await Mediator.Send(comand);
-            return NoContent();
+            try {
+                var isValid = CreateJobCommandValidator.Validate(comand);
+                if (isValid.IsValid)
+                {
+                    await Mediator.Send(comand);
+                    return NoContent();
+                }
+                else 
+                {
+                    return BadRequest();
+                }
+
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+
+            }
+
+
+
 
         }
 

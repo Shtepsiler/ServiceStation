@@ -1,0 +1,38 @@
+﻿@page "/checkmyorders"
+@using BlazorAppForClient.Interfaces;
+@using BlazorAppForClient.ViewModels;
+@inject IJobService _IlobServise
+
+<h3>Сheck my orders</h3>
+
+@if (model is not null)
+{
+    <h3>@model.id</h3>
+    <h1>@model.modelId</h1>   
+    <h3>@model.managerId</h3>
+    <h1>@model.status</h1>   
+    <h3>@model.clientId</h3>
+    <h1>@model.description</h1>
+}
+
+
+
+
+
+
+@code {
+    [Parameter]
+    public JobViewModel model { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+     
+
+        model = await _IlobServise.GetAsync(1);
+    }
+
+
+
+
+}

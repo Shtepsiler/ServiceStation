@@ -16,6 +16,7 @@ namespace ServiceStation.DAL.Repositories
         public IModelRepository _ModelRepository { get; }
         public IManagerRepository _ManagerRepository { get; }
       public ITokenRepository _TokenRepository { get; }
+        public IMechanicRepository _MechanicRepository { get; }
         public async Task SaveChangesAsync()
         {
             await databaseContext.SaveChangesAsync();
@@ -28,7 +29,8 @@ namespace ServiceStation.DAL.Repositories
             IJobRepository jobRepository,
             IModelRepository modelRepository,
             IManagerRepository managerRepository,
-            ITokenRepository tokenRepository
+            ITokenRepository tokenRepository,
+            IMechanicRepository mechanicRepository
           )
         {
             this.databaseContext = databaseContext;
@@ -38,6 +40,7 @@ namespace ServiceStation.DAL.Repositories
             _ModelRepository = modelRepository;
             _ManagerRepository = managerRepository;
             _TokenRepository = tokenRepository;
+            _MechanicRepository = mechanicRepository;
         }
     }
 }

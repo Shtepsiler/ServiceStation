@@ -10,7 +10,7 @@ namespace ServiceStation.BLL.Services
         public IModelService _ModelService { get; }
         public IManagerService _ManagerService { get; }
         public ITokenService _TokenService { get; }
-
+        public IMechanicService _MechanicService { get; }
                 
 
         public UnitOfBisnes(
@@ -19,7 +19,10 @@ namespace ServiceStation.BLL.Services
             IJobService jobService, 
             IModelService modelService, 
             IManagerService managerService,
-            ITokenService tokenService)
+            ITokenService tokenService,
+            IMechanicService mechanicService
+            
+            )
         {
             _ClientService = clientService;
             _IdentityService = identityService;
@@ -27,6 +30,7 @@ namespace ServiceStation.BLL.Services
             _ModelService = modelService;
             _ManagerService = managerService;
             _TokenService = tokenService;
+            _MechanicService = mechanicService;
         }
     }
 }

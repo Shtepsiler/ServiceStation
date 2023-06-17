@@ -14,6 +14,7 @@ namespace ServiceStation.BLL.Mapping
             CreateModelMap();
             CreateIdentityMap();
             CreateClientMap();
+            CreateMechanicMap();
         }
 
 
@@ -35,6 +36,11 @@ namespace ServiceStation.BLL.Mapping
             CreateMap<Manager,ManagerResponse>();
             CreateMap<ManagerRequest, Manager>();
 
+
+        }
+        private void CreateMechanicMap() {
+            CreateMap<Mechanic,MechanicResponse>().ReverseMap();
+            CreateMap<Mechanic, MechanicPublicResponse>().ReverseMap();
 
         }
         private void CreateModelMap()

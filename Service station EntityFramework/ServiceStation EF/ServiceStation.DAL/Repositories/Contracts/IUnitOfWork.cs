@@ -13,6 +13,7 @@ namespace ServiceStation.DAL.Repositories.Contracts
         IManagerRepository _ManagerRepository { get; }
         IModelRepository _ModelRepository { get; }
         ITokenRepository _TokenRepository { get; }
+        IMechanicRepository _MechanicRepository { get; }
         Task SaveChangesAsync();
     }
 }

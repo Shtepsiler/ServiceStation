@@ -47,16 +47,16 @@ namespace ServiceStation.API.Controllers
         }
 
         //GET: api/jobs/Id
-        [Authorize]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<JobResponse>> GetByIdAsync(int id)
+      /*  [Authorize]*/
+        [HttpGet("{Id}")]
+        public async Task<ActionResult<JobResponse>> GetByIdAsync(int Id)
         {
             try
             {
-                var result = await _UnitOfBisnes._JobService.GetByIdAsync(id);
+                var result = await _UnitOfBisnes._JobService.GetByIdAsync(Id);
                 if (result == null)
                 {
-                    _logger.LogInformation($"Івент із Id: {id}, не був знайдейний у базі даних");
+                    _logger.LogInformation($"Івент із Id: {Id}, не був знайдейний у базі даних");
                     return NotFound();
                 }
                 else
@@ -75,7 +75,7 @@ namespace ServiceStation.API.Controllers
 
         //GET: api/jobs/Id
         [Authorize]
-        [HttpGet("user/{id}")]
+        [HttpGet("user/{Id}")]
         public async Task<ActionResult<ClientsJobsResponse>> GetByUserIdAsync(int id)
         {
             try
@@ -151,9 +151,9 @@ namespace ServiceStation.API.Controllers
             }
         }
 
-        //POST: api/jobs/id
+        //POST: api/jobs/Id
         [Authorize]
-        [HttpPut("{id}")]
+        [HttpPut("{Id}")]
         public async Task<ActionResult> UpdateAsync(int id, [FromBody] JobRequest job)
         {
             try
@@ -182,7 +182,7 @@ namespace ServiceStation.API.Controllers
 
         //GET: api/jobs/Id
         [Authorize]
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         public async Task<ActionResult> DeleteByIdAsync(int id)
         {
             try
