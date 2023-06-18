@@ -9,6 +9,7 @@
 @using BlazorAppForClient.ViewModels;
 @using Blazored.FluentValidation
 @using MudBlazor;
+
 <EditForm Model="@user" OnValidSubmit="@SignInAsync">
     <FluentValidationValidator />
     <MudContainer Class="pb-8" MaxWidth="@MaxWidth.Small">

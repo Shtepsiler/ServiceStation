@@ -6,7 +6,7 @@
 <PageTitle>Team</PageTitle>
 
 
-<h1>сторінка на якій буде знаходитися інформація про команду</h1>
+<h1>сторінка на якій знаходиться інформація про команду</h1>
 @if(mechanics is not null)
 {
     @foreach(var Mechanic in mechanics)
@@ -15,7 +15,8 @@
             <hr>
         <h3>@Mechanic.firstName @Mechanic.lastName</h3>
         <h3>@Mechanic.specialization</h3>
-    </div>
+            <hr>
+        </div>
     
     }
 

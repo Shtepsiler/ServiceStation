@@ -8,47 +8,46 @@ namespace BlazorAppForClient.Validation
     {
         public UserSignUpViewModelValidator()
         {
-            RuleFor(request => request.UserName)
+            RuleFor(request => request.userName)
                 .NotEmpty()
                 .WithMessage("UserName can't be empty.");
 
-            RuleFor(request => request.Email)
+            RuleFor(request => request.email)
                 .EmailAddress()
                 .WithMessage("Wrong email address.");
 
-            RuleFor(request => request.Password)
+            RuleFor(request => request.password)
                 .NotEmpty()
-                .WithMessage(request => $"{nameof(request.Password)} can't be empty.")
+                .WithMessage(request => $"{nameof(request.password)} can't be empty.")
                 .Must(password => password is not null && password.Any(char.IsUpper))
-                .WithMessage(request => $"{nameof(request.Password)} must contain an uppercase character.")
+                .WithMessage(request => $"{nameof(request.password)} must contain an uppercase character.")
                 .Must(password => password is not null && password.Any(char.IsLower))
-                .WithMessage(request => $"{nameof(request.Password)} must contain a lowercase character.")
+                .WithMessage(request => $"{nameof(request.password)} must contain a lowercase character.")
                 .Must(password => password is not null && password.Any(char.IsDigit))
-                .WithMessage(request => $"{nameof(request.Password)} must contain a digit.");
-
+                .WithMessage(request => $"{nameof(request.password)} must contain a digit.");
+            /*
+                        RuleFor(request =>  request)
+                            .Must(p => p.ConfirmPassword.Equals(p.ConfirmPassword))
+                            .WithMessage("Password is not equel each other");
+            */
             RuleFor(request => request.ConfirmPassword)
-                .Equal(p=>p.ConfirmPassword)
-                .WithMessage($"Passwords are different.");
+                      .Equal(p => p.password)
+                      .WithMessage($"Passwords are different.");
 
-            RuleFor(request => request.FirstName)
+            RuleFor(request => request.firstName)
                 .NotEmpty()
-                .WithMessage(request => $"{nameof(request.FirstName)} can't be empty.")
+                .WithMessage(request => $"{nameof(request.firstName)} can't be empty.")
                 .MaximumLength(50)
-                .WithMessage(request => $"{nameof(request.FirstName)} should be less than 50 characters.");
+                .WithMessage(request => $"{nameof(request.firstName)} should be less than 50 characters.");
 
-            RuleFor(request => request.LastName)
+            RuleFor(request => request.lastName)
                 .NotEmpty()
-                .WithMessage(request => $"{nameof(request.LastName)} can't be empty.")
+                .WithMessage(request => $"{nameof(request.lastName)} can't be empty.")
                 .MaximumLength(50)
-                .WithMessage(request => $"{nameof(request.LastName)} should be less than 50 characters.");
+                .WithMessage(request => $"{nameof(request.lastName)} should be less than 50 characters.");
 
-            RuleFor(request => request.Profession)
-                .MaximumLength(50)
-                .WithMessage(request => $"{nameof(request.Profession)} should be less than 50 characters.");
-
-            RuleFor(request => request.Specialization)
-                .MaximumLength(50)
-                .WithMessage(request => $"{nameof(request.Specialization)} should be less than 50 characters.");
+          
         }
+        
     }
 }

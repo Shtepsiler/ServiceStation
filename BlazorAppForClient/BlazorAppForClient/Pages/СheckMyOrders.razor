@@ -2,7 +2,7 @@
 @using BlazorAppForClient.Interfaces;
 @using BlazorAppForClient.ViewModels;
 @inject IJobService _IlobServise
-
+@attribute [Authorize]
 <h3>Сheck my orders</h3>
 
 @if (model is not null)

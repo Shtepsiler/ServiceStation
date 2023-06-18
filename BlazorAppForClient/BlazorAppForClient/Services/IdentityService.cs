@@ -26,8 +26,13 @@ namespace BlazorAppForClient.Services
                 requestUri,
                 model);
 
-            await stateProvider.MarkUserAsAuthenticatedAsync(jwtModel.Token);
+            await stateProvider.MarkUserAsAuthenticatedAsync(jwtModel.token);
             return jwtModel;
+        }
+
+        public async Task SingOutAsync()
+        {
+            await stateProvider.MarkUserAsLoggedOutAsync();
         }
 
         public IdentityService(

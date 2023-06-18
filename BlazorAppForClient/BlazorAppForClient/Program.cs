@@ -48,11 +48,11 @@ builder.Services.AddHttpClient<ITeamService, TeamService>(httpClient =>
 {
     httpClient.BaseAddress = new($"{APIBaseString}/api/Mechanic/");
 });
-/*builder.Services.AddHttpClient<IIdentityService, IdentityService>(httpClient =>
-{
-    httpClient.BaseAddress = new($"{APIBaseString}/api/Manager/");
-});
 builder.Services.AddHttpClient<IIdentityService, IdentityService>(httpClient =>
+{
+    httpClient.BaseAddress = new($"{APIBaseString}/api/Identity/");
+});
+/*builder.Services.AddHttpClient<IIdentityService, IdentityService>(httpClient =>
 {
     httpClient.BaseAddress = new($"{APIBaseString}/api/Model/");
 });*/
