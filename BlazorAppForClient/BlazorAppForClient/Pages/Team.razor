@@ -7,20 +7,21 @@
 
 
 <h1>сторінка на якій знаходиться інформація про команду</h1>
+
 @if(mechanics is not null)
-{
+{  <div class="grid-container">
     @foreach(var Mechanic in mechanics)
     {
-        <div>
+            <div class="employee-card">
             <hr>
         <h3>@Mechanic.firstName @Mechanic.lastName</h3>
         <h3>@Mechanic.specialization</h3>
+                <iframe src="@Mechanic.photoURL" width="300" height="200" allow="autoplay" sandbox=" allow-scripts"></iframe>
             <hr>
         </div>
     
     }
-
-
+    </div>
 }
 
 

@@ -12,5 +12,7 @@ namespace ServiceStation.BLL.DTO.Responses
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Specialization { get; set; }
+        public string? PhotoURL { get; set; }
+
     }
 }

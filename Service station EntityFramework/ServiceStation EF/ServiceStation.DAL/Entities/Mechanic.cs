@@ -16,6 +16,7 @@ namespace ServiceStation.DAL.Entities
         public string Phone { get; set; }
         public string Password { get; set; }
         public string Specialization { get; set; }
+        public string? PhotoURL { get; set; }
         [NotMapped]
         public List<Job> Jobs { get; set; }
         [NotMapped]

@@ -28,7 +28,7 @@ namespace ServiceStation.API.Controllers
 
         [HttpGet]
 
-        public async Task<ActionResult<IEnumerable<MechanicResponse>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<MechanicPublicResponse>>> GetAllAsync()
         {
             try
             {

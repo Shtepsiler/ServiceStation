@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiceStation.DAL.Data;
 
@@ -11,9 +12,11 @@ using ServiceStation.DAL.Data;
 namespace ServiceStation.DAL.Migrations
 {
     [DbContext(typeof(ServiceStationDContext))]
-    partial class ServiceStationDContextModelSnapshot : ModelSnapshot
+    [Migration("20230621151634_addphotourl")]
+    partial class addphotourl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
