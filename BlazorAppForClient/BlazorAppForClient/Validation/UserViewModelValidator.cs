@@ -7,21 +7,21 @@ namespace BlazorAppForClient.Validation
     {
         public UserViewModelValidator()
         {
-            RuleFor(request => request.Email)
+            RuleFor(request => request.email)
                 .EmailAddress()
                 .WithMessage("Wrong email address.");
 
-            RuleFor(request => request.FirstName)
+            RuleFor(request => request.firstName)
                 .NotEmpty()
-                .WithMessage(request => $"{nameof(request.FirstName)} can't be empty.")
+                .WithMessage(request => $"{nameof(request.firstName)} can't be empty.")
                 .MaximumLength(50)
-                .WithMessage(request => $"{nameof(request.FirstName)} should be less than 50 characters.");
+                .WithMessage(request => $"{nameof(request.firstName)} should be less than 50 characters.");
 
-            RuleFor(request => request.LastName)
+            RuleFor(request => request.lastName)
                 .NotEmpty()
-                .WithMessage(request => $"{nameof(request.LastName)} can't be empty.")
+                .WithMessage(request => $"{nameof(request.lastName)} can't be empty.")
                 .MaximumLength(50)
-                .WithMessage(request => $"{nameof(request.LastName)} should be less than 50 characters.");
+                .WithMessage(request => $"{nameof(request.lastName)} should be less than 50 characters.");
 
            
 

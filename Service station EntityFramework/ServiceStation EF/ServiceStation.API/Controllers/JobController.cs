@@ -47,7 +47,7 @@ namespace ServiceStation.API.Controllers
         }
 
         //GET: api/jobs/Id
-      /*  [Authorize]*/
+        [Authorize]
         [HttpGet("{Id}")]
         public async Task<ActionResult<JobResponse>> GetByIdAsync(int Id)
         {

@@ -55,6 +55,8 @@ namespace ServiceStation.BLL.Mapping
         private void CreateClientMap()
         {
             CreateMap<Client, ClientResponse>().ForMember(r => r.ClientName, opt => opt.MapFrom(client => client.UserName)).ReverseMap();
+            CreateMap<ClientRequest , Client > ().ForMember(r => r.UserName, opt => opt.MapFrom(client => client.ClientName)).ReverseMap();
+
         }
 
 

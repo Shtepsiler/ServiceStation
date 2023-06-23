@@ -14,22 +14,20 @@ namespace BlazorAppForClient.Services
     {
         private readonly HttpClient _httpClient;
         private readonly ApiAuthenticationStateProvider _stateProvider;
-        private readonly ILocalStorageService _localStorage;
-        public JobService(ILocalStorageService localStorage, HttpClient httpClient, ApiAuthenticationStateProvider stateProvider) {
-        _localStorage = localStorage;
+
+        public JobService( HttpClient httpClient, ApiAuthenticationStateProvider stateProvider) {
             _httpClient = httpClient;
             _stateProvider = stateProvider;
-            
         }
 
-        public async Task<JobViewModel> GetAsync(int id)
+        public async Task<IEnumerable<CompleteJobViewModel>> GetAsync()
         {
-            return await GetAsync<JobViewModel>($"{id}");
+            return await GetAsync<IEnumerable<CompleteJobViewModel>>();
         }
-        private async Task<T> GetAsync<T>(string requestUri)
+        private async Task<T> GetAsync<T>()
         {
             _httpClient.DefaultRequestHeaders.Authorization = await GenerateAuthorizationHeaderAsync();
-            var response = await _httpClient.GetAsync(requestUri);
+            var response = await _httpClient.GetAsync($"user/{ await _stateProvider.GetClientIdAsync()}");
             var responseBody = await response.Content.ReadAsStringAsync();
             StatusCodeHandler.TryHandleStatusCode(response.StatusCode, responseBody);
             return JsonSerializer.Deserialize<T>(responseBody);
@@ -48,11 +46,27 @@ namespace BlazorAppForClient.Services
             _httpClient.DefaultRequestHeaders.Authorization = await GenerateAuthorizationHeaderAsync();
             var response = await _httpClient.PostAsJsonAsync(requestUri, viewModel);
             var responseBody = await response.Content.ReadAsStringAsync();
-            StatusCodeHandler.TryHandleStatusCode(response.StatusCode, responseBody);
+      
+            if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized )
+            {
+/*                _IdentityService.TryRefreshTokenAsync();
+*/                _httpClient.DefaultRequestHeaders.Authorization = await GenerateAuthorizationHeaderAsync();
+                var newresponse = await _httpClient.PostAsJsonAsync(requestUri, viewModel);
+                var newresponseBody = await newresponse.Content.ReadAsStringAsync();
+                StatusCodeHandler.TryHandleStatusCode(newresponse.StatusCode, newresponseBody);
+
+
+
+            }
+      StatusCodeHandler.TryHandleStatusCode(response.StatusCode, responseBody);
+
+
+
         }
         private async Task<AuthenticationHeaderValue> GenerateAuthorizationHeaderAsync() =>
     new("Bearer", await _stateProvider.GetJwtTokenAsync());
-       
+
+
 
         public async Task SubmitAJob(NewJoobViewModel newJoobViewModel)
         {

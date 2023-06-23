@@ -18,6 +18,10 @@ namespace BlazorAppForClient.Authentication
             await localStorage.GetItemAsync<string>("securityToken");
         public async Task<int> GetClientIdAsync() =>
             await localStorage.GetItemAsync<int>("clientId");
+      /*  public async Task<string> GetRefreshTokenAsync() =>
+            await localStorage.GetItemAsync<string>("refreshToken");*/
+        public async Task<string> GetClientNameAsync() =>
+    await localStorage.GetItemAsync<string>("clientName");
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var encryptedToken = await localStorage.GetItemAsync<string>("securityToken");
@@ -30,10 +34,36 @@ namespace BlazorAppForClient.Authentication
             return GenerateStateFromToken(token);
         }
 
-        public async Task MarkUserAsAuthenticatedAsync(string encryptedToken,int userId)
+        public async Task RenewAccessToken(string encryptedToken)
+        {
+            try
+            {
+                var Token = await localStorage.GetItemAsync<string>("securityToken");
+                if (Token is not null)
+                {
+                    await localStorage.RemoveItemAsync("securityToken");
+
+                }
+
+                await localStorage.SetItemAsync("securityToken", encryptedToken);
+
+            }
+            catch (Exception e){ throw e; }
+
+
+            var token = new JwtSecurityTokenHandler().ReadJwtToken(encryptedToken);
+            var state = GenerateStateFromToken(token);
+            NotifyAuthenticationStateChanged(Task.FromResult(state));
+        }
+        public async Task MarkUserAsAuthenticatedAsync(string encryptedToken,int userId,string clientName)
         {
             await localStorage.SetItemAsync("securityToken", encryptedToken);
             await localStorage.SetItemAsync("clientId", userId);
+           // await localStorage.SetItemAsync("refreshToken", refreshToken);
+            await localStorage.SetItemAsync("clientName", clientName);
+
+
+
             var token = new JwtSecurityTokenHandler().ReadJwtToken(encryptedToken);
             var state = GenerateStateFromToken(token);
             NotifyAuthenticationStateChanged(Task.FromResult(state));
@@ -43,6 +73,8 @@ namespace BlazorAppForClient.Authentication
         {
             await localStorage.RemoveItemAsync("securityToken");
             await localStorage.RemoveItemAsync("clientId");
+            await localStorage.RemoveItemAsync("clientName");
+
             NotifyAuthenticationStateChanged(Task.FromResult(AnonymousState));
         }
 

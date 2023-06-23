@@ -122,6 +122,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IMechanicService,MechanicService>();
 builder.Services.AddScoped<IUnitOfBisnes, UnitOfBisnes>();
 
+builder.Services.AddTransient<EmailSender>();
 
 builder.Services.AddScoped<IValidator<ClientSignInRequest>, ClientSignInRequestValidator>();
 builder.Services.AddScoped<IValidator<ClientSignUpRequest>, ClientSingUpRequestValidator>();
@@ -140,7 +141,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                             ClockSkew = TimeSpan.Zero,
                         };
                     });
-
 
 var app = builder.Build();
 

@@ -1,5 +1,6 @@
 ﻿using BlazorAppForClient.Exceptions;
 using BlazorAppForClient.ViewModels;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -8,6 +9,7 @@ namespace BlazorAppForClient.Extensions
 {
     public static class StatusCodeHandler
     {
+
         private static readonly Dictionary<HttpStatusCode, Action<string>> statusCodesHandlers = new()
         {
             {
@@ -42,7 +44,8 @@ namespace BlazorAppForClient.Extensions
                         responseBody.Deserialize<ErrorViewModel>().Message);
                 }
             }
-
+            
+           
 
 
 

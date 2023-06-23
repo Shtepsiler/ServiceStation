@@ -1,4 +1,5 @@
 ﻿using BlazorAppForClient.Authentication;
+using BlazorAppForClient.ViewModels;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -75,7 +76,15 @@ namespace BlazorAppForClient.Extensions
             StatusCodeHandler.TryHandleStatusCode(response.StatusCode, responseBody);
             return responseBody.Deserialize<TOut>();
         }
-
+/*        public async Task<JwtViewModel> PostWithoutAuthorizationTokenAsync(string requestUri)
+        {
+            httpClient.DefaultRequestHeaders.Add("RefreshToken", await stateProvider.GetRefreshTokenAsync());
+            httpClient.BaseAddress = new Uri("https://localhost:7190/api/Client/");
+            var response = await httpClient.PostAsync(requestUri,null);
+            var responseBody = await response.Content.ReadAsStringAsync();
+            StatusCodeHandler.TryHandleStatusCode(response.StatusCode, responseBody);
+            return responseBody.Deserialize<JwtViewModel>();
+        }*/
         public async Task PutAsync<T>(string requestUri, T viewModel)
         {
             httpClient.DefaultRequestHeaders.Authorization = await GenerateAuthorizationHeaderAsync();

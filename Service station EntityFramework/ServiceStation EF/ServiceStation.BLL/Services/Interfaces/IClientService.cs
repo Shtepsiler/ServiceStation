@@ -14,7 +14,14 @@ namespace ServiceStation.BLL.Services.Interfaces
 
 
         Task<ClientResponse> GetClientByName(string name);
-        Task RewokeRefreshToken(string clientMame, string token);
+        Task RewokeRefreshToken(string clientname,string token);
+
+        Task<JwtResponse> RenewAccesToken(string refreshtoken);
+
+        Task UpdateAsync(string name, ClientRequest client);
+        Task DeleteAsync(string name);
+
+
 
 
     }

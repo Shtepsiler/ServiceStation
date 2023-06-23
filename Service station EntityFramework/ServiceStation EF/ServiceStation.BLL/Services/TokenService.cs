@@ -100,10 +100,10 @@ namespace ServiceStation.BLL.Services
 
                 }
                 
-                if (ifrexisttoken.Result.ExpirationDate>DateTime.Now)
+                if (ifrexisttoken.Result.ExpirationDate<DateTime.Now)
                 {
                     unitOfWork._TokenRepository.DeleteTokenByClientName(ifrexisttoken.Result.ClientName);
-                    unitOfWork.SaveChangesAsync().Wait();   
+                    unitOfWork.SaveChangesAsync();   
 
                 throw new Exception("Token is Expirationed it will be deleted you must login again");
 

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceStation.BLL.DTO.Responses
+namespace ServiceStation.BLL.DTO.Requests
 {
-    public class ClientResponse
+    public class ClientRequest
     {
         public int Id { get; set; }
         public string? FirstName { get; set; }

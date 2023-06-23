@@ -5,7 +5,7 @@ namespace BlazorAppForClient.Interfaces
     public interface IJobService
     {
 
-        Task<JobViewModel> GetAsync(int id);
+        Task<IEnumerable<CompleteJobViewModel>> GetAsync();
         Task SubmitAJob(NewJoobViewModel newJoobViewModel);
 
 

@@ -8,6 +8,8 @@ namespace BlazorAppForClient.Interfaces
         Task<JwtViewModel> SignInAsync(UserSignInViewModel viewModel);
 
         Task<JwtViewModel> SignUpAsync(UserSignUpViewModel viewModel);
+/*        Task TryRefreshTokenAsync();
+*/
         Task SingOutAsync();
     }
 }

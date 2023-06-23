@@ -14,6 +14,22 @@ using ServiceStation.BLL.Services.Interfaces;
 using ServiceStation.DAL.Entities;
 using ServiceStation.DAL.Exceptions;
 using ServiceStation.DAL.Repositories.Contracts;
+using System.Security.Policy;
+using System.Text;
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+
 
 namespace ServiceStation.BLL.Services
 {
@@ -27,6 +43,7 @@ namespace ServiceStation.BLL.Services
 
         private readonly ITokenService tokenService;
         private readonly EmailSender emailSender;
+
         public IdentityService(
         IUnitOfWork unitOfWork,
         IMapper mapper,
@@ -49,6 +66,20 @@ namespace ServiceStation.BLL.Services
             {
                 throw new EntityNotFoundException("Incorrect username or password.");
             }
+         /*   if (user.EmailConfirmed)
+            {
+                var userId = await userManager.GetUserIdAsync(user);
+                var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                var callbackUrl = pageModel.Url.Page(
+                    "/Account/ConfirmEmail",
+                    pageHandler: null,
+                    values: new { area = "Identity", userId = userId, code = code, },
+                    protocol: pageModel.Request.Scheme);
+
+                await emailSender.SendEmailAsync(user.Email, "Confirm your email",
+   $"Please confirm your account by visiting the following URL:\r\n\r\n{callbackUrl}");
+            }*/
 
             var jwtToken = tokenService.BuildToken(user);
             return new() {Id=user.Id ,Token = tokenService.SerializeToken(jwtToken), ClientName = user.UserName, RefreshToken= tokenService.GetRefreshToken(user.UserName) };
@@ -73,6 +104,21 @@ namespace ServiceStation.BLL.Services
             var newClient = await userManager.FindByNameAsync(request.UserName);
 
 
+           /* if (user.EmailConfirmed)
+            {
+                var userId = await userManager.GetUserIdAsync(user);
+                var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                var callbackUrl = pageModel.Url.Page(
+                    "/Account/ConfirmEmail",
+                    pageHandler: null,
+                    values: new { area = "Identity", userId = userId, code = code, },
+                    protocol: pageModel.Request.Scheme);
+
+                await emailSender.SendEmailAsync(user.Email, "Confirm your email",
+   $"Please confirm your account by visiting the following URL:\r\n\r\n{callbackUrl}");
+            }
+*/
 
             try
             {

@@ -26,14 +26,32 @@ namespace BlazorAppForClient.Services
                 requestUri,
                 model);
 
-            await stateProvider.MarkUserAsAuthenticatedAsync(jwtModel.token,jwtModel.id);
+            await stateProvider.MarkUserAsAuthenticatedAsync(jwtModel.token,jwtModel.id,jwtModel.clientName);
             return jwtModel;
         }
+      /*  private async Task<JwtViewModel> ExecuteRequestRefreshTokenAsync(string requestUri)
+        {
+            var jwtModel = await httpClient.PostWithoutAuthorizationTokenAsync(requestUri);
 
+            await stateProvider.MarkUserAsAuthenticatedAsync(jwtModel.token, jwtModel.id, jwtModel.refreshToken);
+            return jwtModel;
+        }*/
         public async Task SingOutAsync()
         {
             await stateProvider.MarkUserAsLoggedOutAsync();
         }
+      /*  public async Task TryRefreshTokenAsync()
+        {
+            var jwt = await ExecuteRequestRefreshTokenAsync("refreshToken");
+
+            stateProvider.MarkUserAsAuthenticatedAsync(jwt.token, jwt.id, jwt.refreshToken);
+
+
+
+
+        }*/
+
+
 
         public IdentityService(
             HttpClient httpClient,

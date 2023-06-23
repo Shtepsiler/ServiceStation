@@ -68,7 +68,8 @@
     {
        await _RequestErrorsHandler.HandleRequestAsync(async () =>
         {
-             await _JobService.SubmitAJob(newJoobViewModel);
+              
+            await _JobService.SubmitAJob(newJoobViewModel);
 
             _NavigationManager.NavigateTo("/");
              Snackbar.Add("Job added", Severity.Success);

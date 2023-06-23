@@ -1,4 +1,3 @@
-using BlazorAppForClient.Areas.Identity;
 using BlazorAppForClient.Authentication;
 using BlazorAppForClient.Extensions;
 using BlazorAppForClient.Interfaces;
@@ -8,7 +7,8 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using MudBlazor.Services;
 using FluentValidation.AspNetCore;
 
@@ -19,10 +19,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddBlazoredLocalStorage(); 
 builder.Services.AddMudServices();
 builder.Services.AddAuthenticationCore();
+/*builder.Services.AddAutoMapper(typeof(MapperProfile));
+*/
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+});
+
+
+
 string APIBaseString = builder.Configuration["APIBaseString"];
 /*builder.Services.AddMvc()
                     .AddFluentValidation(configuration =>
@@ -38,7 +47,7 @@ builder.Services.AddScoped<AuthenticationStateProvider>(
 
 
 
-builder.Services.AddScoped<ApiHttpClient>();
+/*builder.Services.AddScoped<ApiHttpClient>();*/
 
 builder.Services.AddHttpClient<IJobService, JobService>(httpClient =>
 {
@@ -52,13 +61,14 @@ builder.Services.AddHttpClient<IIdentityService, IdentityService>(httpClient =>
 {
     httpClient.BaseAddress = new($"{APIBaseString}/api/Identity/");
 });
-/*builder.Services.AddHttpClient<IIdentityService, IdentityService>(httpClient =>
+builder.Services.AddHttpClient<IUsersService, UsersService>(httpClient =>
 {
-    httpClient.BaseAddress = new($"{APIBaseString}/api/Model/");
-});*/
+    httpClient.BaseAddress = new($"{APIBaseString}/api/Client/");
+});
 
 
 
+builder.Services.AddScoped<JwtAuthorizationFilter>();
 
 
 var app = builder.Build();
@@ -81,6 +91,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
