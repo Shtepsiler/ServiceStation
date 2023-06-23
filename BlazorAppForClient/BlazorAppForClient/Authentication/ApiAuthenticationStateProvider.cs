@@ -16,7 +16,8 @@ namespace BlazorAppForClient.Authentication
 
         public async Task<string> GetJwtTokenAsync() =>
             await localStorage.GetItemAsync<string>("securityToken");
-
+        public async Task<int> GetClientIdAsync() =>
+            await localStorage.GetItemAsync<int>("clientId");
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var encryptedToken = await localStorage.GetItemAsync<string>("securityToken");
@@ -29,9 +30,10 @@ namespace BlazorAppForClient.Authentication
             return GenerateStateFromToken(token);
         }
 
-        public async Task MarkUserAsAuthenticatedAsync(string encryptedToken)
+        public async Task MarkUserAsAuthenticatedAsync(string encryptedToken,int userId)
         {
             await localStorage.SetItemAsync("securityToken", encryptedToken);
+            await localStorage.SetItemAsync("clientId", userId);
             var token = new JwtSecurityTokenHandler().ReadJwtToken(encryptedToken);
             var state = GenerateStateFromToken(token);
             NotifyAuthenticationStateChanged(Task.FromResult(state));
@@ -40,6 +42,7 @@ namespace BlazorAppForClient.Authentication
         public async Task MarkUserAsLoggedOutAsync()
         {
             await localStorage.RemoveItemAsync("securityToken");
+            await localStorage.RemoveItemAsync("clientId");
             NotifyAuthenticationStateChanged(Task.FromResult(AnonymousState));
         }
 

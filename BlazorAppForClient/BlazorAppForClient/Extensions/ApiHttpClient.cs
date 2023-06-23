@@ -21,7 +21,7 @@ namespace BlazorAppForClient.Extensions
 
         public async Task<T> GetAsync<T>(string requestUri)
         {
-          //  httpClient.DefaultRequestHeaders.Authorization = await GenerateAuthorizationHeaderAsync();
+            httpClient.DefaultRequestHeaders.Authorization = await GenerateAuthorizationHeaderAsync();
             var response = await httpClient.GetAsync(requestUri);
             var responseBody = await response.Content.ReadAsStringAsync();
             StatusCodeHandler.TryHandleStatusCode(response.StatusCode, responseBody);

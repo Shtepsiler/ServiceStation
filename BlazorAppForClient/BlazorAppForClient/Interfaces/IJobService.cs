@@ -6,7 +6,9 @@ namespace BlazorAppForClient.Interfaces
     {
 
         Task<JobViewModel> GetAsync(int id);
-        Task SafeTolocalStorage();
+        Task SubmitAJob(NewJoobViewModel newJoobViewModel);
+
+
 
     }
 }

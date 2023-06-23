@@ -51,7 +51,7 @@ namespace ServiceStation.BLL.Services
             }
 
             var jwtToken = tokenService.BuildToken(user);
-            return new() { Token = tokenService.SerializeToken(jwtToken), ClientName = user.UserName, RefreshToken= tokenService.GetRefreshToken(user.UserName) };
+            return new() {Id=user.Id ,Token = tokenService.SerializeToken(jwtToken), ClientName = user.UserName, RefreshToken= tokenService.GetRefreshToken(user.UserName) };
         }
 
 

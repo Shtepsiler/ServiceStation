@@ -26,7 +26,7 @@ namespace BlazorAppForClient.Services
                 requestUri,
                 model);
 
-            await stateProvider.MarkUserAsAuthenticatedAsync(jwtModel.token);
+            await stateProvider.MarkUserAsAuthenticatedAsync(jwtModel.token,jwtModel.id);
             return jwtModel;
         }
 

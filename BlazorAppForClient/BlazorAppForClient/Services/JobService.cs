@@ -1,8 +1,11 @@
-﻿using BlazorAppForClient.Extensions;
+﻿using BlazorAppForClient.Authentication;
+using BlazorAppForClient.Extensions;
 using BlazorAppForClient.Interfaces;
 using BlazorAppForClient.ViewModels;
 using Blazored.LocalStorage;
+using Microsoft.Extensions.Options;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace BlazorAppForClient.Services
@@ -10,12 +13,12 @@ namespace BlazorAppForClient.Services
     public class JobService : IJobService
     {
         private readonly HttpClient _httpClient;
-
-
+        private readonly ApiAuthenticationStateProvider _stateProvider;
         private readonly ILocalStorageService _localStorage;
-        public JobService(ILocalStorageService localStorage, HttpClient httpClient) {
+        public JobService(ILocalStorageService localStorage, HttpClient httpClient, ApiAuthenticationStateProvider stateProvider) {
         _localStorage = localStorage;
             _httpClient = httpClient;
+            _stateProvider = stateProvider;
             
         }
 
@@ -25,7 +28,7 @@ namespace BlazorAppForClient.Services
         }
         private async Task<T> GetAsync<T>(string requestUri)
         {
-            //  httpClient.DefaultRequestHeaders.Authorization = await GenerateAuthorizationHeaderAsync();
+            _httpClient.DefaultRequestHeaders.Authorization = await GenerateAuthorizationHeaderAsync();
             var response = await _httpClient.GetAsync(requestUri);
             var responseBody = await response.Content.ReadAsStringAsync();
             StatusCodeHandler.TryHandleStatusCode(response.StatusCode, responseBody);
@@ -40,12 +43,21 @@ namespace BlazorAppForClient.Services
 
                     return jwtModel;
                 }*/
-
-        public async Task SafeTolocalStorage()
+        public async Task PostAsync(string requestUri, NewJoobViewModel viewModel)
         {
-            JobViewModel jobViewModel = new JobViewModel() {id=1, modelId = 1, managerId =1 };
+            _httpClient.DefaultRequestHeaders.Authorization = await GenerateAuthorizationHeaderAsync();
+            var response = await _httpClient.PostAsJsonAsync(requestUri, viewModel);
+            var responseBody = await response.Content.ReadAsStringAsync();
+            StatusCodeHandler.TryHandleStatusCode(response.StatusCode, responseBody);
+        }
+        private async Task<AuthenticationHeaderValue> GenerateAuthorizationHeaderAsync() =>
+    new("Bearer", await _stateProvider.GetJwtTokenAsync());
+       
 
-            await _localStorage.SetItemAsync<JobViewModel>("JobModel", jobViewModel);
+        public async Task SubmitAJob(NewJoobViewModel newJoobViewModel)
+        {
+            newJoobViewModel.ClientId = await _stateProvider.GetClientIdAsync();
+            await PostAsync("", newJoobViewModel);
         }
     }
 }
