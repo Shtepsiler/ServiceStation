@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MudBlazor.Services;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,13 +67,37 @@ builder.Services.AddHttpClient<IUsersService, UsersService>(httpClient =>
     httpClient.BaseAddress = new($"{APIBaseString}/api/Client/");
 });
 
+builder.Services.AddMvc();
+
+builder.Services.AddScoped<IAsyncAuthorizationFilter,JwtAuthorizationFilter>();
+/*
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizePage("/manage");
+    options.Conventions.AuthorizePage("/checkmyorders");
+    options.Conventions.AuthorizePage("/makeanappointment");
 
 
-builder.Services.AddScoped<JwtAuthorizationFilter>();
+
+
+
+
+
+    // Додайте інші сторінки, які потребують авторизації
+});
+*/
 
 
 var app = builder.Build();
+/*
+app.UseStatusCodePages(async context =>
+{
+    if (context.HttpContext.Response.StatusCode == 401)
+    {
 
+        context.HttpContext.Response.Redirect("/expiredTokenRedirect");
+    }
+});*/
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

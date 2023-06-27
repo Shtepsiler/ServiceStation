@@ -7,6 +7,7 @@ using ServiceStation.BLL.DTO.Requests;
 using ServiceStation.BLL.DTO.Responses;
 using ServiceStation.BLL.Services;
 using ServiceStation.BLL.Services.Interfaces;
+using ServiceStation.DAL.Entities;
 using ServiceStation.DAL.Repositories.Contracts;
 
 namespace ServiceStation.API.Controllers
@@ -17,16 +18,19 @@ namespace ServiceStation.API.Controllers
     {
         private IUnitOfWork _UnitOfWork;
         private IUnitOfBisnes _UnitOfBisnes;
-        private Mapper 
+        private IMapper _mapper;
         private readonly ILogger<ClientController> _logger;
         public ClientController(
             ILogger<ClientController> logger,
-             IUnitOfWork UnitOfWork, IUnitOfBisnes UnitOfBisnes
+             IUnitOfWork UnitOfWork,
+             IUnitOfBisnes UnitOfBisnes,
+             IMapper mapper
             )
         {
             _logger = logger;
             _UnitOfWork = UnitOfWork;
             _UnitOfBisnes = UnitOfBisnes;
+            _mapper = mapper;
         }
 
 
@@ -55,12 +59,13 @@ namespace ServiceStation.API.Controllers
 
         //GET: api/jobs/Id
         /*  [Authorize]*/
+        [Authorize]
         [HttpGet("{name}")]
         public async Task<ActionResult<ClientResponse>> GetByNameAsync(string name)
         {
             try
             {
-                var result = mapper await _UnitOfWork._ClientManager.FindByNameAsync(name);
+                var result = _mapper.Map<Client, ClientResponse>( await _UnitOfWork._ClientManager.FindByNameAsync(name));
 
                 if (result == null)
                 {

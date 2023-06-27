@@ -1,8 +1,11 @@
 ﻿@page "/checkmyorders"
+@using BlazorAppForClient.Exceptions;
 @using BlazorAppForClient.Interfaces;
 @using BlazorAppForClient.ViewModels;
 @using MudBlazor;
 @inject IJobService _IlobServise
+@inject NavigationManager navmanager
+
 @attribute [Authorize]
 <h3>Сheck my orders</h3>
 
@@ -68,9 +71,14 @@
     {
         await base.OnInitializedAsync();
      
-
+        try{
         Jobs = (List<CompleteJobViewModel>)await _IlobServise.GetAsync();
     }
+    catch (NotAuthrizeExeption ex)
+    {
+        navmanager.NavigateTo($"expiredTokenRedirect");
+    }
+}
 
     private void ShowBtnPress(int nr)
     {

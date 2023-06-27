@@ -23,9 +23,12 @@ namespace ServiceStation.DAL.Repositories
 
         public async Task DeleteTokenByClientName(string clientname)
         {
-            var entity = await table.Where(p => p.ClientName == clientname).FirstOrDefaultAsync();
-            await Task.Run(() => table.Remove(entity));
-           
+            try
+            {
+                var entity = await table.Where(p => p.ClientName == clientname).FirstOrDefaultAsync();
+                await Task.Run(() => table.Remove(entity));
+            }
+            catch (Exception ex) { }
         }
 
         public async Task<RefreshToken> GeTokenByToken(string token) => await table.Where(p => p.ClientSecret == token).FirstOrDefaultAsync();

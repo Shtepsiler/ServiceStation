@@ -34,9 +34,6 @@ namespace BlazorAppForClient.Services
             
         }
 
-        public Task<MechanicViewModel> GetAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

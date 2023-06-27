@@ -46,19 +46,19 @@ namespace BlazorAppForClient.Services
             _httpClient.DefaultRequestHeaders.Authorization = await GenerateAuthorizationHeaderAsync();
             var response = await _httpClient.PostAsJsonAsync(requestUri, viewModel);
             var responseBody = await response.Content.ReadAsStringAsync();
-      
-            if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized )
+            StatusCodeHandler.TryHandleStatusCode(response.StatusCode, responseBody);
+   /*         if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized )
             {
-/*                _IdentityService.TryRefreshTokenAsync();
-*/                _httpClient.DefaultRequestHeaders.Authorization = await GenerateAuthorizationHeaderAsync();
+*//*                _IdentityService.TryRefreshTokenAsync();
+*//*                _httpClient.DefaultRequestHeaders.Authorization = await GenerateAuthorizationHeaderAsync();
                 var newresponse = await _httpClient.PostAsJsonAsync(requestUri, viewModel);
                 var newresponseBody = await newresponse.Content.ReadAsStringAsync();
                 StatusCodeHandler.TryHandleStatusCode(newresponse.StatusCode, newresponseBody);
 
 
 
-            }
-      StatusCodeHandler.TryHandleStatusCode(response.StatusCode, responseBody);
+            }*/
+
 
 
 

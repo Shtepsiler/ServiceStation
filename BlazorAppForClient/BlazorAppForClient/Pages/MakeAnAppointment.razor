@@ -1,8 +1,10 @@
 ﻿@page "/makeanappointment"
+@using BlazorAppForClient.Exceptions;
 @using BlazorAppForClient.Extensions;
 @using BlazorAppForClient.ViewModels;
 @using BlazorAppForClient.Interfaces;
 @using Blazored.FluentValidation
+@inject NavigationManager navmanager
 
 @using MudBlazor;
 @attribute [Authorize]
@@ -68,9 +70,13 @@
     {
        await _RequestErrorsHandler.HandleRequestAsync(async () =>
         {
-              
+              try{
             await _JobService.SubmitAJob(newJoobViewModel);
-
+         }
+    catch (NotAuthrizeExeption ex)
+        {
+            navmanager.NavigateTo($"expiredTokenRedirect");
+        }
             _NavigationManager.NavigateTo("/");
              Snackbar.Add("Job added", Severity.Success);
 

@@ -23,9 +23,10 @@ namespace BlazorAppForClient.Services
         {
             httpClient.DefaultRequestHeaders.Authorization = await GenerateAuthorizationHeaderAsync();
             var response = await httpClient.GetAsync($"{await stateProvider.GetClientNameAsync()}");
-            var responseBody = await response.Content.ReadAsStringAsync();
+            string responseBody = await response.Content.ReadAsStringAsync();
             StatusCodeHandler.TryHandleStatusCode(response.StatusCode, responseBody);
-            return JsonSerializer.Deserialize<T>(responseBody);
+            var result = JsonSerializer.Deserialize<T>(responseBody, JsonSerializerOptions.Default);
+            return result;
         }
 
 
@@ -48,11 +49,15 @@ namespace BlazorAppForClient.Services
             StatusCodeHandler.TryHandleStatusCode(response.StatusCode, responseBody);
         }
 
-        public async Task DeleteAsync() =>
-            await DeleteAsync($"{await stateProvider.GetClientNameAsync()}");
+        public async Task DeleteAsync()
+        {
+            var user = await stateProvider.GetClientNameAsync();
 
+            await DeleteAsync($"{user}");
+        }
         public async Task DeleteAsync(string requestUri)
         {
+            httpClient.DefaultRequestHeaders.Authorization = await GenerateAuthorizationHeaderAsync();
             var response = await httpClient.DeleteAsync(requestUri);
             var responseBody = await response.Content.ReadAsStringAsync();
             StatusCodeHandler.TryHandleStatusCode(response.StatusCode, responseBody);

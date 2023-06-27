@@ -13,6 +13,8 @@ namespace Application.DTOs.Respponces
 {
     public class JobDTO : IMapFrom<Job>
     {
+
+
         public int Id { get; set; }
         public int? ManagerId { get; set; }
         public int ModelId { get; set; }

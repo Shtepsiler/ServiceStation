@@ -1,0 +1,117 @@
+﻿<UserControl x:Class="WpfAppForManagers1._0.Views.MechanicsViews.CreateMechanic"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfAppForManagers1._0.Views.MechanicsViews"
+             mc:Ignorable="d" 
+             d:DesignHeight="1024" d:DesignWidth="1440">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+       <TextBlock Grid.Row="0"  VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50"  >Create a new Mechanic</TextBlock>
+    
+        
+        <Grid Grid.Row="1" Margin="50">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" SharedSizeGroup="FirstColumn" />
+                <ColumnDefinition Width="auto" SharedSizeGroup="SecondColumn" />
+
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="10,0,0,0"
+                Text="FirstName" 
+                />
+            <TextBox
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="10,5,0,0"
+                Text="{Binding FirstName}" />
+
+
+
+            
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                Text="LastName" />
+            <TextBox
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="10,5,0,0"
+                Text="{Binding LastName}" />
+
+
+
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                Text="Address" />
+            <TextBox
+                Grid.Row="3"
+                Grid.Column="1"
+                Margin="10,5,0,0"
+                Text="{Binding Address}" />
+            
+            
+            <TextBlock
+                Grid.Row="4"
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                Text="Phone" />
+            <TextBox
+                Grid.Row="5"
+                Grid.Column="1"
+                Margin="10,5,0,0"
+                Text="{Binding Phone}" />
+            
+            
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                Margin="10,0,0,0"
+                Text="Specialization" />
+            <TextBox
+                Grid.Row="3"
+                Grid.Column="0"
+                Margin="10,5,0,0"
+                Text="{Binding Specialization}" />
+            
+            
+            <TextBlock
+                Grid.Row="4"
+                Grid.Column="0"
+                Margin="10,0,0,0"
+                Text="Password" />
+            <TextBox
+                Grid.Row="5"
+                Grid.Column="0"
+                Margin="10,5,0,0"
+                Text="{Binding Password}" />
+
+            <Button Grid.Row="6" Grid.Column="0" Content="Submit" ></Button>
+            <Button Grid.Row="6" Grid.Column="1" Content="Cancel"  ></Button>
+
+
+        </Grid>
+
+    </Grid>
+</UserControl>

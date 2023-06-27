@@ -1,5 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
@@ -77,7 +78,7 @@ namespace BlazorAppForClient.Authentication
 
             NotifyAuthenticationStateChanged(Task.FromResult(AnonymousState));
         }
-
+        
         public static async Task<string> GetUserIdFromStateAsync(Task<AuthenticationState> state) =>
             (await state).User.Claims.First(claim => claim.Type == ClaimTypes.Authentication).Value;
 

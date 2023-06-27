@@ -40,8 +40,7 @@ namespace BlazorAppForClient.Extensions
                 HttpStatusCode.Unauthorized,
                 responseBody =>
                 {
-                    throw new ServerResponseException(
-                        responseBody.Deserialize<ErrorViewModel>().Message);
+                    throw new NotAuthrizeExeption();
                 }
             }
             

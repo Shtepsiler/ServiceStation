@@ -82,8 +82,16 @@ namespace ServiceStation.BLL.Services
         {
      var user = await unitOfWork._ClientManager.FindByNameAsync(name);
             if (user == null) throw new Exception();
+            user.UserName = client.ClientName;
+            user.FirstName = client.FirstName;
+            user.LastName = client.LastName;
+            user.PhoneNumber = client.PhoneNumber;
+            user.Email = client.Email;
 
-            user = mapper.Map<ClientRequest,Client>(client);
+
+
+            await unitOfWork._ClientManager.UpdateAsync(user);
+            
             await unitOfWork.SaveChangesAsync();
 
         }

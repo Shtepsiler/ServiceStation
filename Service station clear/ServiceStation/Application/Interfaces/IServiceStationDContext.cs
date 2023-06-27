@@ -18,9 +18,10 @@ namespace Application.Interfaces
         DbSet<PartNeeded> PartsNeeded { get; set; }
         DbSet<RefreshToken> RefreshTokens { get; set; }
         DbSet<Vendor> Vendors { get; set; }
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
-       /* DbSet<TEntity> Set<TEntity> () where TEntity : class;*/
+        DbSet<TEntity> Set<TEntity>() where TEntity : class;
+
 
     }
 }

@@ -8,7 +8,7 @@ using Application.DTOs.Respponces;
 
 namespace Infrastructure.Persistence.Data
 {
-    public class ServiceStationDContext :  IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int>, IServiceStationDContext
+    public class ServiceStationDContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int>, IServiceStationDContext
     {
         public ServiceStationDContext(DbContextOptions contextOptions) : base(contextOptions)
         {
@@ -47,10 +47,10 @@ namespace Infrastructure.Persistence.Data
             modelBuilder.ApplyConfiguration(new RefrshTokenConfiguration());
 
         }
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+/*        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             return base.SaveChangesAsync(cancellationToken);
-        }
+        }*/
 
     }
 }

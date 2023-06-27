@@ -102,8 +102,7 @@ namespace ServiceStation.BLL.Services
                 
                 if (ifrexisttoken.Result.ExpirationDate<DateTime.Now)
                 {
-                    unitOfWork._TokenRepository.DeleteTokenByClientName(ifrexisttoken.Result.ClientName);
-                    unitOfWork.SaveChangesAsync();   
+                    DeleteRefreshToken(username);
 
                 throw new Exception("Token is Expirationed it will be deleted you must login again");
 
@@ -121,7 +120,7 @@ namespace ServiceStation.BLL.Services
     
 
 
-
+        /*
         public bool IsValid(JwtResponse response, out string username)
         {
             username = string.Empty;
@@ -148,6 +147,7 @@ namespace ServiceStation.BLL.Services
             if (curenttoken.Result.ExpirationDate >= DateTime.Now)
             {
                 unitOfWork._TokenRepository.DeleteTokenByClientName(username);
+                unitOfWork.SaveChangesAsync();
                 throw new UnauthorizedAccessException("Refresh Token is expired,it will be deleted");
 
             }
@@ -165,7 +165,7 @@ namespace ServiceStation.BLL.Services
             return true;
 
         }
-
+        
   
         private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
         {
@@ -181,7 +181,7 @@ namespace ServiceStation.BLL.Services
 
 
             };
-
+            
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
 
             ClaimsPrincipal claimsPrincipal = handler.ValidateToken(
@@ -198,7 +198,7 @@ namespace ServiceStation.BLL.Services
             return claimsPrincipal;
 
         }
-
+        */
 
 
 

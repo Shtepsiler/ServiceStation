@@ -2,9 +2,9 @@
 {
     public class UserViewModel
     {
-        public string id { get; set; }
+        public int id { get; set; }
 
-        public string userName { get; set; }
+        public string clientName { get; set; }
 
         public string firstName { get; set; }
 
