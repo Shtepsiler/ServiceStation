@@ -16,5 +16,6 @@ namespace WpfAppForManagers1._0.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        public virtual void Dispose() { }
     }
 }

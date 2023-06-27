@@ -29,8 +29,8 @@ namespace Application
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IPartNeededService, PartNeededService>();
             services.AddScoped<IPartService, PartService>();
-            services.AddScoped<IUnitOfServices, UnitOfServices>();
             services.AddScoped<IVendorsService, VendorsService>();
+            services.AddScoped<IUnitOfServices, UnitOfServices>();
 
 
             return services;

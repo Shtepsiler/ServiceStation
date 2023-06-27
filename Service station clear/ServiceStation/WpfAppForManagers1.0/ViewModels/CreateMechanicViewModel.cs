@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using WpfAppForManagers1._0.Commands;
 
 namespace WpfAppForManagers1._0.ViewModels
 {
@@ -13,7 +14,9 @@ namespace WpfAppForManagers1._0.ViewModels
 
 
         private string _firstname;
-        public string FirstName { get { return _firstname; } 
+        public string FirstName 
+        {
+            get { return _firstname; } 
             set
             {
                 _firstname = value;
@@ -61,6 +64,14 @@ namespace WpfAppForManagers1._0.ViewModels
             }
         }
         private string _specialization;
+
+        public CreateMechanicViewModel()
+        {
+            SubmitCommand = new SubmitMechanicCommand(this);
+            CancelCommand = new CancelMechanicCommand();
+
+        }
+
         public string Specialization
         {
             get { return _specialization; }
@@ -72,7 +83,7 @@ namespace WpfAppForManagers1._0.ViewModels
         }
 
 
-
+        public ICommand GoHomeCommand { get; }
         public ICommand SubmitCommand { get;  }
         public ICommand CancelCommand { get; }
 
