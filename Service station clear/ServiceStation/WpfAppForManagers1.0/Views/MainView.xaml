@@ -53,8 +53,7 @@
             <TextBlock FontSize="40" HorizontalAlignment="Center" Grid.Row="0">Jobs for today</TextBlock>
 
 
-            <ListView Grid.Row="1" Margin="0 20 0 0" Width="1200"  ItemsSource="{Binding jobs}">
-                <ListViewItem/>
+            <ListView x:Name="jobsList"  Grid.Row="1" Margin="0 20 0 0" Width="1200"  ItemsSource="{Binding jobViewModels}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" Width="50">

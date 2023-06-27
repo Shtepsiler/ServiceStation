@@ -19,7 +19,7 @@ namespace WpfAppForManagers1._0
         {
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel() { }
+                DataContext = new CreateMechanicViewModel() { }
             };
             MainWindow.Show();
 

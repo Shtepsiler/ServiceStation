@@ -23,7 +23,7 @@ namespace WpfAppForManagers1._0.Views
         public MainView( )
         {
             InitializeComponent(); 
-            DataContext = new MainViewModel();
+     
         }
     }
 }
