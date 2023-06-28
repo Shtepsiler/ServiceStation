@@ -19,9 +19,12 @@ namespace WpfAppForManagers1._0.Services
             _createViewModel = createViewModel;
         }
 
+
         public void Navigate()
         {
             _navigationStore.CurrentViewModel = _createViewModel();
         }
+
+
     }
 }
