@@ -10,5 +10,7 @@ namespace Application.Interfaces
         Task<IEnumerable<JobDTO>> GetAllAsync();
         Task<JobDTO> GetByIdAsync(int id);
         Task Update(UpdateJobCommand comand);
+        Task<IEnumerable<JobDTO>> GetByIssueDateAsync(DateTime IssueDate);
     }
+   
 }

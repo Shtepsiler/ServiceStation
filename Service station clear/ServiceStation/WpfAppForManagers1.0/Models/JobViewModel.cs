@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfAppForManagers1._0.ViewModels;
 
-namespace WpfAppForManagers1._0.ViewModels
+namespace WpfAppForManagers1._0.Models
 {
     public class JobViewModel : ViewModelBase
     {

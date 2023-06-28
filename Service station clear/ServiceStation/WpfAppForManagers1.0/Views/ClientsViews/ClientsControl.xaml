@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfAppForManagers1._0.Views.ClientsViews"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+             d:DesignHeight="1024" d:DesignWidth="1440">
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="150" />
             <RowDefinition Height="auto"/>
@@ -21,22 +21,71 @@
 
                 <ColumnDefinition/>
                 <ColumnDefinition/>
-                <ColumnDefinition/>
 
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0" Margin="50 50 50 50">
-                <Button Content="Clients" FontSize="40"   ></Button>
+                <Button Content="Home" FontSize="40" Width="200" HorizontalAlignment="Left"  Command="{Binding navigateToHome}" ></Button>
             </Grid>
-            <Grid Grid.Column="1" Margin="50 50 50 50">
-                <Button Content="Jobs" FontSize="40" ></Button>
-            </Grid>
-            <Grid Grid.Column="2" Margin="50 50 50 50">
-                <Button Content="Mechanics" FontSize="40"   ></Button>
-            </Grid>
+            <TextBlock Grid.Column="1" FontSize="40" VerticalAlignment="Center" Text="Clients List"/>
+
         </Grid>
         <Grid Grid.Row="1" Style="{StaticResource Body}">
 
+            <ListView x:Name="jobsList"  Grid.Row="1" Margin="0 20 0 0" Width="660"  ItemsSource="{Binding clients}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" Width="50">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Id}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="UserName" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding UserName}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="First Name" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding FirstName}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Last Name" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding LastName}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Phone Number" Width="150">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding PhoneNumber}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Email" Width="150">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Email}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        
+
+                    </GridView>
+
+                </ListView.View>
+
+
+
+            </ListView>
 
         </Grid>
     </Grid>

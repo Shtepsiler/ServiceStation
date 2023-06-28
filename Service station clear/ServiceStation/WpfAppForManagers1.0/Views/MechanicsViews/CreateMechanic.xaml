@@ -8,16 +8,16 @@
              d:DesignHeight="1024" d:DesignWidth="1440">
     <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="150"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" Background="CornflowerBlue">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0"  VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50"  >Create a new Mechanic</TextBlock>
-            <Button Grid.Column="1" Content="Home"  Command="{Binding GoHomeCommand}"   />
+            <TextBlock Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="40" >Create a new Mechanic</TextBlock>
+            <Button Grid.Column="0" Width="200" Content="Home" Margin=" 50 " FontSize="40" HorizontalAlignment="Left" Command="{Binding GoHomeCommand}"   />
         </Grid>
 
 

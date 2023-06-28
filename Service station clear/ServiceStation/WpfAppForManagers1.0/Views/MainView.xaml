@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:WpfAppForManagers1._0.Views"
              mc:Ignorable="d" 
              d:DesignHeight="1024" d:DesignWidth="1440">
-    <Grid  >
+    <Grid  Background="White">
 
 
 
@@ -30,16 +30,16 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0" Margin="50 50 50 50">
-                <Button Content="Clients" FontSize="40"    ></Button>
+                <Button Content="Clients" FontSize="40"  Command="{ Binding navigateToCliens}"   ></Button>
             </Grid>
             <Grid Grid.Column="1" Margin="50 50 50 50">
-                <Button Content="Jobs" FontSize="40"   ></Button>
+                <Button Content="Jobs" FontSize="40"   Command="{Binding navigateToJobs}" ></Button>
             </Grid>
             <Grid Grid.Column="2" Margin="50 50 50 50">
-                <Button Content="Mechanics" FontSize="40" Command="{ Binding navigaTeToManagers}" ></Button>
+                <Button Content="Mechanics" FontSize="40" Command="{ Binding navigateToMechanics}" ></Button>
             </Grid>
             <Grid Grid.Column="3" Margin="50 50 50 50">
-                <Button Content="Parts" FontSize="40" ></Button>
+                <Button Content="Orders" FontSize="40" Command="{Binding navigateToOrders}" ></Button>
             </Grid>
         </Grid>
         <Grid Grid.Row="1" Style="{StaticResource Body}">
@@ -53,7 +53,7 @@
             <TextBlock FontSize="40" HorizontalAlignment="Center" Grid.Row="0">Jobs for today</TextBlock>
 
 
-            <ListView x:Name="jobsList"  Grid.Row="1" Margin="0 20 0 0" Width="1200"  ItemsSource="{Binding jobViewModels}">
+            <ListView x:Name="jobsList"  Grid.Row="1" Margin="0 20 0 0" Width="1210"  ItemsSource="{Binding jobViewModels}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" Width="50">

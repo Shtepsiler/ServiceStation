@@ -43,6 +43,7 @@ namespace Application.Services
                 }
                 else
                 {
+                    var smth =  isValid.Errors;
                 }
 
             }
@@ -65,6 +66,20 @@ namespace Application.Services
             try
             {
                 var results = await Mediator.Send(new GetJobsQuery());
+
+
+                return results;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<IEnumerable<JobDTO>> GetByIssueDateAsync(DateTime issueDate)
+        {
+            try
+            {
+                var results = await Mediator.Send(new GetJobsByIssueDate() { IssueDate = issueDate });
 
 
                 return results;

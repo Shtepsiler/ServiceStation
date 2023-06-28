@@ -9,7 +9,7 @@ namespace Application.Operations.Jobs.Commands;
 
 public record CreateJobCommand : IRequest<int>
 {
-    public int? ManagerId { get; set; }
+/*    public int? ManagerId { get; set; }*/
     public int ModelId { get; set; }
     public int ClientId { get; set; }
     public DateTime IssueDate { get; set; }
@@ -29,7 +29,7 @@ public class CreateJobHandler : IRequestHandler<CreateJobCommand, int>
     {
         var entity = new Job()
         {
-            ManagerId = request.ManagerId,
+           /* ManagerId = request.ManagerId,*/
             ModelId = request.ModelId,
             ClientId = request.ClientId,
             IssueDate = request.IssueDate,

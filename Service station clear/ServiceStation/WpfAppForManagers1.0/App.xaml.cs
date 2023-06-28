@@ -61,7 +61,7 @@ namespace WpfAppForManagers1._0
         {
 
             _host.Start();
-            NavigationService<AllJobsViewModel> navigationService = _host.Services.GetRequiredService<NavigationService<AllJobsViewModel>>();
+            NavigationService<JobsForTodayViewModel> navigationService = _host.Services.GetRequiredService<NavigationService<JobsForTodayViewModel>>();
             navigationService.Navigate();
 
 

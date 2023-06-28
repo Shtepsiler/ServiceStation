@@ -14,35 +14,35 @@ namespace Application.Common.Validation
         {
             RuleFor(request => request.ModelId)
                 .NotEmpty()
-                .WithMessage("Id can't be empty.")
+                .WithMessage("ModelId can't be empty.")
                 .NotNull()
-                .WithMessage("Id can't be Null.");
+                .WithMessage("ModelId can't be Null.");
 
 
-            RuleFor(request => request.ManagerId)
-                .NotEmpty()
-                .WithMessage("Id can't be empty.")
-                .NotNull()
-                .WithMessage("Id can't be Null.");
+            /*         RuleFor(request => request.ManagerId)
+                         .NotEmpty()
+                         .WithMessage("Id can't be empty.")
+                         .NotNull()
+                         .WithMessage("Id can't be Null.");*/
 
 
             RuleFor(request => request.IssueDate)
                 .NotEmpty()
-                .WithMessage("Id can't be empty.")
+                .WithMessage("IssueDate can't be empty.")
                 .NotNull()
-                .WithMessage("Id can't be Null."); 
+                .WithMessage("IssueDate can't be Null."); 
             
             RuleFor(request => request.Description)
                 .NotEmpty()
-                .WithMessage("Id can't be empty.")
+                .WithMessage("Description can't be empty.")
                 .NotNull()
-                .WithMessage("Id can't be Null."); 
+                .WithMessage("Description can't be Null."); 
             
             RuleFor(request => request.ClientId)
                 .NotEmpty()
-                .WithMessage("Id can't be empty.")
+                .WithMessage("ClientId can't be empty.")
                 .NotNull()
-                .WithMessage("Id can't be Null."); 
+                .WithMessage("ClientId can't be Null."); 
             
           
 

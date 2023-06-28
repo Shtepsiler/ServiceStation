@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,15 +10,26 @@ using WpfAppForManagers1._0.Commands;
 using WpfAppForManagers1._0.Services;
 using WpfAppForManagers1._0.Stores;
 
-namespace WpfAppForManagers1._0.ViewModels
+namespace WpfAppForManagers1._0.ViewModels.MechanicsViewsModels
 {
     public class CreateMechanicViewModel : ViewModelBase
-    {
-     
-        private string _firstname;
-        public string FirstName 
+    {     
+        public CreateMechanicViewModel(NavigationService<JobsForTodayViewModel> navigationStore, IMechanicService mechanicService)
         {
-            get { return _firstname; } 
+            SubmitCommand = new SubmitMechanicCommand(this, mechanicService, navigationStore);
+            CancelCommand = new NavigateCommand<JobsForTodayViewModel>(navigationStore);
+            GoHomeCommand = new NavigateCommand<JobsForTodayViewModel>(navigationStore);
+
+        }
+        public ICommand GoHomeCommand { get; }
+        public ICommand SubmitCommand { get; }
+        public ICommand CancelCommand { get; }
+
+
+        private string _firstname;
+        public string FirstName
+        {
+            get { return _firstname; }
             set
             {
                 _firstname = value;
@@ -66,13 +78,7 @@ namespace WpfAppForManagers1._0.ViewModels
         }
         private string _specialization;
 
-        public CreateMechanicViewModel(NavigationService<AllJobsViewModel> navigationStore)
-        {
-            SubmitCommand = new SubmitMechanicCommand(this);
-            CancelCommand = new CancelMechanicCommand();
-            GoHomeCommand = new NavigateCommand<AllJobsViewModel>(navigationStore);
 
-        }
 
 
 
@@ -87,10 +93,7 @@ namespace WpfAppForManagers1._0.ViewModels
         }
 
 
-        public ICommand GoHomeCommand { get; }
-        public ICommand SubmitCommand { get;  }
-        public ICommand CancelCommand { get; }
-
+   
 
 
     }

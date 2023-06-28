@@ -22,22 +22,72 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
-
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0" Margin="50 50 50 50">
-                <Button Content="Clients" FontSize="40"   ></Button>
+                <Button Content="Home" FontSize="40" Width="200" HorizontalAlignment="Left"  Command="{Binding navigateToHome}" ></Button>
             </Grid>
-            <Grid Grid.Column="1" Margin="50 50 50 50">
-                <Button Content="Jobs" FontSize="40" ></Button>
+            <TextBlock Grid.Column="1" FontSize="40" VerticalAlignment="Center" Text="Mechanics List"/>
+            <Grid Grid.Column="2" Margin="0 50">
+                <Button  Content="Create Mechanic" FontSize="40" Width="300" HorizontalAlignment="Left"  Command="{Binding navigateToCreateMechanic}" ></Button>
+                </Grid>
             </Grid>
-            <Grid Grid.Column="2" Margin="50 50 50 50">
-                <Button Content="Mechanics" FontSize="40"   ></Button>
-            </Grid>
-        </Grid>
         <Grid Grid.Row="1" Style="{StaticResource Body}" Background="White">
 
-            <local:CreateMechanic/>
+            <ListView x:Name="jobsList"  Grid.Row="1" Margin="0 20 0 0" Width="660"  ItemsSource="{Binding MechanicsViewModels}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" Width="50">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Id}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="First Name" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding FirstName}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Last Name" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding LastName}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Address" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Address}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Phone Number" Width="150">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Phone}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Specialization" Width="150">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Specialization}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+
+                    </GridView>
+
+                </ListView.View>
+
+
+
+            </ListView>
 
         </Grid>
 

@@ -8,18 +8,45 @@
         xmlns:jobviews="clr-namespace:WpfAppForManagers1._0.Views.JobsViews"
         xmlns:mechanicviews="clr-namespace:WpfAppForManagers1._0.Views.MechanicsViews"
         xmlns:partsviews="clr-namespace:WpfAppForManagers1._0.Views.PartsViews" 
+        xmlns:ordersviews="clr-namespace:WpfAppForManagers1._0.Views.OrdersViews" 
         xmlns:views ="clr-namespace:WpfAppForManagers1._0.Views" 
         xmlns:viewmodels="clr-namespace:WpfAppForManagers1._0.ViewModels"
+        xmlns:viewmodelsclients="clr-namespace:WpfAppForManagers1._0.ViewModels.ClientViewsModels"   
+        xmlns:viewmodelsjobs="clr-namespace:WpfAppForManagers1._0.ViewModels.JobsViewModels"   
+        xmlns:viewmodelsmechanics="clr-namespace:WpfAppForManagers1._0.ViewModels.MechanicsViewsModels"  
+        xmlns:viewmodelsorders="clr-namespace:WpfAppForManagers1._0.ViewModels.OrdersViewsModels" 
+        xmlns:viewmodelsparts="clr-namespace:WpfAppForManagers1._0.ViewModels.PartsViewsModels"
         
         mc:Ignorable="d"
         Title="Sevice station adminictator app" Height="1024" Width="1440">
     <Grid  >
         <Grid.Resources>
-            <DataTemplate DataType="{x:Type viewmodels:AllJobsViewModel}">
+            <DataTemplate DataType="{x:Type viewmodels:JobsForTodayViewModel}">
                    <views:MainView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type viewmodels:CreateMechanicViewModel}">
+            <DataTemplate DataType="{x:Type viewmodelsmechanics:CreateMechanicViewModel}">
                 <mechanicviews:CreateMechanic  />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodelsmechanics:MechanicControlViewMoidel}">
+                <mechanicviews:MechanicControl  />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodelsclients:ClientControlViewModel}">
+                <clientviews:ClientsControl  />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodelsjobs:JobControlViewModel}">
+                <jobviews:JobControl  />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodelsjobs:CreateJobViewModel}">
+                <jobviews:CreateJobPage  />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodelsjobs:EditJobViewModel}">
+                <jobviews:EditJobPage  />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodelsorders:OrdersControlViewModel}">
+            <ordersviews:OrdersControl  />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodelsparts:PartsControlViewModel}">
+                <partsviews:PartsControl />
             </DataTemplate>
         </Grid.Resources>
 
