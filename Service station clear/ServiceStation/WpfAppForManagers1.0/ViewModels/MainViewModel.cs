@@ -10,25 +10,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using WpfAppForManagers1._0.Stores;
 
 namespace WpfAppForManagers1._0.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        public ViewModelBase CurrentViewModel;
+        private NavigationStore NavigationStore;
 
-  /*      public MainViewModel()
+
+        public ViewModelBase CurrentViewModel => NavigationStore.CurrentViewModel;
+
+
+        public MainViewModel()
         {
             jobs = new ObservableCollection<JobViewModel>();
             jobs.Add(new JobViewModel(new() { Id = 1, ClientId = 1, MechanicId = 1, ModelId = 1, ManagerId = 1, Status = "pending", Description = "blablabla", Price = 123, FinishDate = DateTime.Now, IssueDate = DateTime.Now }));
-            jobViewModels =  (IEnumerable<JobViewModel>)jobs;
-        }*/
+            jobViewModels = (IEnumerable<JobViewModel>)jobs;
+        }
         private readonly IJobService jobService;
-        public MainViewModel(IJobService jobService)
+        public MainViewModel(IJobService jobService,NavigationStore navigationStore)
         {          
             jobs = new ObservableCollection<JobViewModel>();
 
             this.jobService = jobService;
+            this.NavigationStore = navigationStore;
             jobViewModels = (IEnumerable<JobViewModel>)jobs;
 
             GetAllJobs();

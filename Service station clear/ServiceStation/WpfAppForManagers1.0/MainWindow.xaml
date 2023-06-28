@@ -10,10 +10,21 @@
         xmlns:partsviews="clr-namespace:WpfAppForManagers1._0.Views.PartsViews" 
         xmlns:views ="clr-namespace:WpfAppForManagers1._0.Views" 
         xmlns:viewmodels="clr-namespace:WpfAppForManagers1._0.ViewModels"
+        
         mc:Ignorable="d"
         Title="Sevice station adminictator app" Height="1024" Width="1440">
     <Grid  >
-     
-        <views:MainView Grid.Row="0"/>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type viewmodels:MainViewModel}">
+                   <views:MainView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:CreateMechanicViewModel}">
+                <mechanicviews:CreateMechanic  />
+            </DataTemplate>
+        </Grid.Resources>
+
+        <ContentControl Content="{Binding CurrentViewModel}" />
+
+
     </Grid>
 </Window>

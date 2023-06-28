@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WpfAppForManagers1._0.Commands;
+using WpfAppForManagers1._0.Stores;
 
 namespace WpfAppForManagers1._0.ViewModels
 {
     public class CreateMechanicViewModel : ViewModelBase
     {
+        public NavigationStore NavigationStore { get; set; }
 
+
+        public ViewModelBase CurrentViewModel => NavigationStore.CurrentViewModel;
 
         private string _firstname;
         public string FirstName 
@@ -65,8 +69,9 @@ namespace WpfAppForManagers1._0.ViewModels
         }
         private string _specialization;
 
-        public CreateMechanicViewModel()
+        public CreateMechanicViewModel( NavigationStore navigationStore )
         {
+            this.NavigationStore = navigationStore;
             SubmitCommand = new SubmitMechanicCommand(this);
             CancelCommand = new CancelMechanicCommand();
 
