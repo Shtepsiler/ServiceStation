@@ -12,6 +12,7 @@ using Infrastructure.Persistence.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Application.Interfaces;
 
 namespace WpfAppForManagers1._0
 {
@@ -36,6 +37,7 @@ namespace WpfAppForManagers1._0
 
                    });
 
+                   services.AddScoped<IServiceStationDContext, ServiceStationDContext>();
                })
                 .Build();
         }
@@ -45,7 +47,7 @@ namespace WpfAppForManagers1._0
             _host.Start();
             MainWindow = new MainWindow()
             {
-                DataContext = new CreateMechanicViewModel() { }
+                DataContext = new MainViewModel(_host.Services.GetRequiredService<IJobService>()) { }
             };
             MainWindow.Show();
 
