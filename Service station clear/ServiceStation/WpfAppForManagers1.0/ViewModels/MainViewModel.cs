@@ -1,60 +1,28 @@
-﻿using Application.DTOs.Respponces;
-using Application.Interfaces;
-using Microsoft.IdentityModel.Abstractions;
-using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using WpfAppForManagers1._0.Stores;
 
 namespace WpfAppForManagers1._0.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private NavigationStore NavigationStore;
+        private readonly NavigationStore _navigationStore;
 
+        public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 
-        public ViewModelBase CurrentViewModel => NavigationStore.CurrentViewModel;
-
-
-        public MainViewModel()
+        public MainViewModel(NavigationStore navigationStore)
         {
-            jobs = new ObservableCollection<JobViewModel>();
-            jobs.Add(new JobViewModel(new() { Id = 1, ClientId = 1, MechanicId = 1, ModelId = 1, ManagerId = 1, Status = "pending", Description = "blablabla", Price = 123, FinishDate = DateTime.Now, IssueDate = DateTime.Now }));
-            jobViewModels = (IEnumerable<JobViewModel>)jobs;
-        }
-        private readonly IJobService jobService;
-        public MainViewModel(IJobService jobService,NavigationStore navigationStore)
-        {          
-            jobs = new ObservableCollection<JobViewModel>();
+            _navigationStore = navigationStore;
 
-            this.jobService = jobService;
-            this.NavigationStore = navigationStore;
-            jobViewModels = (IEnumerable<JobViewModel>)jobs;
-
-            GetAllJobs();
-
+            _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
         }
 
-public  ObservableCollection<JobViewModel> jobs { get; set; }
-
-        public async void GetAllJobs()
+        private void OnCurrentViewModelChanged()
         {
-            var models = await jobService.GetAllAsync();
-           foreach(JobDTO model in models)
-            {
-                jobs.Add(new JobViewModel(model));
-
-
-            }
+            OnPropertyChanged(nameof(CurrentViewModel));
         }
-        
-
-        public IEnumerable<JobViewModel> jobViewModels { get; set; } 
     }
 }

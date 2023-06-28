@@ -15,7 +15,7 @@
         Title="Sevice station adminictator app" Height="1024" Width="1440">
     <Grid  >
         <Grid.Resources>
-            <DataTemplate DataType="{x:Type viewmodels:MainViewModel}">
+            <DataTemplate DataType="{x:Type viewmodels:AllJobsViewModel}">
                    <views:MainView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:CreateMechanicViewModel}">

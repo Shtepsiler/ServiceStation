@@ -14,6 +14,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Application.Interfaces;
 using WpfAppForManagers1._0.Stores;
+using WpfAppForManagers1._0.Services;
+using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace WpfAppForManagers1._0
 {
@@ -38,9 +41,13 @@ namespace WpfAppForManagers1._0
                        options.UseSqlServer(connectionString);
                       
                    }, ServiceLifetime.Transient);
+                   services.AddIdentityCore<Client>()
+                   .AddRoles<IdentityRole<int>>()
+                   .AddSignInManager<SignInManager<Client>>()
+                   .AddDefaultTokenProviders()
+                   .AddEntityFrameworkStores<ServiceStationDContext>();
 
                    services.AddTransient<IServiceStationDContext, ServiceStationDContext>();
-                   services.AddSingleton<NavigationStore>();
 
                    services.AddSingleton(s => new MainWindow()
                    {
@@ -52,12 +59,16 @@ namespace WpfAppForManagers1._0
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            NavigationStore navstore = _host.Services.GetRequiredService<NavigationStore>();
-            navstore.CurrentViewModel = new MainViewModel(_host.Services.GetRequiredService<IJobService>(), _host.Services.GetRequiredService<NavigationStore>());
+
             _host.Start();
+            NavigationService<AllJobsViewModel> navigationService = _host.Services.GetRequiredService<NavigationService<AllJobsViewModel>>();
+            navigationService.Navigate();
+
+
             MainWindow = _host.Services.GetRequiredService<MainWindow>();
          MainWindow.Show();
-
+            
+            navigationService.Navigate();
 
 
             base.OnStartup(e);

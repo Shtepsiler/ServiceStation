@@ -30,13 +30,13 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0" Margin="50 50 50 50">
-                <Button Content="Clients" FontSize="40"   ></Button>
+                <Button Content="Clients" FontSize="40"    ></Button>
             </Grid>
             <Grid Grid.Column="1" Margin="50 50 50 50">
                 <Button Content="Jobs" FontSize="40"   ></Button>
             </Grid>
             <Grid Grid.Column="2" Margin="50 50 50 50">
-                <Button Content="Mechanics" FontSize="40"  ></Button>
+                <Button Content="Mechanics" FontSize="40" Command="{ Binding navigaTeToManagers}" ></Button>
             </Grid>
             <Grid Grid.Column="3" Margin="50 50 50 50">
                 <Button Content="Parts" FontSize="40" ></Button>
