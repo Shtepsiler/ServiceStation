@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,15 +18,24 @@ namespace WpfAppForManagers1._0.ViewModels
 
         public ObservableCollection<JobViewModel> jobs { get; set; }
 
+        private readonly IJobService jobService;
 
 
 
 
-
-        public ListJobsViewModel()
+        public  ListJobsViewModel(IJobService jobService )
         {
-            jobs = new ObservableCollection<JobViewModel>();
-            jobs.Add(new JobViewModel(new() { Id = 1, ClientId = 1, MechanicId = 1, ModelId = 1, ManagerId = 1, Status = "pending", Description = "blablabla", Price = 123, FinishDate = DateTime.Now, IssueDate = DateTime.Now }));
+        this.jobService = jobService;
+
+            GetAllJobs();
+
+        }
+
+
+
+        public async void GetAllJobs()
+        {
+            jobs = (ObservableCollection<JobViewModel>)await jobService.GetAllAsync();
         }
     }
 }
