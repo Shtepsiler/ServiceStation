@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace WpfAppForManagers1._0.Views.JobsViews
 {
     /// <summary>
-    /// Логика взаимодействия для GetTasksForJob.xaml
+    /// Логика взаимодействия для GetTasxsForJob.xaml
     /// </summary>
-    public partial class GetTasksForJob : UserControl
+    public partial class GetTasxsForJob : UserControl
     {
-        public GetTasksForJob()
+        public GetTasxsForJob()
         {
             InitializeComponent();
         }

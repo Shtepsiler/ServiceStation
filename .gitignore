@@ -361,3 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Service station clear/ServiceStation/WpfAppForManagers1.0/ViewModels/JobsViewModels/GetTasxsForJobViewModel.cs
