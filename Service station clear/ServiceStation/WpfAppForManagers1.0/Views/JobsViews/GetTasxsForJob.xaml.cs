@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfAppForManagers1._0.Views.PartsViews
+namespace WpfAppForManagers1._0.Views.JobsViews
 {
     /// <summary>
-    /// Логика взаимодействия для PartsControl.xaml
+    /// Логика взаимодействия для GetTasxsForJob.xaml
     /// </summary>
-    public partial class PartsControl : UserControl
+    public partial class GetTasxsForJob : UserControl
     {
-        public PartsControl()
+        public GetTasxsForJob()
         {
             InitializeComponent();
         }

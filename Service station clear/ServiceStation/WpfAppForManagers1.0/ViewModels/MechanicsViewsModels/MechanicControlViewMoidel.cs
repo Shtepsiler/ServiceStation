@@ -9,6 +9,7 @@ using System.Windows.Input;
 using WpfAppForManagers1._0.Commands;
 using WpfAppForManagers1._0.Models;
 using WpfAppForManagers1._0.Services;
+using WpfAppForManagers1._0.ViewModels.JobsViewModels;
 
 namespace WpfAppForManagers1._0.ViewModels.MechanicsViewsModels
 {
@@ -18,14 +19,21 @@ namespace WpfAppForManagers1._0.ViewModels.MechanicsViewsModels
         public ICommand navigateToCreateMechanic { get; set; }
         private readonly IMechanicService mechanicsService;
 
+        public ICommand navigateToTasks { get; set; }
 
 
 
-        public MechanicControlViewMoidel(IMechanicService clientsService, NavigationService<JobsForTodayViewModel> toHome, NavigationService<CreateMechanicViewModel> ctreatenav)
+        public MechanicControlViewMoidel(IMechanicService clientsService, 
+            NavigationService<JobsForTodayViewModel> toHome, 
+            NavigationService<CreateMechanicViewModel> ctreatenav,
+            NavigationService<GetTasxsForJobViewModel> nawtotasks
+            )
         {
             mechanics = new ObservableCollection<MechanicViewModel>();
             navigateToHome = new NavigateCommand<JobsForTodayViewModel>(toHome);
             navigateToCreateMechanic = new NavigateCommand<CreateMechanicViewModel>(ctreatenav);
+            navigateToTasks = new NavigateCommand<GetTasxsForJobViewModel>(nawtotasks);
+
             mechanicsService = clientsService;
             MechanicsViewModels = mechanics;
 

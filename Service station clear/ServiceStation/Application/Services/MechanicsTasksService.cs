@@ -90,5 +90,20 @@ namespace Application.Services
                 throw ex;
             }
         }
+
+        public async Task<IEnumerable<MechanicsTasksDTO>> GetAllByParametrs(int jobId, int mechanicId)
+        {
+            try
+            {
+                var results = await Mediator.Send(new GetMechanicsTasksByParametrs(){JobId=jobId,MechanicId = mechanicId});
+
+
+                return results;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

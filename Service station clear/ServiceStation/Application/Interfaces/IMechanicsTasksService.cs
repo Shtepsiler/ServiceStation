@@ -11,6 +11,8 @@ namespace Application.Interfaces
         Task Create(CreateMechanicTaskCommand comand);
         Task Delete(int id);
         Task<IEnumerable<MechanicsTasksDTO>> GetAllAsync();
+        Task<IEnumerable<MechanicsTasksDTO>> GetAllByParametrs( int jobId,int mevhanicId);
+
         Task<MechanicsTasksDTO> GetByIdAsync(int id);
         Task Update(UpdateMechanicTaskCommand comand);
     }

@@ -14,6 +14,11 @@ namespace WpfAppForManagers1._0.ViewModels.JobsViewModels
     {
 
 
+
+
+
+
+
         public EditJobViewModel(NavigationService<JobsForTodayViewModel> navigationStore, IJobService jobService)
         {
             SubmitCommand = new UpdateJobCommand(this, jobService, navigationStore);

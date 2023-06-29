@@ -7,15 +7,11 @@
         xmlns:clientviews="clr-namespace:WpfAppForManagers1._0.Views.ClientsViews"  
         xmlns:jobviews="clr-namespace:WpfAppForManagers1._0.Views.JobsViews"
         xmlns:mechanicviews="clr-namespace:WpfAppForManagers1._0.Views.MechanicsViews"
-        xmlns:partsviews="clr-namespace:WpfAppForManagers1._0.Views.PartsViews" 
-        xmlns:ordersviews="clr-namespace:WpfAppForManagers1._0.Views.OrdersViews" 
         xmlns:views ="clr-namespace:WpfAppForManagers1._0.Views" 
         xmlns:viewmodels="clr-namespace:WpfAppForManagers1._0.ViewModels"
         xmlns:viewmodelsclients="clr-namespace:WpfAppForManagers1._0.ViewModels.ClientViewsModels"   
         xmlns:viewmodelsjobs="clr-namespace:WpfAppForManagers1._0.ViewModels.JobsViewModels"   
         xmlns:viewmodelsmechanics="clr-namespace:WpfAppForManagers1._0.ViewModels.MechanicsViewsModels"  
-        xmlns:viewmodelsorders="clr-namespace:WpfAppForManagers1._0.ViewModels.OrdersViewsModels" 
-        xmlns:viewmodelsparts="clr-namespace:WpfAppForManagers1._0.ViewModels.PartsViewsModels"
         
         mc:Ignorable="d"
         Title="Sevice station adminictator app" Height="1024" Width="1440">
@@ -42,11 +38,8 @@
             <DataTemplate DataType="{x:Type viewmodelsjobs:EditJobViewModel}">
                 <jobviews:EditJobPage  />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type viewmodelsorders:OrdersControlViewModel}">
-            <ordersviews:OrdersControl  />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type viewmodelsparts:PartsControlViewModel}">
-                <partsviews:PartsControl />
+            <DataTemplate DataType="{x:Type viewmodelsjobs:GetTasxsForJobViewModel}">
+                <jobviews:GetTasxsForJob  />
             </DataTemplate>
         </Grid.Resources>
 

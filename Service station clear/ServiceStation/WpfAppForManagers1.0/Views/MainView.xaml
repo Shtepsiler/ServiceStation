@@ -25,7 +25,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
-                <ColumnDefinition/>
+              
 
             </Grid.ColumnDefinitions>
 
@@ -38,9 +38,8 @@
             <Grid Grid.Column="2" Margin="50 50 50 50">
                 <Button Content="Mechanics" FontSize="40" Command="{ Binding navigateToMechanics}" ></Button>
             </Grid>
-            <Grid Grid.Column="3" Margin="50 50 50 50">
-                <Button Content="Orders" FontSize="40" Command="{Binding navigateToOrders}" ></Button>
-            </Grid>
+       
+            
         </Grid>
         <Grid Grid.Row="1" Style="{StaticResource Body}">
 
