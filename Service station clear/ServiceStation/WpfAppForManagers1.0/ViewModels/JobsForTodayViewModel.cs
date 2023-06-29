@@ -17,7 +17,6 @@ using WpfAppForManagers1._0.Stores;
 using WpfAppForManagers1._0.ViewModels.ClientViewsModels;
 using WpfAppForManagers1._0.ViewModels.JobsViewModels;
 using WpfAppForManagers1._0.ViewModels.MechanicsViewsModels;
-using WpfAppForManagers1._0.ViewModels.OrdersViewsModels;
 
 namespace WpfAppForManagers1._0.ViewModels
 {
@@ -27,7 +26,7 @@ namespace WpfAppForManagers1._0.ViewModels
         public ICommand navigateToManagers { get; set; }
         public ICommand navigateToCliens { get; set; }
         public ICommand navigateToJobs { get; set; }
-        public ICommand navigateToOrders { get; set; }
+     
 
         public ICommand navigateToMechanics { get; set; }
 
@@ -38,16 +37,16 @@ namespace WpfAppForManagers1._0.ViewModels
         public JobsForTodayViewModel(IJobService jobService,
             NavigationService<CreateMechanicViewModel> navtomechanics,
             NavigationService<ClientControlViewModel> navtoclients,
-            NavigationService<MechanicControlViewMoidel> navtomech, 
-            NavigationService<JobControlViewModel> navtojobs,
-            NavigationService<OrdersControlViewModel> navtoordeers)
+            NavigationService<MechanicControlViewModel> navtomech, 
+            NavigationService<JobControlViewModel> navtojobs
+            )
         {          
             jobs = new ObservableCollection<JobViewModel>();
             navigateToManagers = new NavigateCommand<CreateMechanicViewModel>(navtomechanics);
             navigateToCliens = new NavigateCommand<ClientControlViewModel>(navtoclients);
-            navigateToMechanics = new NavigateCommand<MechanicControlViewMoidel>(navtomech);
+            navigateToMechanics = new NavigateCommand<MechanicControlViewModel>(navtomech);
             navigateToJobs = new NavigateCommand<JobControlViewModel>(navtojobs);
-            navigateToOrders = new NavigateCommand<OrdersControlViewModel>(navtoordeers);
+          ;
             this.jobService = jobService;
             jobViewModels = (IEnumerable<JobViewModel>)jobs;
          

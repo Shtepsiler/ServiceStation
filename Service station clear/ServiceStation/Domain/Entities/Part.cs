@@ -21,7 +21,5 @@ namespace Domain.Entities
         public List<PartNeeded> PartNeededs { get; set; }
         [NotMapped]
         public List<OrderPart> OrderedParts { get; set; }
-
-
     }
 }

@@ -27,7 +27,9 @@
             <Grid Grid.Column="0" Margin="50 50 50 50">
                 <Button Content="Home" FontSize="40" Width="200" HorizontalAlignment="Left"  Command="{Binding navigateToHome}" ></Button>
             </Grid>
-            <TextBlock Grid.Column="1" FontSize="40" VerticalAlignment="Center" Text="Mechanics List"/>
+            <Grid Grid.Column="1" Margin="0 50">
+                <Button  Content="Show tasks" FontSize="40" Width="300" HorizontalAlignment="Left"  Command="{Binding navigateToTasks}" ></Button>
+            </Grid>
             <Grid Grid.Column="2" Margin="0 50">
                 <Button  Content="Create Mechanic" FontSize="40" Width="300" HorizontalAlignment="Left"  Command="{Binding navigateToCreateMechanic}" ></Button>
                 </Grid>

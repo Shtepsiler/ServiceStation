@@ -5,8 +5,7 @@ using WpfAppForManagers1._0.Stores;
 using WpfAppForManagers1._0.ViewModels.ClientViewsModels;
 using WpfAppForManagers1._0.ViewModels.JobsViewModels;
 using WpfAppForManagers1._0.ViewModels.MechanicsViewsModels;
-using WpfAppForManagers1._0.ViewModels.OrdersViewsModels;
-using WpfAppForManagers1._0.ViewModels.PartsViewsModels;
+
 
 namespace WpfAppForManagers1._0.ViewModels
 {
@@ -30,9 +29,9 @@ namespace WpfAppForManagers1._0.ViewModels
         services.AddSingleton<NavigationService<CreateMechanicViewModel>>();
             services.AddSingleton<Func<CreateMechanicViewModel>>((s) => () => s.GetRequiredService<CreateMechanicViewModel>());
 
-    services.AddSingleton<MechanicControlViewMoidel>();
-        services.AddSingleton<NavigationService<MechanicControlViewMoidel>>();
-            services.AddSingleton<Func<MechanicControlViewMoidel>>((s) => () => s.GetRequiredService<MechanicControlViewMoidel>());
+    services.AddSingleton<MechanicControlViewModel>();
+        services.AddSingleton<NavigationService<MechanicControlViewModel>>();
+            services.AddSingleton<Func<MechanicControlViewModel>>((s) => () => s.GetRequiredService<MechanicControlViewModel>());
 
 
     services.AddTransient<JobsForTodayViewModel>();
@@ -45,18 +44,7 @@ namespace WpfAppForManagers1._0.ViewModels
 
 
 
-    services.AddTransient<OrdersControlViewModel>();
-        services.AddSingleton<Func<OrdersControlViewModel>>((s) => () => s.GetRequiredService<OrdersControlViewModel>());
-            services.AddSingleton<NavigationService<OrdersControlViewModel>>();
-
-    services.AddTransient<PartsControlViewModel>();
-        services.AddSingleton<Func<PartsControlViewModel>>((s) => () => s.GetRequiredService<PartsControlViewModel>());
-            services.AddSingleton<NavigationService<PartsControlViewModel>>();
-
-
-
-
-            //Add jobs views models
+            //Add tasxs views models
     services.AddTransient<JobControlViewModel>();
         services.AddSingleton<Func<JobControlViewModel>>((s) => () => s.GetRequiredService<JobControlViewModel>());
             services.AddSingleton<NavigationService<JobControlViewModel>>();
@@ -68,6 +56,10 @@ namespace WpfAppForManagers1._0.ViewModels
     services.AddTransient<EditJobViewModel>();
         services.AddSingleton<Func<EditJobViewModel>>((s) => () => s.GetRequiredService<EditJobViewModel>());
             services.AddSingleton<NavigationService<EditJobViewModel>>();
+
+    services.AddTransient<GetTasksForJobViewModel>();
+       services.AddSingleton<Func<GetTasksForJobViewModel>>((s) => () => s.GetRequiredService<GetTasksForJobViewModel>());
+            services.AddSingleton<NavigationService<GetTasksForJobViewModel>>();
 
             return services;
         }

@@ -18,8 +18,6 @@ namespace Domain.Entities
         public Job? Job { get; set; }
         public string Task { get; set; }
         public string? Status { get; set; }
-
-
     }
 
 }

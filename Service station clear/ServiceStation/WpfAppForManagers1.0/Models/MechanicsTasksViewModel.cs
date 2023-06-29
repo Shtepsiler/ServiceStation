@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Application.DTOs.Respponces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +9,9 @@ namespace WpfAppForManagers1._0.Models
 {
     public  class MechanicsTasksViewModel
     {
-        private MechanicsTasks _tasks;
+        private MechanicsTasksDTO _tasks;
 
-        public MechanicsTasksViewModel(MechanicsTasks tasks)
+        public MechanicsTasksViewModel(MechanicsTasksDTO tasks)
         {
             _tasks = tasks;
         }
