@@ -19,6 +19,7 @@ namespace GraphQl
            
 
 
+        [UseApplicationDbContext]
         public Task<Speaker> GetSpeakerAsync(
             int id,
             SpeakerByIdDataLoader dataLoader,
