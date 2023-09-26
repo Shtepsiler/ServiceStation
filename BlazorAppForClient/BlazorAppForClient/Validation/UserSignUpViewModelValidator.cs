@@ -25,6 +25,9 @@ namespace BlazorAppForClient.Validation
                 .WithMessage(request => $"{nameof(request.password)} must contain a lowercase character.")
                 .Must(password => password is not null && password.Any(char.IsDigit))
                 .WithMessage(request => $"{nameof(request.password)} must contain a digit.");
+            //add a non diggit validation
+                /*
+                .Must(password => password is not null && password.Any(char.Id))*/
             /*
                         RuleFor(request =>  request)
                             .Must(p => p.ConfirmPassword.Equals(p.ConfirmPassword))
