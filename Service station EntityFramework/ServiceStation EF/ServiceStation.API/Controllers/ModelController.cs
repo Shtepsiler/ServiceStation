@@ -27,7 +27,7 @@ namespace ServiceStation.API.Controllers
 
         //GET: api/jobs
         [HttpGet]
-        [Authorize]
+    
 
         public async Task<ActionResult<IEnumerable<ModelResponse>>> GetAllAsync()
         {
