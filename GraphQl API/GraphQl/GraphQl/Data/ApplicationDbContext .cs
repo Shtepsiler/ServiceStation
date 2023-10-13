@@ -16,6 +16,12 @@ namespace GraphQl.Data
                 .HasIndex(a => a.UserName)
                 .IsUnique();
 
+        /*    modelBuilder.Entity<Speaker>().HasMany(p => p.sessions).WithMany(p => p.speakers);
+
+            modelBuilder.Entity<Attendee>().HasMany(p => p.Sessions).WithMany(p => p.Attendees);*/
+
+
+
             // Many-to-many: Session <-> Attendee
             modelBuilder
                 .Entity<SessionAttendee>()
@@ -25,6 +31,7 @@ namespace GraphQl.Data
             modelBuilder
                 .Entity<SessionSpeaker>()
                 .HasKey(ss => new { ss.SessionId, ss.SpeakerId });
+
         }
         public DbSet<Session> Sessions { get; set; } = default!;
         public DbSet<Track> Tracks { get; set; } = default!;

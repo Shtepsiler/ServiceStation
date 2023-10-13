@@ -10,10 +10,11 @@ using GraphQl.Data;
 
 namespace GraphQl.DataLoader
 {
-    public class SessionByIdDataLoader :  BatchDataLoader<int, Session>
+    public class SessionByIdDataLoader : BatchDataLoader<int, Session>
     {
         private readonly IDbContextFactory<ApplicationDbContext> _dbContextFactory;
-
+    
+     
         public SessionByIdDataLoader(
             IBatchScheduler batchScheduler,
             IDbContextFactory<ApplicationDbContext> dbContextFactory)
@@ -22,7 +23,6 @@ namespace GraphQl.DataLoader
             _dbContextFactory = dbContextFactory ??
                 throw new ArgumentNullException(nameof(dbContextFactory));
         }
-
         protected override async Task<IReadOnlyDictionary<int, Session>> LoadBatchAsync(
             IReadOnlyList<int> keys,
             CancellationToken cancellationToken)

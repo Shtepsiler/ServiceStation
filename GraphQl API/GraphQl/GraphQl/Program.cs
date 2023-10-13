@@ -1,7 +1,10 @@
 using GraphQl;
 using GraphQl.Data;
 using GraphQl.DataLoader;
+using GraphQl.Sessions;
+using GraphQl.Speakers;
 using GraphQl.Types;
+using HotChocolate.AspNetCore.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,10 +22,18 @@ builder.Services.AddPooledDbContextFactory<ApplicationDbContext>(options =>
 builder.Services
     .AddGraphQLServer()
     .AddQueryType<Query>()
+
     .AddMutationType<Mutation>()
+
     .AddType<SpeakerType>()
+    .AddType<AttendeeType>()
+    .AddType<SessionType>()
+    .AddType<TrackType>()    
     .AddDataLoader<SpeakerByIdDataLoader>()
     .AddDataLoader<SessionByIdDataLoader>()
+    .AddDataLoader<AttendeeByIdDataLoader>()
+    .AddDataLoader<TrackByIdDataLoader>()
+
     ;
 
 
@@ -43,12 +54,12 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
-    HotChocolate.AspNetCore.Extensions.GraphQLEndpointConventionBuilder graphQLEndpointConventionBuilder = endpoints.MapGraphQL();
+   GraphQLEndpointConventionBuilder graphQLEndpointConventionBuilder = endpoints.MapGraphQL();
 });
-app.UseAuthorization();
 
 app.MapRazorPages();
 
