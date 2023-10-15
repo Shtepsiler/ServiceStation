@@ -1,7 +1,9 @@
 ﻿using TaskManagerForMechanic.DAL;
 using TaskManagerForMechanic.DAL.Entitys;
 using TaskManagerForMechanic.WEB.Extensions;
+using TaskManagerForMechanic.WEB.GraphQl.Inputs.Job;
 using TaskManagerForMechanic.WEB.GraphQl.Inputs.MechanicTask;
+using TaskManagerForMechanic.WEB.GraphQl.Payloads.Jobs;
 using TaskManagerForMechanic.WEB.GraphQl.Payloads.MechanicTasks;
 
 namespace TaskManagerForMechanic.WEB.GraphQl
@@ -30,6 +32,71 @@ namespace TaskManagerForMechanic.WEB.GraphQl
 
 
 
+        [UseApplicationDbContext]
+        public async Task<ChangeMechanicsTaskPayload> ChangeTask(
+        ChangeTaskInput intut,
+        [ScopedService] TaskManagerDbContext context)
+        {
+
+
+            var task = context.MechanicsTasks.Find(intut.id);
+            if(task == null)
+            {
+                throw new Exception();
+            }
+
+            task.MechanicId = intut.MechanicId;
+            task.JobId = intut.JobId;
+            task.Status = intut.Status;
+            task.Task = intut.Task;
+         
+           
+            await context.SaveChangesAsync();
+
+            return new ChangeMechanicsTaskPayload(task);
+
+        }
+        [UseApplicationDbContext]
+        public async Task<ChangeMechanicsTaskPayload> ChangeTaskStatus(
+ChangeTaskStatusInput intut,
+[ScopedService] TaskManagerDbContext context)
+        {
+
+
+            var task = context.MechanicsTasks.Find(intut.id);
+            if (task == null)
+            {
+                throw new Exception();
+            }
+
+
+            task.Status = intut.status;
+
+
+            await context.SaveChangesAsync();
+
+            return new ChangeMechanicsTaskPayload(task);
+
+        }
+
+        [UseApplicationDbContext]
+        public async Task<ChangeJobStatusPayload> ChangeJobStatus(
+                ChangeJobStatusInput input,
+                [ScopedService] TaskManagerDbContext context)
+        {
+            var job = context.Jobs.Find(input.id);
+            if(job == null)
+            {
+                throw new Exception();
+            }
+
+            job.Status = input.status;
+
+  await context.SaveChangesAsync();
+
+            return new ChangeJobStatusPayload(job);
+
+        }
 
 
 

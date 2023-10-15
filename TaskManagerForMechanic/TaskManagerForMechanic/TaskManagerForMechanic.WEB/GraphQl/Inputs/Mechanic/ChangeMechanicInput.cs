@@ -1,6 +1,7 @@
 ﻿namespace TaskManagerForMechanic.WEB.GraphQl.Inputs.Mechanic
 {
-    public record AddMechanicInput(
+    public record ChangeMechanicInput(
+        int id,
         string FirstName, 
         string LastName, 
         string Address, 

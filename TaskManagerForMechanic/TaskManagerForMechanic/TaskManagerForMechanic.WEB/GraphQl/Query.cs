@@ -9,9 +9,9 @@ namespace TaskManagerForMechanic.WEB.GraphQl
 {
     public class Query
     {
-     
+
         [UseApplicationDbContext]
-        public List<Job> GetJobs([ScopedService] TaskManagerDbContext context ) =>
+        public List<Job> GetJobs([ScopedService] TaskManagerDbContext context) =>
             context.Jobs.ToList();
         [UseApplicationDbContext]
 
@@ -44,13 +44,14 @@ namespace TaskManagerForMechanic.WEB.GraphQl
         }
 
 
+
         [UseApplicationDbContext]
 
-        public MechanicsTasks GetMechanicsTask([ScopedService] TaskManagerDbContext context, int id)
+        public MechanicsTasks GetMechanicsTaskById([ScopedService] TaskManagerDbContext context, int id)
         {
 
-            var mechanic = context.MechanicsTasks.Where(p => p.Id == id).First();
-            return mechanic;
+            var Task = context.MechanicsTasks.Where(p => p.Id == id).First();
+            return Task;
         }
 
         [UseApplicationDbContext]
@@ -58,8 +59,35 @@ namespace TaskManagerForMechanic.WEB.GraphQl
         public List<MechanicsTasks> GetMechanicsTaskByMechanicId([ScopedService] TaskManagerDbContext context, int MechanicId)
         {
 
-            var mechanic = context.MechanicsTasks.Where(p => p.MechanicId == MechanicId ).ToList();
-            return mechanic;
+            var Task = context.MechanicsTasks.Where(p => p.MechanicId == MechanicId).ToList();
+            return Task;
+        }
+
+        [UseApplicationDbContext]
+
+        public List<MechanicsTasks> GetMechanicsTaskByTask([ScopedService] TaskManagerDbContext context, string task)
+        {
+
+            var Task = context.MechanicsTasks.Where(p => p.Task.Contains(task)).ToList();
+            return Task;
+        }
+
+
+
+
+
+        [UseApplicationDbContext]
+        public async Task<Mechanic>  Login([ScopedService] TaskManagerDbContext context, string phone, string password)
+        {
+
+            var mechanic = context.Mechanics.Where(p => p.Phone == phone).First();
+            if(mechanic.Password == password)
+            {
+                return mechanic;
+            }
+            return null; 
+
+
         }
 
 
