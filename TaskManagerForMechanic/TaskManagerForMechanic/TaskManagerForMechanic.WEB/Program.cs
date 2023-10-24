@@ -21,11 +21,11 @@ builder.Services.AddPooledDbContextFactory<TaskManagerDbContext>(options =>
 
 
 builder.Services.AddGraphQLServer()
-    .AddType<JobType>()
+     .AddType<JobType>()
      .AddType<MechanicType>()
      .AddType<MechanicTaskType>()
      .AddDataLoader<JobByIdDataLoader>()
-    .AddDataLoader<MechanicByIdDataloader>()
+     .AddDataLoader<MechanicByIdDataloader>()
      .AddDataLoader<MechanicTaskByIdDataLoader>()
 
 
@@ -33,10 +33,10 @@ builder.Services.AddGraphQLServer()
 
     .AddQueryType<Query>()
     .AddMutationType<Mutations>()
+    .AddSubscriptionType<Subscriptions>()
     
     
-    
-    
+    .AddInMemorySubscriptions()
     
     
     
@@ -57,6 +57,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseWebSockets();
 
 app.UseRouting().UseEndpoints(endpoints =>endpoints.MapGraphQL());
 

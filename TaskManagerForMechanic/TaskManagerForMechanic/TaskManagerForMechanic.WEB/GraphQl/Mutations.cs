@@ -1,4 +1,5 @@
-﻿using TaskManagerForMechanic.DAL;
+﻿using HotChocolate.Subscriptions;
+using TaskManagerForMechanic.DAL;
 using TaskManagerForMechanic.DAL.Entitys;
 using TaskManagerForMechanic.WEB.Extensions;
 using TaskManagerForMechanic.WEB.GraphQl.Inputs.Job;
@@ -59,7 +60,8 @@ namespace TaskManagerForMechanic.WEB.GraphQl
         [UseApplicationDbContext]
         public async Task<ChangeMechanicsTaskPayload> ChangeTaskStatus(
 ChangeTaskStatusInput intut,
-[ScopedService] TaskManagerDbContext context)
+[ScopedService] TaskManagerDbContext context,
+                [Service] ITopicEventSender eventSender)
         {
 
 
@@ -74,7 +76,9 @@ ChangeTaskStatusInput intut,
 
 
             await context.SaveChangesAsync();
-
+            await eventSender.SendAsync(
+       nameof(Subscriptions.OnTaskStatusUpdateAsync),
+       task.Id);
             return new ChangeMechanicsTaskPayload(task);
 
         }
@@ -82,7 +86,8 @@ ChangeTaskStatusInput intut,
         [UseApplicationDbContext]
         public async Task<ChangeJobStatusPayload> ChangeJobStatus(
                 ChangeJobStatusInput input,
-                [ScopedService] TaskManagerDbContext context)
+                [ScopedService] TaskManagerDbContext context,
+                [Service] ITopicEventSender eventSender)
         {
             var job = context.Jobs.Find(input.id);
             if(job == null)
@@ -92,8 +97,10 @@ ChangeTaskStatusInput intut,
 
             job.Status = input.status;
 
-  await context.SaveChangesAsync();
-
+            await context.SaveChangesAsync();
+            await eventSender.SendAsync(
+        nameof(Subscriptions.OnJobStatusUpdateAsync),
+        job.Id);
             return new ChangeJobStatusPayload(job);
 
         }

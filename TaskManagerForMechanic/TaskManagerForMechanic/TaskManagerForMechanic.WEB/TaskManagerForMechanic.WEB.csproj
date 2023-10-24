@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="Extensions\Exceptions\" />
+    <Folder Include="GraphQl\Subscriptions\" />
   </ItemGroup>
 
 </Project>
